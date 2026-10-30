@@ -1,0 +1,65 @@
+---
+import { nav, site } from '../data/site';
+import { href } from '../lib/url';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href={href('/')} aria-label={`${site.shortName} home`}>
+          <span class="brand-mark" aria-hidden="true">
+            <span>H</span><span>K</span><span>U</span><span class="brand-mark-dot"></span>
+          </span>
+          <span class="brand-type">
+            <span class="brand-name">HKU CPC</span>
+            <span class="brand-sub">Competitive Programming</span>
+          </span>
+        </a>
+        <p class="footer-statement">
+          A student-run community for people who like their problems hard
+          and their code correct.
+        </p>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer">
+        <p class="footer-heading mono">Index</p>
+        <ul class="footer-links">
+          <li><a href={href('/')}>Home</a></li>
+          {nav.map((item) => (
+            <li><a href={href(item.href)}>{item.label}</a></li>
+          ))}
+          <li><a href={href('/about/#join')}>Join</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <p class="footer-heading mono">Contact</p>
+        <ul class="footer-links">
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={site.github} rel="noreferrer">GitHub ↗</a></li>
+          <li><a href={site.instagram} rel="noreferrer">Instagram ↗</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <p class="footer-heading mono">Colophon</p>
+        <p class="footer-note">
+          {site.department}<br />
+          {site.address}
+        </p>
+        <p class="footer-note">
+          Set in Geist and Geist Mono. Built with Astro. Deployed on GitHub Pages.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="mono">© {year} {site.shortName}</span>
+      <span class="footer-demo">Demo content — names, results and dates are fictional.</span>
+      <a class="mono" href="#top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>

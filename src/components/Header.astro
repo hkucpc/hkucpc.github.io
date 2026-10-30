@@ -1,0 +1,80 @@
+---
+import { nav, site } from '../data/site';
+import { activePath, href } from '../lib/url';
+
+const current = activePath(Astro.url.pathname);
+const isActive = (target: string) =>
+  current === target || current.startsWith(`${target}/`);
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={href('/')} aria-label={`${site.shortName} home`}>
+      <span class="brand-mark" aria-hidden="true">
+        <span>H</span><span>K</span><span>U</span><span class="brand-mark-dot"></span>
+      </span>
+      <span class="brand-type">
+        <span class="brand-name">HKU CPC</span>
+        <span class="brand-sub">Competitive Programming</span>
+      </span>
+    </a>
+
+    <div class="header-right">
+      <nav class="site-nav" id="primary-navigation" data-nav aria-label="Primary">
+        {nav.map((item) => (
+          <a
+            class:list={['nav-link', { active: isActive(item.href) }]}
+            href={href(item.href)}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            <span class="nav-index">{item.index}</span>
+            <span>{item.label}</span>
+          </a>
+        ))}
+      </nav>
+
+      <span class="header-season mono" aria-hidden="true">HK / 2025—26</span>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+        data-nav-toggle
+      >
+        <span class="nav-toggle-label">Menu</span>
+        <span class="nav-toggle-lines" aria-hidden="true">
+          <span></span><span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+
+  if (toggle && nav) {
+    const setOpen = (open: boolean) => {
+      nav.dataset.open = String(open);
+      toggle.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('nav-open', open);
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(nav.dataset.open !== 'true');
+    });
+
+    nav.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && nav.dataset.open === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

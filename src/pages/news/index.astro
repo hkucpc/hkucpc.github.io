@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import JoinCta from '../../components/JoinCta.astro';
+import { featuredPost, posts } from '../../data/news';
+import { href } from '../../lib/url';
+
+const otherPosts = posts.filter((post) => post.slug !== featuredPost.slug);
+const tags = ['All', ...new Set(posts.flatMap((post) => post.tags))];
+---
+
+<BaseLayout
+  title="News"
+  description="Announcements, contest reports and community stories from the HKU Competitive Programming Community."
+>
+  <PageHeader
+    index="04"
+    label="News"
+    title="Dispatches from the contest room."
+    intro="Contest reports, training notes and the occasional announcement. Written by members, for anyone who wants to know what we are working on."
+    meta={`${posts.length} entries / 2025—26`}
+  />
+
+  <section class="section section--flush-top">
+    <div class="container">
+      <article class="featured">
+        <div class="featured-meta mono">
+          <span>Featured story</span>
+          <time datetime={featuredPost.date}>{featuredPost.displayDate}</time>
+        </div>
+        <div class="featured-grid">
+          <h2 class="featured-title">
+            <a href={href(`/news/${featuredPost.slug}/`)}>{featuredPost.title}</a>
+          </h2>
+          <div class="featured-side">
+            <p class="featured-excerpt">{featuredPost.excerpt}</p>
+            <div class="featured-tags">
+              {featuredPost.tags.map((tag) => <span class="tag mono">{tag}</span>)}
+            </div>
+            <a class="btn" href={href(`/news/${featuredPost.slug}/`)}>
+              Read the story <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="01"
+        title="All stories"
+        description="Filter by category, or read everything from the top."
+      />
+
+      <div class="filter-bar" role="group" aria-label="Filter news by tag">
+        {tags.map((tag, index) => (
+          <button
+            class="filter"
+            type="button"
+            data-news-filter={tag}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+          >
+            {tag}
+          </button>
+        ))}
+        <p class="filter-count mono" data-news-count>{otherPosts.length} stories</p>
+      </div>
+
+      <div class="news-list" data-news-list>
+        {otherPosts.map((post) => (
+          <article class="news-row" data-tags={post.tags.join('|')}>
+            <time class="news-row-date mono" datetime={post.date}>{post.displayDate}</time>
+            <div class="news-row-body">
+              <h2 class="news-row-title">
+                <a class="stretched-link" href={href(`/news/${post.slug}/`)}>{post.title}</a>
+              </h2>
+              <p class="news-row-excerpt">{post.excerpt}</p>
+            </div>
+            <div class="news-row-tags">
+              {post.tags.map((tag) => <span class="tag mono">{tag}</span>)}
+            </div>
+            <span class="news-row-arrow" aria-hidden="true">↗</span>
+          </article>
+        ))}
+        <p class="results-empty" data-news-empty hidden>No stories in this category yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <JoinCta
+    eyebrow="Stay in the loop"
+    title="Good news travels by email."
+    text="Contest reports, training schedules and tryout announcements go to the community mailing list. It is low volume and easy to leave."
+    linkLabel="Join the list"
+    linkHref="mailto:hello@hkucpc.example?subject=Mailing%20list"
+  />
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-news-filter]');
+  const rows = document.querySelectorAll<HTMLElement>('[data-news-list] [data-tags]');
+  const count = document.querySelector<HTMLElement>('[data-news-count]');
+  const empty = document.querySelector<HTMLElement>('[data-news-empty]');
+
+  const apply = (filter: string) => {
+    let visible = 0;
+    rows.forEach((row) => {
+      const rowTags = (row.dataset.tags ?? '').split('|');
+      const show = filter === 'All' || rowTags.includes(filter);
+      row.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (count) count.textContent = `${visible} ${visible === 1 ? 'story' : 'stories'}`;
+    if (empty) empty.hidden = visible !== 0;
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      buttons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+      apply(button.dataset.newsFilter ?? 'All');
+    });
+  });
+</script>

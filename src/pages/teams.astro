@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHead from '../components/SectionHead.astro';
+import JoinCta from '../components/JoinCta.astro';
+import { archive, coaches, currentTeams } from '../data/teams';
+
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<BaseLayout
+  title="Teams"
+  description="Meet the six squads representing HKU in the 2025–26 season."
+>
+  <PageHeader
+    index="02"
+    label="Teams"
+    title="Six squads. One standard."
+    intro="Every squad trains on the same material and shares the same room. Selection places people by experience and working style — not by who arrived first."
+    meta="Season 2025—26 / 18 competitors"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="season-bar">
+        <div>
+          <p class="kicker">Current season</p>
+          <p class="season-title">2025—26</p>
+        </div>
+        <div class="season-meta">
+          <p>3 competitive squads<br />3 development squads</p>
+          <a class="section-link mono" href="#archive">Past squads <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--flush-top">
+    <div class="container">
+      <div class="team-grid">
+        {currentTeams.map((team, index) => (
+          <article class="team-card" id={team.id}>
+            <div class="team-card-top">
+              <p class="team-no mono">{pad(index + 1)}</p>
+              <span class="team-tier mono">{team.tier}</span>
+              <span class="team-rating mono">R{team.rating}</span>
+            </div>
+
+            <h2 class="team-name">{team.name}</h2>
+            <p class="team-blurb">{team.blurb}</p>
+
+            <ul class="team-members" aria-label={`${team.name} members`}>
+              {team.members.map((member) => (
+                <li class="team-member">
+                  <span class="member-name">{member.name}</span>
+                  <span class="member-handle mono">@{member.handle}</span>
+                  <span class="member-year mono">{member.year}</span>
+                </li>
+              ))}
+            </ul>
+
+            <dl class="team-meta">
+              <div>
+                <dt class="mono">Coach</dt>
+                <dd>{team.coach}</dd>
+              </div>
+              <div>
+                <dt class="mono">Focus</dt>
+                <dd>{team.focus}</dd>
+              </div>
+              <div>
+                <dt class="mono">Best result</dt>
+                <dd>{team.bestResult}</dd>
+              </div>
+            </dl>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="01"
+        title="Coaching staff"
+        description="Coaches set the training calendar, run simulations and are the first to ask whether you have checked the constraints."
+      />
+      <div class="coach-grid">
+        {coaches.map((coach) => (
+          <article class="coach-card">
+            <p class="coach-role mono">{coach.role}</p>
+            <h3>{coach.name}</h3>
+            <p>{coach.note}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="archive">
+    <div class="container">
+      <SectionHead
+        index="02"
+        title="Past squads"
+        description="A partial archive. Full contest records live on the achievements page."
+      />
+      <div class="archive-table">
+        <div class="archive-row archive-row--head mono" aria-hidden="true">
+          <span>Season</span>
+          <span>Team</span>
+          <span>Members</span>
+          <span>Result</span>
+        </div>
+        {archive.map((row) => (
+          <div class="archive-row">
+            <span class="mono">{row.season}</span>
+            <span class="archive-team">{row.team}</span>
+            <span class="archive-members">{row.members}</span>
+            <span class="archive-result">{row.result}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <JoinCta
+    eyebrow="Formation test / September 2026"
+    title="Your squad starts here."
+    text="The team formation test is open to every HKU student. It takes five hours, it is scored individually, and it is the most useful five hours you will spend all semester."
+    linkLabel="About joining"
+    linkHref="/about/#join"
+  />
+</BaseLayout>

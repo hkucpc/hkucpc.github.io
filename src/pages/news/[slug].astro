@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import type { Post } from '../../data/news';
+import { posts } from '../../data/news';
+import { href } from '../../lib/url';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const related = posts.filter((item) => item.slug !== post.slug).slice(0, 2);
+const index = posts.findIndex((item) => item.slug === post.slug);
+const next = posts[(index + 1) % posts.length];
+---
+
+<BaseLayout title={post.title} description={post.excerpt}>
+  <article class="article">
+    <header class="article-head">
+      <div class="container">
+        <div class="article-top mono">
+          <a href={href('/news/')}>← All news</a>
+          <span>{post.tags.join(' / ')}</span>
+        </div>
+
+        <div class="article-head-grid">
+          <div class="article-meta">
+            <time class="mono" datetime={post.date}>{post.displayDate}</time>
+            <span class="mono">HKU CPC</span>
+          </div>
+          <div class="article-heading">
+            <h1 class="article-title">{post.title}</h1>
+            <p class="article-dek">{post.excerpt}</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container article-layout">
+      <aside class="article-aside">
+        <p class="kicker">Filed under</p>
+        <div class="article-tags">
+          {post.tags.map((tag) => <span class="tag mono">{tag}</span>)}
+        </div>
+        <p class="article-aside-note">
+          Written by the HKU Competitive Programming Community. Demo content —
+          names and results are fictional.
+        </p>
+      </aside>
+
+      <div class="prose">
+        {post.body.map((block) => {
+          if (block.startsWith('## ')) return <h2>{block.slice(3)}</h2>;
+          if (block.startsWith('> ')) return <blockquote><p>{block.slice(2)}</p></blockquote>;
+          return <p>{block}</p>;
+        })}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="article-next">
+        <p class="kicker">Next story</p>
+        <a href={href(`/news/${next.slug}/`)}>
+          <span>{next.title}</span>
+          <span class="mono">{next.displayDate} →</span>
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-index mono">More</p>
+        <div class="section-heading">
+          <h2 class="section-title">Related stories</h2>
+        </div>
+        <a class="section-link mono" href={href('/news/')}>All news <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="news-grid news-grid--two">
+        {related.map((item) => <NewsCard post={item} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

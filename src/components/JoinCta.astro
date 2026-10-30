@@ -1,0 +1,34 @@
+---
+import { href } from '../lib/url';
+
+interface Props {
+  title?: string;
+  eyebrow?: string;
+  text?: string;
+  linkLabel?: string;
+  linkHref?: string;
+}
+
+const {
+  title = 'Think you can keep up?',
+  eyebrow = 'Join / Every August',
+  text = 'Open tryouts, free training and a room full of people who will happily argue about segment trees. No prior contest experience required.',
+  linkLabel = 'How to join',
+  linkHref = '/about/#join',
+} = Astro.props;
+---
+
+<section class="join">
+  <div class="container join-grid">
+    <div>
+      <p class="kicker kicker--light">{eyebrow}</p>
+      <h2 class="join-title">{title}</h2>
+    </div>
+    <div class="join-side">
+      <p class="join-text">{text}</p>
+      <a class="btn btn--light" href={href(linkHref)}>
+        {linkLabel} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Award from '../components/Award.astro';
+import JoinCta from '../components/JoinCta.astro';
+import { achievementStats, achievements } from '../data/achievements';
+import { href } from '../lib/url';
+
+const filters = ['All', 'World Finals', 'Regional'] as const;
+---
+
+<BaseLayout
+  title="Achievements"
+  description="World Finals appearances, regional medals and the record of HKU teams in the ICPC."
+>
+  <PageHeader
+    index="03"
+    label="Achievements"
+    title="The record."
+    intro="Six World Finals appearances, two World Finals medals and a decade of regional results. Every line below started as a practice problem nobody could solve."
+    meta="2016 — 2026 / 18 entries"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="achievement-stats">
+        {achievementStats.map((stat, index) => (
+          <div class="achievement-stat">
+            <p class="achievement-stat-no mono">{String(index + 1).padStart(2, '0')}</p>
+            <p class="achievement-stat-value">{stat.value}</p>
+            <p class="achievement-stat-label">{stat.label}</p>
+            <p class="achievement-stat-note mono">{stat.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="01"
+        title="Contest record"
+        description="Filter the record by level. Years shown are contest years."
+      />
+
+      <div class="filter-bar" role="group" aria-label="Filter achievements by category">
+        {filters.map((filter, index) => (
+          <button
+            class="filter"
+            type="button"
+            data-filter={filter}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+          >
+            {filter}
+          </button>
+        ))}
+        <p class="filter-count mono" data-filter-count>{achievements.length} entries</p>
+      </div>
+
+      <div class="results results--full" data-achievement-table>
+        <div class="result-row result-row--head mono" aria-hidden="true">
+          <span>Year</span>
+          <span>Contest</span>
+          <span>Team</span>
+          <span>Rank</span>
+          <span>Award</span>
+        </div>
+        {achievements.map((row) => (
+          <div class="result-row" data-category={row.category}>
+            <span class="result-year mono">{row.year}</span>
+            <span class="result-contest">
+              {row.contest}
+              <span class="result-category mono">{row.category}</span>
+            </span>
+            <span class="result-team">{row.team}</span>
+            <span class="result-rank mono">#{row.rank.replace(/\D/g, '')}</span>
+            <span><Award award={row.award} /></span>
+          </div>
+        ))}
+        <p class="results-empty" data-empty hidden>No results in this category.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="split-left">
+          <p class="kicker">02 / World Finals</p>
+          <h2 class="split-title">On the<br />biggest stage.</h2>
+          <p class="split-copy">
+            The World Finals brings the best university teams in the world into
+            one room. We have been there six times, and we have come home with
+            bronze twice.
+          </p>
+          <a class="btn btn--ghost" href={href('/news/')}>Read the stories <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="split-right">
+          <ol class="finals-list">
+            <li>
+              <span class="finals-year mono">2026</span>
+              <div><strong>50th World Finals — Baku</strong><span>Bronze · 19th</span></div>
+            </li>
+            <li>
+              <span class="finals-year mono">2025</span>
+              <div><strong>49th World Finals — Astana</strong><span>Honourable Mention · 41st</span></div>
+            </li>
+            <li>
+              <span class="finals-year mono">2024</span>
+              <div><strong>48th World Finals — Luxor</strong><span>Bronze · 22nd</span></div>
+            </li>
+            <li>
+              <span class="finals-year mono">2022</span>
+              <div><strong>46th World Finals — Dhaka</strong><span>Honourable Mention · 38th</span></div>
+            </li>
+            <li>
+              <span class="finals-year mono">2021</span>
+              <div><strong>45th World Finals Invitational — Moscow</strong><span>Honourable Mention · 29th</span></div>
+            </li>
+            <li>
+              <span class="finals-year mono">2019</span>
+              <div><strong>44th World Finals — Porto</strong><span>Finalist · 52nd</span></div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <JoinCta
+    eyebrow="The next line"
+    title="Add your name to the record."
+    text="Every result on this page began with someone deciding to try a contest. The next intake starts in September."
+    linkLabel="How to join"
+    linkHref="/about/#join"
+  />
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const rows = document.querySelectorAll<HTMLElement>('[data-achievement-table] [data-category]');
+  const count = document.querySelector<HTMLElement>('[data-filter-count]');
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+
+  const apply = (filter: string) => {
+    let visible = 0;
+    rows.forEach((row) => {
+      const show = filter === 'All' || row.dataset.category === filter;
+      row.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (count) count.textContent = `${visible} ${visible === 1 ? 'entry' : 'entries'}`;
+    if (empty) empty.hidden = visible !== 0;
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      buttons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+      apply(button.dataset.filter ?? 'All');
+    });
+  });
+</script>

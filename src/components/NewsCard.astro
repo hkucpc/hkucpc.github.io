@@ -1,0 +1,26 @@
+---
+import type { Post } from '../data/news';
+import { href } from '../lib/url';
+
+interface Props {
+  post: Post;
+  variant?: 'default' | 'featured' | 'compact';
+}
+
+const { post, variant = 'default' } = Astro.props;
+---
+
+<article class:list={['news-card', `news-card--${variant}`]}>
+  <div class="news-card-top">
+    <time class="news-date mono" datetime={post.date}>{post.displayDate}</time>
+    <span class="news-tag mono">{post.tags[0]}</span>
+  </div>
+  <h3 class="news-title">
+    <a class="stretched-link" href={href(`/news/${post.slug}/`)}>{post.title}</a>
+  </h3>
+  <p class="news-excerpt">{post.excerpt}</p>
+  <div class="news-card-foot">
+    <span class="news-tags mono">{post.tags.join(' / ')}</span>
+    <span class="news-arrow" aria-hidden="true">↗</span>
+  </div>
+</article>

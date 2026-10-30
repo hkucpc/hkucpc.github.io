@@ -1,0 +1,24 @@
+---
+interface Props {
+  index: string;
+  label: string;
+  title: string;
+  intro: string;
+  meta?: string;
+}
+
+const { index, label, title, intro, meta = 'HKU CPC / Season 2025—26' } = Astro.props;
+---
+
+<header class="page-head">
+  <div class="container">
+    <div class="page-head-top mono">
+      <span>{index} / {label}</span>
+      <span>{meta}</span>
+    </div>
+    <div class="page-head-grid">
+      <h1 class="page-title">{title}</h1>
+      <p class="page-intro">{intro}</p>
+    </div>
+  </div>
+</header>

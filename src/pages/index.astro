@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHead from '../components/SectionHead.astro';
+import NewsCard from '../components/NewsCard.astro';
+import Award from '../components/Award.astro';
+import JoinCta from '../components/JoinCta.astro';
+import { stats } from '../data/site';
+import { posts } from '../data/news';
+import { achievements } from '../data/achievements';
+import { href } from '../lib/url';
+
+const latest = posts.slice(0, 3);
+const selected = achievements.slice(0, 5);
+---
+
+<BaseLayout title="Home">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-meta mono">
+        <span>The University of Hong Kong</span>
+        <span>Est. 2016</span>
+        <span>Hong Kong</span>
+        <span class="hero-meta-accent">Season 2025—26</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line">Competitive</span>
+        <span class="line line--indent">Programming</span>
+        <span class="line line--end">at HKU<span class="dot" aria-hidden="true"></span></span>
+      </h1>
+
+      <div class="hero-foot">
+        <div class="hero-intro">
+          <p>
+            We train, select and support the University of Hong Kong’s teams for
+            the International Collegiate Programming Contest — and for the
+            harder problems that come after it.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href={href('/about/')}>About the community <span aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" href={href('/achievements/')}>See our record</a>
+          </div>
+        </div>
+
+        <div class="hero-aside">
+          <div class="hero-note">
+            <p class="kicker">The season</p>
+            <p>Six squads. Eighteen competitors. One weekly ritual: contest, upsolve, repeat.</p>
+          </div>
+          <div class="hero-note">
+            <p class="kicker">Next up</p>
+            <p>ICPC Asia Hong Kong Regional<br />12 December 2026</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-band" aria-label="Community at a glance">
+    <div class="container">
+      <div class="stats">
+        {stats.map((stat) => (
+          <div class="stat">
+            <p class="stat-value">{stat.value}</p>
+            <p class="stat-label">{stat.label}</p>
+            <p class="stat-note mono">{stat.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="01"
+        title="Latest news"
+        linkHref="/news/"
+        linkLabel="All news"
+      />
+      <div class="news-grid">
+        {latest.map((post) => <NewsCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="02"
+        title="Selected results"
+        linkHref="/achievements/"
+        linkLabel="Full record"
+        description="A decade of contests, condensed to the results we are proudest of."
+      />
+
+      <div class="results">
+        <div class="result-row result-row--head mono" aria-hidden="true">
+          <span>Year</span>
+          <span>Contest</span>
+          <span>Team</span>
+          <span>Rank</span>
+          <span>Award</span>
+        </div>
+        {selected.map((row) => (
+          <div class="result-row">
+            <span class="result-year mono">{row.year}</span>
+            <span class="result-contest">{row.contest}</span>
+            <span class="result-team">{row.team}</span>
+            <span class="result-rank mono">#{row.rank.replace(/\D/g, '')}</span>
+            <span><Award award={row.award} /></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="split-left">
+          <p class="kicker">03 / Approach</p>
+          <h2 class="split-title">Built on reps,<br />not tricks.</h2>
+          <p class="split-copy">
+            There is no secret syllabus. We meet twice a week, compete most
+            weekends, and read every editorial we can find. The rest is
+            consistency.
+          </p>
+          <a class="btn btn--ghost" href={href('/about/')}>How we train <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="split-right">
+          <ol class="pillars">
+            <li class="pillar">
+              <span class="pillar-no mono">01</span>
+              <div>
+                <h3>Train in public</h3>
+                <p>Weekly theory sessions, rated contests and a shared upsolving log. Everyone’s mistakes are useful.</p>
+              </div>
+            </li>
+            <li class="pillar">
+              <span class="pillar-no mono">02</span>
+              <div>
+                <h3>Compete often</h3>
+                <p>Regional and continental contests each season, plus virtual contests every weekend.</p>
+              </div>
+            </li>
+            <li class="pillar">
+              <span class="pillar-no mono">03</span>
+              <div>
+                <h3>Leave it better</h3>
+                <p>Senior members coach beginners. Alumni come back to judge, set problems and tell honest stories.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <JoinCta />
+</BaseLayout>

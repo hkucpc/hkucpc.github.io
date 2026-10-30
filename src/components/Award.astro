@@ -1,0 +1,20 @@
+---
+import type { Achievement } from '../data/achievements';
+
+interface Props {
+  award: Achievement['award'];
+}
+
+const { award } = Astro.props;
+const modifier = {
+  Gold: 'gold',
+  Silver: 'silver',
+  Bronze: 'bronze',
+  'Honourable Mention': 'mention',
+  Finalist: 'finalist',
+}[award];
+---
+
+<span class:list={['award', `award--${modifier}`]}>
+  <span class="award-dot" aria-hidden="true"></span>{award}
+</span>

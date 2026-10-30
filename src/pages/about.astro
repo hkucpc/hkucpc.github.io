@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHead from '../components/SectionHead.astro';
+import JoinCta from '../components/JoinCta.astro';
+import { site } from '../data/site';
+
+const facts = [
+  { label: 'Founded', value: '2016' },
+  { label: 'Based in', value: 'Department of Computer Science' },
+  { label: 'Training', value: 'Wed & Sat, on campus' },
+  { label: 'Members', value: '120+ current & alumni' },
+];
+
+const pillars = [
+  {
+    no: '01',
+    title: 'Train',
+    text: 'Two sessions a week: a theory block, a five-hour contest simulation, and a group upsolve. Problem sets are curated, not scraped. Sessions are free and open to all HKU students.',
+  },
+  {
+    no: '02',
+    title: 'Select',
+    text: 'Each August we run an individual team formation test. It places competitors into squads by experience and working style. Nobody is cut from the community; the test decides where you start, not whether you belong.',
+  },
+  {
+    no: '03',
+    title: 'Compete',
+    text: 'We field six teams across ICPC regional and continental rounds, invitationals and open contests. Travel is supported by the department and the community’s alumni fund.',
+  },
+  {
+    no: '04',
+    title: 'Give back',
+    text: 'Senior members teach the beginner bootcamp, write practice problems and mentor first-time competitors. Alumni return for mock contests, career sessions and the annual dinner.',
+  },
+];
+
+const timeline = [
+  {
+    year: '2016',
+    title: 'A room and a whiteboard',
+    text: 'The community starts as a student-led training group of twelve, meeting weekly in the Department of Computer Science.',
+  },
+  {
+    year: '2018',
+    title: 'First regional medal',
+    text: 'A bronze at the ICPC Asia Hong Kong Regional. The team celebrates by immediately upsolving the two problems it missed.',
+  },
+  {
+    year: '2020',
+    title: 'First World Finals',
+    text: 'HKU qualifies for the ICPC World Finals for the first time, after a gold at the Hong Kong Regional.',
+  },
+  {
+    year: '2023',
+    title: 'A continental silver',
+    text: 'Monolith takes silver at the ICPC Asia East Continent Final and establishes a permanent weekly simulation block.',
+  },
+  {
+    year: '2025',
+    title: 'Two golds at home',
+    text: 'Monolith wins the Hong Kong Regional; Vector finishes third. Parabola earns silver in its first regional.',
+  },
+  {
+    year: '2026',
+    title: 'World Finals bronze',
+    text: 'A bronze medal at the 50th ICPC World Finals in Baku — the community’s best result to date.',
+  },
+];
+
+const joinSteps = [
+  {
+    no: '01',
+    title: 'Come to an open session',
+    text: 'Wednesdays at 18:30 during term time, Room 308, Chow Yei Ching Building. No registration, no interview. Bring a laptop if you have one.',
+  },
+  {
+    no: '02',
+    title: 'Take the formation test',
+    text: 'Every September: five hours, nine problems, individual. It is a placement exercise, not an entrance exam. First-years and non-CS majors are especially welcome.',
+  },
+  {
+    no: '03',
+    title: 'Join a squad',
+    text: 'You will be placed in a training group with a coach and a contest calendar. From there, progress is mostly a function of showing up and upsolving.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="How the HKU Competitive Programming Community trains, selects and supports its teams."
+>
+  <PageHeader
+    index="01"
+    label="About"
+    title="A small community with a high bar."
+    intro="We are a student-run group inside the Department of Computer Science at HKU. Our business is algorithmic problem solving, and our favourite result is the next one."
+    meta="Founded 2016 / Pokfulam, Hong Kong"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="statement-grid">
+        <p class="kicker">Our purpose</p>
+        <p class="statement">
+          We exist to make hard problems <span class="accent">less intimidating</span> —
+          and good teams <span class="accent">more common</span>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="facts-band" aria-label="Key facts">
+    <div class="container">
+      <div class="facts">
+        {facts.map((fact) => (
+          <div class="fact">
+            <p class="fact-label mono">{fact.label}</p>
+            <p class="fact-value">{fact.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="01"
+        title="What we do"
+        description="Four commitments, unchanged since the first season."
+      />
+      <div class="pillar-grid">
+        {pillars.map((pillar) => (
+          <article class="pillar-card">
+            <p class="pillar-no mono">{pillar.no}</p>
+            <h3>{pillar.title}</h3>
+            <p>{pillar.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="02"
+        title="How we got here"
+        description="A short history of a community that keeps taking the next problem."
+      />
+      <ol class="timeline">
+        {timeline.map((item) => (
+          <li class="timeline-item">
+            <span class="timeline-year">{item.year}</span>
+            <div class="timeline-body">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="join">
+    <div class="container">
+      <SectionHead
+        index="03"
+        title="Join the community"
+        description="There is no application form and no minimum rating. There is a weekly session, and a seat for you."
+      />
+
+      <div class="join-info">
+        <div class="join-steps">
+          {joinSteps.map((step) => (
+            <article class="join-step">
+              <span class="join-step-no mono">{step.no}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <aside class="join-aside">
+          <p class="kicker">Practical notes</p>
+          <dl class="detail-list">
+            <div>
+              <dt class="mono">Who</dt>
+              <dd>Any HKU student, any year, any major.</dd>
+            </div>
+            <div>
+              <dt class="mono">Cost</dt>
+              <dd>Free. Travel support is available for selected teams.</dd>
+            </div>
+            <div>
+              <dt class="mono">When</dt>
+              <dd>Wednesdays 18:30 during term; long simulations on Saturdays.</dd>
+            </div>
+            <div>
+              <dt class="mono">Where</dt>
+              <dd>Room 308, Chow Yei Ching Building, HKU.</dd>
+            </div>
+          </dl>
+          <a class="btn" href={`mailto:${site.email}`}>Ask us anything <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <JoinCta
+    eyebrow="Next intake / September 2026"
+    title="Start with one session."
+    text="Turn up, solve something, meet the people you will be debugging with at 2 a.m. before a regional. That is the whole pitch."
+    linkLabel="Email the community"
+    linkHref="mailto:hello@hkucpc.example"
+  />
+</BaseLayout>

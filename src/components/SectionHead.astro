@@ -1,0 +1,26 @@
+---
+import { href } from '../lib/url';
+
+interface Props {
+  index: string;
+  title: string;
+  linkHref?: string;
+  linkLabel?: string;
+  description?: string;
+}
+
+const { index, title, linkHref, linkLabel = 'View all', description } = Astro.props;
+---
+
+<div class="section-head">
+  <p class="section-index mono">{index}</p>
+  <div class="section-heading">
+    <h2 class="section-title">{title}</h2>
+    {description && <p class="section-description">{description}</p>}
+  </div>
+  {linkHref && (
+    <a class="section-link mono" href={href(linkHref)}>
+      {linkLabel} <span aria-hidden="true">→</span>
+    </a>
+  )}
+</div>
