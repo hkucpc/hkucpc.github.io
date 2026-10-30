@@ -4,22 +4,26 @@ import PageHeader from '../components/PageHeader.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Award from '../components/Award.astro';
 import JoinCta from '../components/JoinCta.astro';
-import { achievementStats, achievements } from '../data/achievements';
+import {
+  achievementStats,
+  achievements,
+  worldFinals,
+} from '../data/achievements';
 import { href } from '../lib/url';
 
-const filters = ['All', 'World Finals', 'Regional'] as const;
+const filters = ['All', 'World Finals', 'Regional', 'Local', 'CCPC', 'Other'] as const;
 ---
 
 <BaseLayout
   title="Achievements"
-  description="World Finals appearances, regional medals and the record of HKU teams in the ICPC."
+  description="World Finals appearances, regional medals and the complete contest record of HKU teams since 2000."
 >
   <PageHeader
     index="03"
     label="Achievements"
     title="The record."
-    intro="Six World Finals appearances, two World Finals medals and a decade of regional results. Every line below started as a practice problem nobody could solve."
-    meta="2016 — 2026 / 18 entries"
+    intro="Ten World Finals appearances, a World Finals bronze and 58 regional medals since 2000. Every line below started as a practice problem nobody could solve."
+    meta={`2000 — 2026 / ${achievements.length} entries`}
   />
 
   <section class="section">
@@ -42,7 +46,7 @@ const filters = ['All', 'World Finals', 'Regional'] as const;
       <SectionHead
         index="01"
         title="Contest record"
-        description="Filter the record by level. Years shown are contest years."
+        description="Filter by contest level. Records are listed newest first."
       />
 
       <div class="filter-bar" role="group" aria-label="Filter achievements by category">
@@ -73,14 +77,19 @@ const filters = ['All', 'World Finals', 'Regional'] as const;
             <span class="result-contest">
               {row.contest}
               <span class="result-category mono">{row.category}</span>
+              {row.note && <span class="result-note">{row.note}</span>}
             </span>
             <span class="result-team">{row.team}</span>
-            <span class="result-rank mono">#{row.rank.replace(/\D/g, '')}</span>
+            <span class="result-rank mono">{row.rank}</span>
             <span><Award award={row.award} /></span>
           </div>
         ))}
         <p class="results-empty" data-empty hidden>No results in this category.</p>
       </div>
+
+      <p class="source-note mono">
+        Source: <a href="https://i.cs.hku.hk/~provinci/achievements.html" rel="noreferrer">HKU Provinci achievements archive ↗</a>
+      </p>
     </div>
   </section>
 
@@ -92,37 +101,25 @@ const filters = ['All', 'World Finals', 'Regional'] as const;
           <h2 class="split-title">On the<br />biggest stage.</h2>
           <p class="split-copy">
             The World Finals brings the best university teams in the world into
-            one room. We have been there six times, and we have come home with
-            bronze twice.
+            one room. HKU has been there ten times, and came home with a bronze
+            in 2005.
           </p>
           <a class="btn btn--ghost" href={href('/news/')}>Read the stories <span aria-hidden="true">→</span></a>
         </div>
         <div class="split-right">
           <ol class="finals-list">
-            <li>
-              <span class="finals-year mono">2026</span>
-              <div><strong>50th World Finals — Baku</strong><span>Bronze · 19th</span></div>
-            </li>
-            <li>
-              <span class="finals-year mono">2025</span>
-              <div><strong>49th World Finals — Astana</strong><span>Honourable Mention · 41st</span></div>
-            </li>
-            <li>
-              <span class="finals-year mono">2024</span>
-              <div><strong>48th World Finals — Luxor</strong><span>Bronze · 22nd</span></div>
-            </li>
-            <li>
-              <span class="finals-year mono">2022</span>
-              <div><strong>46th World Finals — Dhaka</strong><span>Honourable Mention · 38th</span></div>
-            </li>
-            <li>
-              <span class="finals-year mono">2021</span>
-              <div><strong>45th World Finals Invitational — Moscow</strong><span>Honourable Mention · 29th</span></div>
-            </li>
-            <li>
-              <span class="finals-year mono">2019</span>
-              <div><strong>44th World Finals — Porto</strong><span>Finalist · 52nd</span></div>
-            </li>
+            {worldFinals.map((item) => (
+              <li>
+                <span class="finals-year mono">{item.year}</span>
+                <div>
+                  <strong>{item.contest}</strong>
+                  <span>
+                    {item.team} · {item.award === 'Position' ? `${item.rank} place` : item.award}
+                    {item.rank !== '—' && item.award !== 'Position' ? ` · ${item.rank}` : ''}
+                  </span>
+                </div>
+              </li>
+            ))}
           </ol>
         </div>
       </div>

@@ -10,7 +10,9 @@ import { achievements } from '../data/achievements';
 import { href } from '../lib/url';
 
 const latest = posts.slice(0, 3);
-const selected = achievements.slice(0, 5);
+const selected = achievements
+  .filter((item) => ['Gold', 'Silver', 'Bronze', 'Champion'].includes(item.award))
+  .slice(0, 5);
 ---
 
 <BaseLayout title="Home">
@@ -18,9 +20,9 @@ const selected = achievements.slice(0, 5);
     <div class="container">
       <div class="hero-meta mono">
         <span>The University of Hong Kong</span>
-        <span>Est. 2016</span>
+        <span>Since 2000</span>
         <span>Hong Kong</span>
-        <span class="hero-meta-accent">Season 2025—26</span>
+        <span class="hero-meta-accent">Season 2025</span>
       </div>
 
       <h1 class="hero-title">
@@ -45,11 +47,11 @@ const selected = achievements.slice(0, 5);
         <div class="hero-aside">
           <div class="hero-note">
             <p class="kicker">The season</p>
-            <p>Six squads. Eighteen competitors. One weekly ritual: contest, upsolve, repeat.</p>
+            <p>Four squads. Twelve competitors. One weekly ritual: contest, upsolve, repeat.</p>
           </div>
           <div class="hero-note">
             <p class="kicker">Next up</p>
-            <p>ICPC Asia Hong Kong Regional<br />12 December 2026</p>
+            <p>49th ICPC World Finals<br />40th place, Baku 2025</p>
           </div>
         </div>
       </div>
@@ -91,7 +93,7 @@ const selected = achievements.slice(0, 5);
         title="Selected results"
         linkHref="/achievements/"
         linkLabel="Full record"
-        description="A decade of contests, condensed to the results we are proudest of."
+        description="Twenty-six seasons of contests, condensed to the results we are proudest of."
       />
 
       <div class="results">
@@ -107,7 +109,7 @@ const selected = achievements.slice(0, 5);
             <span class="result-year mono">{row.year}</span>
             <span class="result-contest">{row.contest}</span>
             <span class="result-team">{row.team}</span>
-            <span class="result-rank mono">#{row.rank.replace(/\D/g, '')}</span>
+            <span class="result-rank mono">{row.rank}</span>
             <span><Award award={row.award} /></span>
           </div>
         ))}

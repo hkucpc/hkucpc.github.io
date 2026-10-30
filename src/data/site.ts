@@ -8,7 +8,7 @@ export const site = {
   instagram: 'https://instagram.com/hkucpc',
   department: 'Department of Computer Science, The University of Hong Kong',
   address: 'Pokfulam Road, Hong Kong',
-  established: 2016,
+  established: 2000,
 };
 
 export const nav = [
@@ -19,8 +19,8 @@ export const nav = [
 ];
 
 export const stats = [
-  { value: '10', label: 'Seasons', note: 'Since 2016' },
-  { value: '6', label: 'World Finals', note: 'Appearances' },
-  { value: '12+', label: 'Regional medals', note: 'ICPC Asia' },
-  { value: '120+', label: 'Members', note: 'Current & alumni' },
+  { value: '10', label: 'World Finals', note: '2001 — 2025' },
+  { value: '1', label: 'World Finals medal', note: 'Bronze, 2005' },
+  { value: '58', label: 'Regional medals', note: 'ICPC Asia' },
+  { value: '26', label: 'Seasons', note: 'Since 2000' },
 ];

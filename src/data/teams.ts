@@ -1,119 +1,17 @@
 export interface Member {
   name: string;
-  handle: string;
-  year: string;
+  program: string;
+  handle?: string;
 }
 
 export interface Team {
   id: string;
   name: string;
-  tier: string;
-  rating: number;
-  members: Member[];
+  alternate?: string;
   coach: string;
-  focus: string;
-  bestResult: string;
-  blurb: string;
+  members: Member[];
+  honors: string[];
 }
-
-export const currentTeams: Team[] = [
-  {
-    id: 'monolith',
-    name: 'Monolith',
-    tier: 'Team A',
-    rating: 2894,
-    members: [
-      { name: 'Chan Ka Ho', handle: 'kaho', year: 'Year 3' },
-      { name: 'Wong Tsz Ying', handle: 'tszying', year: 'Year 3' },
-      { name: 'Lee Chun Hei', handle: 'chunhei', year: 'Year 2' },
-    ],
-    coach: 'Dr. Miranda Lau',
-    focus: 'Graphs · geometry · implementation',
-    bestResult: 'Gold — ICPC Asia East Continent Final 2026',
-    blurb:
-      'The current flagship squad. Three years of shared contest history, a preference for hard constructive problems, and an unhealthy attachment to custom stress testers.',
-  },
-  {
-    id: 'vector',
-    name: 'Vector',
-    tier: 'Team B',
-    rating: 2641,
-    members: [
-      { name: 'Ngai Ho Yin', handle: 'hoyin', year: 'Year 3' },
-      { name: 'Fung Sze Wing', handle: 'szewing', year: 'Year 2' },
-      { name: 'Cheung Lok Yiu', handle: 'lokyiu', year: 'Year 2' },
-    ],
-    coach: 'Kenji Watanabe',
-    focus: 'Data structures · number theory',
-    bestResult: 'Gold — ICPC Asia Hong Kong Regional 2025',
-    blurb:
-      'A team that wins by accumulation: fast starts, low penalties, and a knack for finding the one line of algebra everyone else missed.',
-  },
-  {
-    id: 'parabola',
-    name: 'Parabola',
-    tier: 'Team C',
-    rating: 2418,
-    members: [
-      { name: 'Kwok Hoi Ching', handle: 'hoiching', year: 'Year 2' },
-      { name: 'Tam Wai Lok', handle: 'wailok', year: 'Year 2' },
-      { name: 'Yip Sum Yuet', handle: 'sumyuet', year: 'Year 1' },
-    ],
-    coach: 'Dr. Miranda Lau',
-    focus: 'Dynamic programming · flows',
-    bestResult: 'Silver — ICPC Asia Hong Kong Regional 2025',
-    blurb:
-      'Promoted from the development squad after a breakout regional. Young, fast, and learning to love the scoreboard freeze.',
-  },
-  {
-    id: 'recursion',
-    name: 'Recursion',
-    tier: 'Development',
-    rating: 2186,
-    members: [
-      { name: 'Ho Nga Man', handle: 'ngaman', year: 'Year 2' },
-      { name: 'Lai Cheuk Hei', handle: 'cheukhei', year: 'Year 1' },
-      { name: 'So Ka Wing', handle: 'kawing', year: 'Year 1' },
-    ],
-    coach: 'Kenji Watanabe',
-    focus: 'Fundamentals · contest craft',
-    bestResult: 'Bronze — ICPC Asia Hong Kong Regional 2025',
-    blurb:
-      'The first step on the ladder for most new members. Weekly virtual contests, heavy upsolving, and a firm rule against copying editorials before trying.',
-  },
-  {
-    id: 'base-case',
-    name: 'Base Case',
-    tier: 'Development',
-    rating: 1974,
-    members: [
-      { name: 'Ma Tsz Kwan', handle: 'tszkwan', year: 'Year 1' },
-      { name: 'Tse Hoi Tung', handle: 'hoitung', year: 'Year 1' },
-      { name: 'Yuen Chi Hang', handle: 'chihang', year: 'Year 1' },
-    ],
-    coach: 'Alumni coaching pool',
-    focus: 'Search · greedy · math',
-    bestResult: 'Top 30 — ICPC Asia Hong Kong Regional 2025',
-    blurb:
-      'A first-year squad built from the beginner bootcamp. Competing for experience this season, with an eye on the 2027 team formation test.',
-  },
-  {
-    id: 'null-pointer',
-    name: 'Null Pointer',
-    tier: 'Novice',
-    rating: 1732,
-    members: [
-      { name: 'Au Yeung King', handle: 'king', year: 'Year 1' },
-      { name: 'Choi Yan Lam', handle: 'yanlam', year: 'Year 1' },
-      { name: 'Tang Ho Yin', handle: 'hoyin.t', year: 'Year 1' },
-    ],
-    coach: 'Alumni coaching pool',
-    focus: 'Learning · having fun',
-    bestResult: 'First contest completed together',
-    blurb:
-      'Named before anyone checked the pun budget. The novice squad trains on easier sets, asks excellent questions, and has the best attendance record in the community.',
-  },
-];
 
 export interface ArchiveTeam {
   season: string;
@@ -122,59 +20,155 @@ export interface ArchiveTeam {
   result: string;
 }
 
-export const archive: ArchiveTeam[] = [
+export interface CoachLink {
+  label: string;
+  href: string;
+}
+
+export interface Coach {
+  name: string;
+  role: string;
+  note: string;
+  email?: string;
+  links?: CoachLink[];
+}
+
+// Source: https://i.cs.hku.hk/~provinci/contact.html (2025 squads)
+export const currentTeams: Team[] = [
   {
-    season: '2024–25',
-    team: 'Monolith',
-    members: 'Chan Ka Ho, Wong Tsz Ying, Lee Chun Hei',
-    result: 'Bronze — 48th ICPC World Finals',
+    id: 'hot-kpop-union',
+    name: 'Hot Kpop Union',
+    alternate: '热门流行音乐联盟',
+    coach: 'Qipeng Kuang',
+    members: [
+      { name: 'Mingfei Xia', program: 'BEng(CompSc) 4' },
+      { name: 'Yuchen Wu', program: 'BEng(CompSc) 2', handle: 'BeyondHeaven' },
+      { name: 'Qixuan Li', program: 'Bioinformatics 2', handle: 'lqx2005' },
+    ],
+    honors: [
+      'Silver Medal — ICPC Asia East Continent Final, Hangzhou',
+      'Gold Medal (7th Place) — ICPC Asia Hong Kong Regional',
+    ],
   },
   {
-    season: '2024–25',
-    team: 'Vector',
-    members: 'Ngai Ho Yin, Fung Sze Wing, Cheung Lok Yiu',
-    result: 'Bronze — ICPC Asia Kunming',
+    id: 'team-name-ddl-today',
+    name: 'Team name ddl today',
+    alternate: '今天必须取个队名',
+    coach: 'Qipeng Kuang',
+    members: [
+      { name: 'Mingtian Yang', program: 'PhD 1' },
+      { name: 'Jian Luo', program: 'BSc 1' },
+      { name: 'Yancheng Liu', program: 'BSc(QFin) 1' },
+    ],
+    honors: [
+      '3rd Place — ACM-HK Programming Contest',
+      'Silver Medal — ICPC Asia Hong Kong Regional',
+      'Bronze Medal — ICPC Asia Nanjing Regional',
+    ],
   },
   {
-    season: '2024–25',
-    team: 'Lattice',
-    members: 'Kwok Hoi Ching, Tam Wai Lok, Yip Sum Yuet',
-    result: 'Top 20 — ICPC Asia Hong Kong',
+    id: 'waiguoren',
+    name: 'Waiguoren',
+    alternate: '外国人',
+    coach: 'Qipeng Kuang',
+    members: [
+      { name: 'Christivan Komah', program: 'BEng 1' },
+      { name: 'Owen Sidarta', program: 'BEng 1' },
+      { name: 'Akhmet Issa', program: 'BEng 1' },
+    ],
+    honors: [
+      'Bronze Medal — ICPC Asia Shanghai Regional',
+      'Silver Medal — ICPC Asia Nanjing Regional',
+    ],
   },
   {
-    season: '2023–24',
-    team: 'Monolith',
-    members: 'Chan Ka Ho, Ngai Ho Yin, Wong Tsz Ying',
-    result: 'Silver — ICPC Asia East Continent Final',
-  },
-  {
-    season: '2023–24',
-    team: 'Vector',
-    members: 'Lee Chun Hei, Fung Sze Wing, Cheung Lok Yiu',
-    result: 'Silver — ICPC Asia Hong Kong',
-  },
-  {
-    season: '2022–23',
-    team: 'Monolith',
-    members: 'Chan Ka Ho, Ngai Ho Yin, Wong Tsz Ying',
-    result: 'Honourable Mention — 46th ICPC World Finals',
+    id: 'kfc-enjoyers',
+    name: 'kfc_enjoyers',
+    coach: 'Qipeng Kuang',
+    members: [
+      { name: 'Ismayil Maharramov', program: 'BEng(CompSc) 3' },
+      { name: 'Richie Wilynnton', program: 'BEng(CompSc) 4' },
+      { name: 'Shah Jahan Ishaq', program: 'BEng(CompSc) 4' },
+    ],
+    honors: [],
   },
 ];
 
-export const coaches = [
+export const coaches: Coach[] = [
   {
-    name: 'Dr. Miranda Lau',
-    role: 'Head coach',
-    note: 'Algorithms, geometry and the annual reminder to read the constraints.',
+    name: 'Weiming Feng',
+    role: 'Coordinator',
+    note: 'Faculty coordinator for the HKU ICPC teams. Office CB 409.',
+    email: 'wfeng@hku.hk',
+    links: [{ label: 'Homepage', href: 'https://fwm94.github.io/' }],
   },
   {
-    name: 'Prof. Adrian Cheng',
-    role: 'Faculty advisor',
-    note: 'Department liaison, contest logistics and occasional problem-setter.',
+    name: 'Mingtian Yang',
+    role: 'Coach',
+    note: 'Coach for the 2025 squads.',
+    email: 'skylee03@connect.hku.hk',
   },
   {
-    name: 'Kenji Watanabe',
-    role: 'Alumni coach',
-    note: 'ICPC World Finals 2019. Runs the development squad’s virtual contests.',
+    name: 'Qipeng Kuang',
+    role: 'Team coach',
+    note: 'PhD 4. Team coach for the 2025 squads.',
+    email: 'kuangqipeng@connect.hku.hk',
+    links: [
+      { label: 'Codeforces', href: 'https://codeforces.com/profile/kqp' },
+      { label: 'AtCoder', href: 'https://atcoder.jp/users/kqp' },
+      { label: 'GitHub', href: 'https://github.com/l2l7l9p' },
+    ],
+  },
+];
+
+// Recent squads reconstructed from the same source.
+export const archive: ArchiveTeam[] = [
+  {
+    season: '2024',
+    team: 'Hot Kpop Union',
+    members: 'Qiyue Xu, Yuchen Wu, Qixuan Li',
+    result: 'Gold — Hong Kong & Nanjing Regionals; Bronze — East Continent Final',
+  },
+  {
+    season: '2024',
+    team: 'Team name ddl today',
+    members: 'Mingtian Yang, Haoyuan Wu, Mingfei Xia',
+    result: 'Silver — Hong Kong Regional; Bronze — Nanjing Regional',
+  },
+  {
+    season: '2024',
+    team: 'Gojo Teacher',
+    members: 'Jingyu Luo, Yufei Li, Yuchen Zhang',
+    result: 'Bronze — East Continent Final & Hangzhou Regional',
+  },
+  {
+    season: '2024',
+    team: 'Cheeky Chubbies',
+    members: 'Po Wa Lee, Yerdaulet Mussabek, Dorjderem Namsraijav',
+    result: 'Bronze — Hangzhou Regional',
+  },
+  {
+    season: '2023',
+    team: 'huawei 15 pro max',
+    members: 'Che Liu, Anzhe Wang, Junkai Song',
+    result: 'Gold — East Continent Final & Macau Regional; Silver — Hefei Regional',
+  },
+  {
+    season: '2023',
+    team: 'Better rua turtle',
+    members: 'Haoyuan Wu, Jiannan Wang, Shengyao Sun',
+    result: 'Silver — East Continent Final; Bronze — Macau & Hefei Regionals',
+  },
+  {
+    season: '2023',
+    team: '404 Not Found',
+    members: 'Ching Wai Justin Yim, Yufei Li, Jingyu Luo',
+    result: 'Bronze — Jinan & Hefei Regionals',
+  },
+  {
+    season: '2023',
+    team: 'Cant enter HW 312',
+    members: 'Xinzhuang Xiong, Tsz Ching Chan, Yerdaulet Mussabek',
+    result: 'Bronze — Hefei Regional',
   },
 ];

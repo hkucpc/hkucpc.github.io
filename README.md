@@ -5,9 +5,11 @@ static [Astro](https://astro.build) site with a Swiss international-style
 typographic system, self-hosted **Geist / Geist Mono**, and a GitHub Pages
 deployment workflow.
 
-> **Demo content:** every person, result, date and contact detail in this
-> repository is fictional. Replace the data files described below before
-> publishing.
+> **Data provenance:** the Teams and Achievements data are based on the
+> [HKU Provinci contact page](https://i.cs.hku.hk/~provinci/contact.html) and
+> [achievements archive](https://i.cs.hku.hk/~provinci/achievements.html).
+> News copy, training logistics and some contact details are illustrative —
+> review and replace them before publishing.
 
 ## Stack
 
@@ -70,17 +72,21 @@ header and footer. Homepage statistics live in the same file.
 
 Edit `src/data/teams.ts`:
 
-- `currentTeams` — one object per squad card
-- `coaches` — coaching staff cards
-- `archive` — the past-squads table
+- `currentTeams` — one object per squad card (name, members, coach, honors)
+- `coaches` — coordinator and coaching staff cards
+- `archive` — the recent-squads table
 
 Each team needs a unique `id`; it becomes the anchor on `/teams/`.
 
 ### Achievements
 
-Edit `src/data/achievements.ts`. The `category` field must be `"World Finals"`
-or `"Regional"` to match the filter buttons. Update `achievementStats` when the
-headline numbers change.
+Edit `src/data/achievements.ts`. The `category` field must be one of
+`"World Finals"`, `"Regional"`, `"Local"`, `"CCPC"` or `"Other"` to match the
+filter buttons. Update `achievementStats` when the headline numbers change.
+
+The current data was generated from the Provinci achievements table (2000–2026).
+When adding results, keep the newest-first order and update `achievementStats`
+if a headline number changes.
 
 ### News
 
@@ -147,6 +153,13 @@ npm run preview
 - Fonts are bundled at build time. There are no third-party requests at
   runtime.
 - Add real social links, a mailing address and a privacy note before launch.
+- Team and contest data comes from the HKU Provinci pages. Confirm with the
+  coordinator before publishing updates; results are maintained by hand.
+
+## Sources
+
+- Teams: <https://i.cs.hku.hk/~provinci/contact.html>
+- Achievements: <https://i.cs.hku.hk/~provinci/achievements.html>
 
 ## License
 

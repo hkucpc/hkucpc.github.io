@@ -6,18 +6,19 @@ import JoinCta from '../components/JoinCta.astro';
 import { archive, coaches, currentTeams } from '../data/teams';
 
 const pad = (n: number) => String(n).padStart(2, '0');
+const memberCount = currentTeams.reduce((total, team) => total + team.members.length, 0);
 ---
 
 <BaseLayout
   title="Teams"
-  description="Meet the six squads representing HKU in the 2025–26 season."
+  description="Meet the four HKU squads competing in the 2025 ICPC season."
 >
   <PageHeader
     index="02"
     label="Teams"
-    title="Six squads. One standard."
-    intro="Every squad trains on the same material and shares the same room. Selection places people by experience and working style — not by who arrived first."
-    meta="Season 2025—26 / 18 competitors"
+    title="Four squads. One standard."
+    intro="HKU’s 2025 ICPC squads — twelve competitors across computer science, bioinformatics, quantitative finance and engineering, coached by Qipeng Kuang."
+    meta={`2025 season / ${currentTeams.length} squads / ${memberCount} competitors`}
   />
 
   <section class="section">
@@ -25,11 +26,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
       <div class="season-bar">
         <div>
           <p class="kicker">Current season</p>
-          <p class="season-title">2025—26</p>
+          <p class="season-title">2025</p>
         </div>
         <div class="season-meta">
-          <p>3 competitive squads<br />3 development squads</p>
-          <a class="section-link mono" href="#archive">Past squads <span aria-hidden="true">↓</span></a>
+          <p>{currentTeams.length} squads<br />{memberCount} competitors</p>
+          <a class="section-link mono" href="#archive">Recent squads <span aria-hidden="true">↓</span></a>
         </div>
       </div>
     </div>
@@ -42,40 +43,50 @@ const pad = (n: number) => String(n).padStart(2, '0');
           <article class="team-card" id={team.id}>
             <div class="team-card-top">
               <p class="team-no mono">{pad(index + 1)}</p>
-              <span class="team-tier mono">{team.tier}</span>
-              <span class="team-rating mono">R{team.rating}</span>
+              <span class="team-tier mono">2025</span>
+              <span class="team-count mono">{team.members.length} members</span>
             </div>
 
             <h2 class="team-name">{team.name}</h2>
-            <p class="team-blurb">{team.blurb}</p>
+            {team.alternate && <p class="team-alternate">{team.alternate}</p>}
 
             <ul class="team-members" aria-label={`${team.name} members`}>
               {team.members.map((member) => (
                 <li class="team-member">
                   <span class="member-name">{member.name}</span>
-                  <span class="member-handle mono">@{member.handle}</span>
-                  <span class="member-year mono">{member.year}</span>
+                  <span class="member-program mono">{member.program}</span>
+                  {member.handle && (
+                    <a
+                      class="member-handle mono"
+                      href={`https://codeforces.com/profile/${member.handle}`}
+                      rel="noreferrer"
+                    >
+                      @{member.handle} ↗
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
 
-            <dl class="team-meta">
-              <div>
-                <dt class="mono">Coach</dt>
-                <dd>{team.coach}</dd>
-              </div>
-              <div>
-                <dt class="mono">Focus</dt>
-                <dd>{team.focus}</dd>
-              </div>
-              <div>
-                <dt class="mono">Best result</dt>
-                <dd>{team.bestResult}</dd>
-              </div>
-            </dl>
+            <div class="team-honors">
+              <p class="kicker">Results / 2025</p>
+              {team.honors.length > 0 ? (
+                <ul class="honor-list">
+                  {team.honors.map((honor) => <li>{honor}</li>)}
+                </ul>
+              ) : (
+                <p class="honor-empty">No results recorded yet. The season is still young.</p>
+              )}
+            </div>
+
+            <p class="team-coach mono">Coach — {team.coach}</p>
           </article>
         ))}
       </div>
+
+      <p class="source-note mono">
+        Source: <a href="https://i.cs.hku.hk/~provinci/contact.html" rel="noreferrer">HKU Provinci contact page ↗</a>
+      </p>
     </div>
   </section>
 
@@ -84,7 +95,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
       <SectionHead
         index="01"
         title="Coaching staff"
-        description="Coaches set the training calendar, run simulations and are the first to ask whether you have checked the constraints."
+        description="The coordinator and coaches behind the 2025 squads."
       />
       <div class="coach-grid">
         {coaches.map((coach) => (
@@ -92,6 +103,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
             <p class="coach-role mono">{coach.role}</p>
             <h3>{coach.name}</h3>
             <p>{coach.note}</p>
+            <div class="coach-links">
+              {coach.email && <a class="mono" href={`mailto:${coach.email}`}>Email ↗</a>}
+              {coach.links?.map((link) => (
+                <a class="mono" href={link.href} rel="noreferrer">{link.label} ↗</a>
+              ))}
+            </div>
           </article>
         ))}
       </div>
@@ -102,8 +119,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <div class="container">
       <SectionHead
         index="02"
-        title="Past squads"
-        description="A partial archive. Full contest records live on the achievements page."
+        title="Recent squads"
+        description="The 2023 and 2024 squads. Earlier teams are archived on the Provinci site."
       />
       <div class="archive-table">
         <div class="archive-row archive-row--head mono" aria-hidden="true">
@@ -121,11 +138,14 @@ const pad = (n: number) => String(n).padStart(2, '0');
           </div>
         ))}
       </div>
+      <p class="source-note mono">
+        Full archive: <a href="https://i.cs.hku.hk/~provinci/contact.html" rel="noreferrer">HKU Provinci teams by year ↗</a>
+      </p>
     </div>
   </section>
 
   <JoinCta
-    eyebrow="Formation test / September 2026"
+    eyebrow="Formation test / September"
     title="Your squad starts here."
     text="The team formation test is open to every HKU student. It takes five hours, it is scored individually, and it is the most useful five hours you will spend all semester."
     linkLabel="About joining"

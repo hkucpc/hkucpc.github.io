@@ -6,10 +6,10 @@ import JoinCta from '../components/JoinCta.astro';
 import { site } from '../data/site';
 
 const facts = [
-  { label: 'Founded', value: '2016' },
+  { label: 'Record since', value: '2000' },
   { label: 'Based in', value: 'Department of Computer Science' },
-  { label: 'Training', value: 'Wed & Sat, on campus' },
-  { label: 'Members', value: '120+ current & alumni' },
+  { label: 'World Finals', value: '10 appearances' },
+  { label: 'Regional medals', value: '58 and counting' },
 ];
 
 const pillars = [
@@ -21,12 +21,12 @@ const pillars = [
   {
     no: '02',
     title: 'Select',
-    text: 'Each August we run an individual team formation test. It places competitors into squads by experience and working style. Nobody is cut from the community; the test decides where you start, not whether you belong.',
+    text: 'Each season we run an individual team formation test. It places competitors into squads by experience and working style. Nobody is cut from the community; the test decides where you start, not whether you belong.',
   },
   {
     no: '03',
     title: 'Compete',
-    text: 'We field six teams across ICPC regional and continental rounds, invitationals and open contests. Travel is supported by the department and the community’s alumni fund.',
+    text: 'We field multiple squads across ICPC regional and continental rounds, invitationals and open contests. Travel is supported by the department and the community’s alumni fund.',
   },
   {
     no: '04',
@@ -37,34 +37,34 @@ const pillars = [
 
 const timeline = [
   {
-    year: '2016',
-    title: 'A room and a whiteboard',
-    text: 'The community starts as a student-led training group of twelve, meeting weekly in the Department of Computer Science.',
+    year: '2000',
+    title: 'The record begins',
+    text: 'HKU takes 3rd place at the Hong Kong Regional — the first result in the archive that now stretches across 26 seasons.',
+  },
+  {
+    year: '2001',
+    title: 'First World Finals',
+    text: 'Team TICK qualifies for the 25th ICPC World Finals in Canada, finishing 29th.',
+  },
+  {
+    year: '2005',
+    title: 'A World Finals bronze',
+    text: 'HKUCS1 finishes 12th at the 29th World Finals in China and brings home a bronze medal.',
+  },
+  {
+    year: '2012',
+    title: 'Champions in Hanoi',
+    text: 'GMT wins the Hanoi Regional, while IT Genius finishes 3rd. The same season, Azureus places 4th in Jakarta.',
   },
   {
     year: '2018',
-    title: 'First regional medal',
-    text: 'A bronze at the ICPC Asia Hong Kong Regional. The team celebrates by immediately upsolving the two problems it missed.',
-  },
-  {
-    year: '2020',
-    title: 'First World Finals',
-    text: 'HKU qualifies for the ICPC World Finals for the first time, after a gold at the Hong Kong Regional.',
-  },
-  {
-    year: '2023',
-    title: 'A continental silver',
-    text: 'Monolith takes silver at the ICPC Asia East Continent Final and establishes a permanent weekly simulation block.',
+    title: 'CCPC Final gold',
+    text: 'GMT+7 takes gold and 5th place at the CCPC Final in Shenzhen, alongside a gold at the Xi’an East Continent Final.',
   },
   {
     year: '2025',
-    title: 'Two golds at home',
-    text: 'Monolith wins the Hong Kong Regional; Vector finishes third. Parabola earns silver in its first regional.',
-  },
-  {
-    year: '2026',
-    title: 'World Finals bronze',
-    text: 'A bronze medal at the 50th ICPC World Finals in Baku — the community’s best result to date.',
+    title: 'Four squads, two home medals',
+    text: 'Hot Kpop Union wins gold at the Hong Kong Regional and places 40th at the World Finals. Team name ddl today takes silver, while Waiguoren medals in Nanjing and Shanghai.',
   },
 ];
 
@@ -72,12 +72,12 @@ const joinSteps = [
   {
     no: '01',
     title: 'Come to an open session',
-    text: 'Wednesdays at 18:30 during term time, Room 308, Chow Yei Ching Building. No registration, no interview. Bring a laptop if you have one.',
+    text: 'We meet weekly during term time. The room and time are announced each semester on the mailing list. No registration, no interview. Bring a laptop if you have one.',
   },
   {
     no: '02',
     title: 'Take the formation test',
-    text: 'Every September: five hours, nine problems, individual. It is a placement exercise, not an entrance exam. First-years and non-CS majors are especially welcome.',
+    text: 'Each season: five hours, nine problems, individual. It is a placement exercise, not an entrance exam. First-years and non-CS majors are especially welcome.',
   },
   {
     no: '03',
@@ -95,8 +95,8 @@ const joinSteps = [
     index="01"
     label="About"
     title="A small community with a high bar."
-    intro="We are a student-run group inside the Department of Computer Science at HKU. Our business is algorithmic problem solving, and our favourite result is the next one."
-    meta="Founded 2016 / Pokfulam, Hong Kong"
+    intro="HKU’s competitive programming community, supported by the Department of Computer Science. Our business is algorithmic problem solving, and our favourite result is the next one."
+    meta="Record since 2000 / Pokfulam, Hong Kong"
   />
 
   <section class="section">
@@ -198,11 +198,11 @@ const joinSteps = [
             </div>
             <div>
               <dt class="mono">When</dt>
-              <dd>Wednesdays 18:30 during term; long simulations on Saturdays.</dd>
+              <dd>Weekly during term; the schedule is announced by email.</dd>
             </div>
             <div>
               <dt class="mono">Where</dt>
-              <dd>Room 308, Chow Yei Ching Building, HKU.</dd>
+              <dd>On campus; the room is announced each semester.</dd>
             </div>
           </dl>
           <a class="btn" href={`mailto:${site.email}`}>Ask us anything <span aria-hidden="true">→</span></a>
@@ -212,7 +212,7 @@ const joinSteps = [
   </section>
 
   <JoinCta
-    eyebrow="Next intake / September 2026"
+    eyebrow="Next intake / Each season"
     title="Start with one session."
     text="Turn up, solve something, meet the people you will be debugging with at 2 a.m. before a regional. That is the whole pitch."
     linkLabel="Email the community"
