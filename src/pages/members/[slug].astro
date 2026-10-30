@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Award from '../../components/Award.astro';
+import JoinCta from '../../components/JoinCta.astro';
+import { memberProfiles, type MemberProfile } from '../../data/members';
+import { href } from '../../lib/url';
+
+export function getStaticPaths() {
+  return memberProfiles.map((profile) => ({
+    params: { slug: profile.slug },
+    props: { profile },
+  }));
+}
+
+interface Props {
+  profile: MemberProfile;
+}
+
+const { profile } = Astro.props;
+const seasons = profile.appearances.length;
+const honors = profile.honors.length;
+const plural = (count: number, one: string, many = `${one}s`) =>
+  count === 1 ? one : many;
+---
+
+<BaseLayout
+  title={profile.name}
+  description={`ICPC season history and awards for ${profile.name}, HKU Competitive Programming Community.`}
+>
+  <header class="member-head">
+    <div class="container">
+      <div class="member-top mono">
+        <a href={href('/teams/')}>← All teams</a>
+        <span>Player profile / {seasons} {plural(seasons, 'season')}</span>
+      </div>
+
+      <div class="member-head-grid">
+        <div class="member-meta">
+          <p class="kicker">Player</p>
+          {profile.program && <p class="member-program mono">{profile.program}</p>}
+          {profile.handle && (
+            <a
+              class="member-link mono"
+              href={`https://codeforces.com/profile/${profile.handle}`}
+              rel="noreferrer"
+            >
+              Codeforces @{profile.handle} ↗
+            </a>
+          )}
+        </div>
+
+        <div class="member-heading">
+          <h1 class="member-title">{profile.name}</h1>
+          <p class="member-dek">
+            {seasons} {plural(seasons, 'season')} on record with HKU CPC
+            {profile.medals > 0 ? `, including ${profile.medals} ${plural(profile.medals, 'medal')}.` : '.'}
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="member-stats">
+        <div class="member-stat">
+          <p class="member-stat-value">{seasons}</p>
+          <p class="member-stat-label">{plural(seasons, 'Season')} competing</p>
+          <p class="member-stat-note mono">On record</p>
+        </div>
+        <div class="member-stat">
+          <p class="member-stat-value">{honors}</p>
+          <p class="member-stat-label">{plural(honors, 'Result')} &amp; awards</p>
+          <p class="member-stat-note mono">All contests</p>
+        </div>
+        <div class="member-stat">
+          <p class="member-stat-value">{profile.medals}</p>
+          <p class="member-stat-label">{plural(profile.medals, 'Medal')}</p>
+          <p class="member-stat-note mono">Gold / silver / bronze</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="01"
+        title="Season history"
+        description="Every HKU squad on record for this player, newest first."
+      />
+
+      <div class="member-history">
+        {profile.appearances.map((appearance) => (
+          <article class="member-season">
+            <div class="member-season-head">
+              <span class="member-season-year">{appearance.season}</span>
+              <h2>
+                <a href={href(`/teams/#${appearance.team.id}`)}>{appearance.team.name}</a>
+              </h2>
+              <span class="member-season-coach mono">Coach — {appearance.team.coach}</span>
+            </div>
+
+            <div class="member-season-body">
+              <div class="member-season-team">
+                <p class="kicker">Team</p>
+                <ul class="member-season-members">
+                  {appearance.team.members.map((member) => (
+                    <li>
+                      <a
+                        class:list={[{ current: member.slug === profile.slug }]}
+                        href={href(`/members/${member.slug}/`)}
+                      >
+                        {member.name}
+                      </a>
+                      {member.program && <span class="mono">{member.program}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="member-season-awards">
+                <p class="kicker">Awards &amp; results</p>
+                {appearance.honors.length > 0 ? (
+                  <ul class="member-award-list">
+                    {appearance.honors.map((honor) => (
+                      <li>
+                        <span class="member-award-contest">{honor.text}</span>
+                        <Award award={honor.award} />
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="member-award-empty">No recorded results for this squad.</p>
+                )}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {profile.teammates.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <SectionHead
+          index="02"
+          title="Teammates"
+          description={`Everyone who has shared a squad with ${profile.name}.`}
+        />
+        <ul class="teammate-grid">
+          {profile.teammates.map((member) => (
+            <li class="teammate-card">
+              <a href={href(`/members/${member.slug}/`)}>{member.name}</a>
+              {member.program && <span class="mono">{member.program}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <JoinCta
+    eyebrow="Play with us"
+    title="Your name could be here."
+    text="Every player on this page started with one contest. The next intake is open to all HKU students."
+    linkLabel="How to join"
+    linkHref="/about/#join"
+  />
+</BaseLayout>

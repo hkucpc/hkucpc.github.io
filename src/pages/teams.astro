@@ -4,9 +4,24 @@ import PageHeader from '../components/PageHeader.astro';
 import SectionHead from '../components/SectionHead.astro';
 import JoinCta from '../components/JoinCta.astro';
 import { archive, coaches, currentTeams } from '../data/teams';
+import { href } from '../lib/url';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 const memberCount = currentTeams.reduce((total, team) => total + team.members.length, 0);
+
+const shortenHonor = (honor: string) =>
+  honor
+    .replace(' Medal in ICPC Asia Regional Contest ', ' — ICPC Asia ')
+    .replace(' Medal in ICPC Asia East Continent Final Contest', ' — East Continent Final')
+    .replace(' Medal in ACM-HK Programming Contest', ' — ACM-HK')
+    .replace(' in ACM-HK Programming Contest', ' — ACM-HK')
+    .replace('Champion in ', 'Champion — ');
+
+const resultFor = (team: (typeof archive)[number]) => {
+  if (team.honors.length === 0) return '—';
+  const first = shortenHonor(team.honors[0]);
+  return team.honors.length > 1 ? `${first} · +${team.honors.length - 1}` : first;
+};
 ---
 
 <BaseLayout
@@ -30,7 +45,7 @@ const memberCount = currentTeams.reduce((total, team) => total + team.members.le
         </div>
         <div class="season-meta">
           <p>{currentTeams.length} squads<br />{memberCount} competitors</p>
-          <a class="section-link mono" href="#archive">Recent squads <span aria-hidden="true">↓</span></a>
+          <a class="section-link mono" href="#archive">Past squads <span aria-hidden="true">↓</span></a>
         </div>
       </div>
     </div>
@@ -53,7 +68,7 @@ const memberCount = currentTeams.reduce((total, team) => total + team.members.le
             <ul class="team-members" aria-label={`${team.name} members`}>
               {team.members.map((member) => (
                 <li class="team-member">
-                  <span class="member-name">{member.name}</span>
+                  <a class="member-name" href={href(`/members/${member.slug}/`)}>{member.name}</a>
                   <span class="member-program mono">{member.program}</span>
                   {member.handle && (
                     <a
@@ -119,8 +134,8 @@ const memberCount = currentTeams.reduce((total, team) => total + team.members.le
     <div class="container">
       <SectionHead
         index="02"
-        title="Recent squads"
-        description="The 2023 and 2024 squads. Earlier teams are archived on the Provinci site."
+        title="Past squads"
+        description="Every squad on record from 2016 to 2024. Open a player profile for their full history."
       />
       <div class="archive-table">
         <div class="archive-row archive-row--head mono" aria-hidden="true">
@@ -130,11 +145,18 @@ const memberCount = currentTeams.reduce((total, team) => total + team.members.le
           <span>Result</span>
         </div>
         {archive.map((row) => (
-          <div class="archive-row">
+          <div class="archive-row" id={row.id}>
             <span class="mono">{row.season}</span>
-            <span class="archive-team">{row.team}</span>
-            <span class="archive-members">{row.members}</span>
-            <span class="archive-result">{row.result}</span>
+            <span class="archive-team">{row.name}</span>
+            <span class="archive-members">
+              {row.members.map((member, index) => (
+                <>
+                  {index > 0 && ', '}
+                  <a href={href(`/members/${member.slug}/`)}>{member.name}</a>
+                </>
+              ))}
+            </span>
+            <span class="archive-result">{resultFor(row)}</span>
           </div>
         ))}
       </div>
