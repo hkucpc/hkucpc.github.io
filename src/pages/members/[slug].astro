@@ -4,6 +4,7 @@ import SectionHead from '../../components/SectionHead.astro';
 import Award from '../../components/Award.astro';
 import JoinCta from '../../components/JoinCta.astro';
 import { memberProfiles, type MemberProfile } from '../../data/members';
+import { coachesBySeason } from '../../data/teams';
 import { href } from '../../lib/url';
 
 export function getStaticPaths() {
@@ -18,6 +19,8 @@ interface Props {
 }
 
 const { profile } = Astro.props;
+const coachNames = (season: string) =>
+  (coachesBySeason[season] ?? []).map((coach) => coach.name).join(' · ');
 const seasons = profile.appearances.length;
 const honors = profile.honors.length;
 const plural = (count: number, one: string, many = `${one}s`) =>
@@ -99,7 +102,7 @@ const plural = (count: number, one: string, many = `${one}s`) =>
               <h2>
                 <a href={href(`/teams/#${appearance.team.id}`)}>{appearance.team.name}</a>
               </h2>
-              <span class="member-season-coach mono">Coach — {appearance.team.coach}</span>
+              <span class="member-season-coach mono">Coaches — {coachNames(appearance.season)}</span>
             </div>
 
             <div class="member-season-body">

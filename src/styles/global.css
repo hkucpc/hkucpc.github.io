@@ -1352,10 +1352,10 @@ time {
 }
 
 .team-card-top {
-  display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
-  gap: 1rem;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 1.25rem;
 }
 
@@ -1488,7 +1488,7 @@ time {
 
 .coach-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: var(--gutter);
 }
 
@@ -1944,6 +1944,174 @@ time {
 
   .teammate-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+
+/* Teams by year --------------------------------------------------------- */
+
+.teams-years {
+  padding-top: 0;
+}
+
+.team-card[id] {
+  scroll-margin-top: calc(var(--header-h) + 4.75rem);
+}
+
+.year-tabs {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.year-tab {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.48rem 0.65rem;
+  border: 1px solid var(--line-dark);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.year-tab-year {
+  font-variant-numeric: tabular-nums;
+}
+
+.year-tab-count {
+  font-size: 0.44rem;
+  color: var(--muted);
+}
+
+.year-tab:hover {
+  background: var(--paper-deep);
+}
+
+.year-tab.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.year-tab.active .year-tab-count {
+  color: #b8b7ad;
+}
+
+.year-panel {
+  padding-top: clamp(2rem, 4vw, 3.25rem);
+}
+
+.year-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--ink);
+}
+
+.year-title {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 550;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.year-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: flex-end;
+  text-align: right;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.year-meta .mono {
+  font-size: 0.48rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.season-coaches {
+  padding-block: 1.5rem 1.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.season-coaches > .kicker {
+  margin-bottom: 1rem;
+}
+
+.season-teams {
+  padding-top: 1.5rem;
+}
+
+.season-teams > .kicker {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 960px) {
+  .coach-grid {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    row-gap: 2rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .year-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-block: 0.7rem;
+    scrollbar-width: none;
+  }
+
+  .year-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .year-tab {
+    flex: none;
+  }
+
+  .year-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .year-meta {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .year-title {
+    font-size: 3.4rem;
+  }
+
+  .team-card-top {
+    gap: 0.6rem;
+  }
+
+  .member-season-coach {
+    max-width: 22rem;
+    line-height: 1.5;
   }
 }
 

@@ -1,167 +1,153 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import SectionHead from '../components/SectionHead.astro';
 import JoinCta from '../components/JoinCta.astro';
-import { archive, coaches, currentTeams } from '../data/teams';
+import { coachesBySeason, teamSeasons } from '../data/teams';
 import { href } from '../lib/url';
 
 const pad = (n: number) => String(n).padStart(2, '0');
-const memberCount = currentTeams.reduce((total, team) => total + team.members.length, 0);
+const years = [...new Set(teamSeasons.map((team) => team.season))];
+const playerCount = new Set(
+  teamSeasons.flatMap((team) => team.members.map((member) => member.slug)),
+).size;
 
-const shortenHonor = (honor: string) =>
-  honor
-    .replace(' Medal in ICPC Asia Regional Contest ', ' — ICPC Asia ')
-    .replace(' Medal in ICPC Asia East Continent Final Contest', ' — East Continent Final')
-    .replace(' Medal in ACM-HK Programming Contest', ' — ACM-HK')
-    .replace(' in ACM-HK Programming Contest', ' — ACM-HK')
-    .replace('Champion in ', 'Champion — ');
-
-const resultFor = (team: (typeof archive)[number]) => {
-  if (team.honors.length === 0) return '—';
-  const first = shortenHonor(team.honors[0]);
-  return team.honors.length > 1 ? `${first} · +${team.honors.length - 1}` : first;
-};
+const groups = years.map((year) => {
+  const teams = teamSeasons.filter((team) => team.season === year);
+  const players = new Set(teams.flatMap((team) => team.members.map((member) => member.slug)));
+  return {
+    year,
+    teams,
+    coaches: coachesBySeason[year] ?? [],
+    playerCount: players.size,
+  };
+});
 ---
 
 <BaseLayout
   title="Teams"
-  description="Meet the four HKU squads competing in the 2025 ICPC season."
+  description="Every HKU ICPC squad and coach, year by year."
 >
   <PageHeader
     index="02"
     label="Teams"
-    title="Four squads. One standard."
-    intro="HKU’s 2025 ICPC squads — twelve competitors across computer science, bioinformatics, quantitative finance and engineering, coached by Qipeng Kuang."
-    meta={`2025 season / ${currentTeams.length} squads / ${memberCount} competitors`}
+    title="Every squad, by year."
+    intro="Ten seasons of HKU ICPC teams. Coaches are listed for each season; open a player’s name to see their full history and awards."
+    meta={`2016 — 2025 / ${teamSeasons.length} squads / ${playerCount} players`}
   />
 
-  <section class="section">
+  <section class="section section--flush-top teams-years">
     <div class="container">
-      <div class="season-bar">
-        <div>
-          <p class="kicker">Current season</p>
-          <p class="season-title">2025</p>
-        </div>
-        <div class="season-meta">
-          <p>{currentTeams.length} squads<br />{memberCount} competitors</p>
-          <a class="section-link mono" href="#archive">Past squads <span aria-hidden="true">↓</span></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--flush-top">
-    <div class="container">
-      <div class="team-grid">
-        {currentTeams.map((team, index) => (
-          <article class="team-card" id={team.id}>
-            <div class="team-card-top">
-              <p class="team-no mono">{pad(index + 1)}</p>
-              <span class="team-tier mono">2025</span>
-              <span class="team-count mono">{team.members.length} members</span>
-            </div>
-
-            <h2 class="team-name">{team.name}</h2>
-            {team.alternate && <p class="team-alternate">{team.alternate}</p>}
-
-            <ul class="team-members" aria-label={`${team.name} members`}>
-              {team.members.map((member) => (
-                <li class="team-member">
-                  <a class="member-name" href={href(`/members/${member.slug}/`)}>{member.name}</a>
-                  <span class="member-program mono">{member.program}</span>
-                  {member.handle && (
-                    <a
-                      class="member-handle mono"
-                      href={`https://codeforces.com/profile/${member.handle}`}
-                      rel="noreferrer"
-                    >
-                      @{member.handle} ↗
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-
-            <div class="team-honors">
-              <p class="kicker">Results / 2025</p>
-              {team.honors.length > 0 ? (
-                <ul class="honor-list">
-                  {team.honors.map((honor) => <li>{honor}</li>)}
-                </ul>
-              ) : (
-                <p class="honor-empty">No results recorded yet. The season is still young.</p>
-              )}
-            </div>
-
-            <p class="team-coach mono">Coach — {team.coach}</p>
-          </article>
+      <div class="year-tabs" role="tablist" aria-label="Select a season">
+        {groups.map((group, index) => (
+          <button
+            class:list={['year-tab', { active: index === 0 }]}
+            type="button"
+            role="tab"
+            id={`year-tab-${group.year}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls={`year-panel-${group.year}`}
+            tabindex={index === 0 ? 0 : -1}
+            data-year-tab={group.year}
+          >
+            <span class="year-tab-year">{group.year}</span>
+            <span class="year-tab-count">{group.teams.length}</span>
+          </button>
         ))}
       </div>
 
-      <p class="source-note mono">
-        Source: <a href="https://i.cs.hku.hk/~provinci/contact.html" rel="noreferrer">HKU Provinci contact page ↗</a>
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <SectionHead
-        index="01"
-        title="Coaching staff"
-        description="The coordinator and coaches behind the 2025 squads."
-      />
-      <div class="coach-grid">
-        {coaches.map((coach) => (
-          <article class="coach-card">
-            <p class="coach-role mono">{coach.role}</p>
-            <h3>{coach.name}</h3>
-            <p>{coach.note}</p>
-            <div class="coach-links">
-              {coach.email && <a class="mono" href={`mailto:${coach.email}`}>Email ↗</a>}
-              {coach.links?.map((link) => (
-                <a class="mono" href={link.href} rel="noreferrer">{link.label} ↗</a>
-              ))}
+      {groups.map((group, index) => (
+        <div
+          class="year-panel"
+          id={`year-panel-${group.year}`}
+          role="tabpanel"
+          aria-labelledby={`year-tab-${group.year}`}
+          data-year-panel={group.year}
+          hidden={index !== 0}
+        >
+          <div class="year-head">
+            <div>
+              <p class="kicker">Season</p>
+              <h2 class="year-title">{group.year}</h2>
             </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="archive">
-    <div class="container">
-      <SectionHead
-        index="02"
-        title="Past squads"
-        description="Every squad on record from 2016 to 2024. Open a player profile for their full history."
-      />
-      <div class="archive-table">
-        <div class="archive-row archive-row--head mono" aria-hidden="true">
-          <span>Season</span>
-          <span>Team</span>
-          <span>Members</span>
-          <span>Result</span>
-        </div>
-        {archive.map((row) => (
-          <div class="archive-row" id={row.id}>
-            <span class="mono">{row.season}</span>
-            <span class="archive-team">{row.name}</span>
-            <span class="archive-members">
-              {row.members.map((member, index) => (
-                <>
-                  {index > 0 && ', '}
-                  <a href={href(`/members/${member.slug}/`)}>{member.name}</a>
-                </>
-              ))}
-            </span>
-            <span class="archive-result">{resultFor(row)}</span>
+            <div class="year-meta">
+              <p>{group.teams.length} squads / {group.playerCount} players</p>
+              <p class="mono">Coaches listed separately below</p>
+            </div>
           </div>
-        ))}
-      </div>
+
+          <div class="season-coaches">
+            <p class="kicker">Coaches / {group.year}</p>
+            <div class="coach-grid">
+              {group.coaches.map((coach) => (
+                <article class="coach-card">
+                  <p class="coach-role mono">{coach.role}</p>
+                  <h3>{coach.name}</h3>
+                  <p>{coach.note}</p>
+                  <div class="coach-links">
+                    {coach.email && <a class="mono" href={`mailto:${coach.email}`}>Email ↗</a>}
+                    {coach.links?.map((link) => (
+                      <a class="mono" href={link.href} rel="noreferrer">{link.label} ↗</a>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div class="season-teams">
+            <p class="kicker">Teams / {group.year}</p>
+            <div class="team-grid">
+              {group.teams.map((team, teamIndex) => (
+                <article class="team-card" id={team.id}>
+                  <div class="team-card-top">
+                    <p class="team-no mono">Squad {pad(teamIndex + 1)}</p>
+                    <span class="team-count mono">{team.members.length} members</span>
+                  </div>
+
+                  <h3 class="team-name">{team.name}</h3>
+                  {team.alternate && <p class="team-alternate">{team.alternate}</p>}
+
+                  <ul class="team-members" aria-label={`${team.name} members`}>
+                    {team.members.map((member) => (
+                      <li class="team-member">
+                        <a class="member-name" href={href(`/members/${member.slug}/`)}>
+                          {member.name}
+                        </a>
+                        {member.program && (
+                          <span class="member-program mono">{member.program}</span>
+                        )}
+                        {member.handle && (
+                          <a
+                            class="member-handle mono"
+                            href={`https://codeforces.com/profile/${member.handle}`}
+                            rel="noreferrer"
+                          >
+                            @{member.handle} ↗
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div class="team-honors">
+                    <p class="kicker">Results</p>
+                    {team.honors.length > 0 ? (
+                      <ul class="honor-list">
+                        {team.honors.map((honor) => <li>{honor}</li>)}
+                      </ul>
+                    ) : (
+                      <p class="honor-empty">No results recorded for this squad.</p>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+
       <p class="source-note mono">
-        Full archive: <a href="https://i.cs.hku.hk/~provinci/contact.html" rel="noreferrer">HKU Provinci teams by year ↗</a>
+        Source: <a href="https://i.cs.hku.hk/~provinci/contact.html" rel="noreferrer">HKU Provinci teams by year ↗</a>
       </p>
     </div>
   </section>
@@ -174,3 +160,56 @@ const resultFor = (team: (typeof archive)[number]) => {
     linkHref="/about/#join"
   />
 </BaseLayout>
+
+<script>
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-year-tab]')];
+  const panels = [...document.querySelectorAll<HTMLElement>('[data-year-panel]')];
+
+  const activate = (year: string, updateHash = true) => {
+    const validYear = panels.some((panel) => panel.dataset.yearPanel === year)
+      ? year
+      : tabs[0]?.dataset.yearTab;
+
+    if (!validYear) return;
+
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.yearTab === validYear;
+      tab.classList.toggle('active', selected);
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+    });
+
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.yearPanel !== validYear;
+    });
+
+    if (updateHash) {
+      history.replaceState(null, '', `#year-${validYear}`);
+    }
+  };
+
+  const hashYear = location.hash.match(/^#(?:year-)?(20\d{2})/)?.[1];
+  activate(hashYear ?? tabs[0]?.dataset.yearTab ?? '2025', false);
+
+  // Deep links from a member profile point at a team anchor, e.g.
+  // /teams/#2021-team-name. Open that season, then scroll to the card.
+  if (location.hash && !location.hash.startsWith('#year-')) {
+    const targetId = decodeURIComponent(location.hash.slice(1));
+    requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView();
+    });
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(tab.dataset.yearTab ?? ''));
+
+    tab.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      const next = tabs[(index + direction + tabs.length) % tabs.length];
+      next.focus();
+      activate(next.dataset.yearTab ?? '');
+    });
+  });
+</script>

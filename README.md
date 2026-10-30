@@ -35,7 +35,7 @@ npm run preview    # preview the production build
 | ------------------ | ------------------------------- | -------------------------------------------- |
 | `/`                | `src/pages/index.astro`         | Hero, stats, latest news, selected results   |
 | `/about/`          | `src/pages/about.astro`         | Mission, training model, history, joining    |
-| `/teams/`          | `src/pages/teams.astro`         | Current squads, coaches, past squads         |
+| `/teams/`          | `src/pages/teams.astro`         | Squads and coaches grouped by season         |
 | `/members/[slug]/` | `src/pages/members/[slug].astro`| Player history, awards and teammates          |
 | `/achievements/`   | `src/pages/achievements.astro`  | Filterable contest record and World Finals   |
 | `/news/`           | `src/pages/news/index.astro`    | Featured story and filterable story list     |
@@ -74,15 +74,15 @@ header and footer. Homepage statistics live in the same file.
 
 Edit `src/data/teams.ts`:
 
-- `teamSeasons` — every squad from 2016 to 2025, with roster, coach and honors
-- `currentTeams` — the 2025 squads
-- `archive` — all earlier squads
-- `coaches` — coordinator and coaching staff cards
+- `teamSeasons` — every squad from 2016 to 2025, with roster and honors
+- `coachesBySeason` — coaches keyed by season, not attached to individual teams
 
-Each team needs a unique `id`; it becomes the anchor on `/teams/`. Player profiles in `/members/` are generated automatically from `teamSeasons`
+The Teams page displays one season at a time using accessible year tabs.
+Each team needs a unique `id`; it becomes the anchor on `/teams/`. Player
+profiles in `/members/` are generated automatically from `teamSeasons`
 (2016–2025) by `src/data/members.ts`. Every member must have a unique `slug`;
 it becomes `/members/<slug>/`. Honors shown on a profile come from that
-season’s team entry.
+season’s team entry, and the coach line comes from `coachesBySeason`.
 
 ### Achievements
 

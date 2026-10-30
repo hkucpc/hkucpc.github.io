@@ -10,7 +10,6 @@ export interface Team {
   season: string;
   name: string;
   alternate?: string;
-  coach: string;
   members: Member[];
   honors: string[];
 }
@@ -37,7 +36,6 @@ export const teamSeasons: Team[] = [
     season: "2025",
     name: "Hot Kpop Union",
     alternate: "热门流行音乐联盟",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Mingfei Xia", slug: "mingfei-xia", program: "BEng(CompSc) 4" },
       { name: "Yuchen Wu", slug: "yuchen-wu", program: "BEng(CompSc) 2", handle: "BeyondHeaven" },
@@ -53,7 +51,6 @@ export const teamSeasons: Team[] = [
     season: "2025",
     name: "Team name ddl today",
     alternate: "今天必须取个队名",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Mingtian Yang", slug: "mingtian-yang", program: "PhD 1" },
       { name: "Jian Luo", slug: "jian-luo", program: "BSc 1" },
@@ -70,7 +67,6 @@ export const teamSeasons: Team[] = [
     season: "2025",
     name: "Waiguoren",
     alternate: "外国人",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Christivan Komah", slug: "christivan-komah", program: "BEng 1" },
       { name: "Owen Sidarta", slug: "owen-sidarta", program: "BEng 1" },
@@ -85,7 +81,6 @@ export const teamSeasons: Team[] = [
     id: "2025-kfc-enjoyers",
     season: "2025",
     name: "kfc_enjoyers",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Ismayil Maharramov", slug: "ismayil-maharramov", program: "BEng(CompSc) 3" },
       { name: "Richie Wilynnton", slug: "richie-wilynnton", program: "BEng(CompSc) 4" },
@@ -98,7 +93,6 @@ export const teamSeasons: Team[] = [
     season: "2024",
     name: "Hot Kpop Union",
     alternate: "热门流行音乐联盟",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Qiyue Xu", slug: "qiyue-xu", program: "BEng(CompSc) 2" },
       { name: "Yuchen Wu", slug: "yuchen-wu", program: "BEng 1", handle: "BeyondHeaven" },
@@ -116,7 +110,6 @@ export const teamSeasons: Team[] = [
     season: "2024",
     name: "Team name ddl today",
     alternate: "今天必须取个队名",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Mingtian Yang", slug: "mingtian-yang", program: "BEng(CompSc) 4" },
       { name: "Haoyuan Wu", slug: "haoyuan-wu", program: "BEng(CompSc) 3" },
@@ -132,7 +125,6 @@ export const teamSeasons: Team[] = [
     season: "2024",
     name: "Gojo Teacher",
     alternate: "五条牢师",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Jingyu Luo", slug: "jingyu-luo", program: "BEng(CompSc) 2" },
       { name: "Yufei Li", slug: "yufei-li", program: "BEng 2" },
@@ -148,7 +140,6 @@ export const teamSeasons: Team[] = [
     season: "2024",
     name: "Cheeky Chubbies",
     alternate: "Cheeky Chubbies",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Po Wa Lee", slug: "po-wa-lee", program: "MBBS 2" },
       { name: "Yerdaulet Mussabek", slug: "yerdaulet-mussabek", program: "BEng(CE) 3" },
@@ -163,7 +154,6 @@ export const teamSeasons: Team[] = [
     season: "2023",
     name: "huawei 15 pro max",
     alternate: "遥遥领先",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Che Liu", slug: "che-liu", program: "BEng 2", handle: "cheissmart" },
       { name: "Anzhe Wang", slug: "anzhe-wang", program: "BEng(CE) 4", handle: "Biden" },
@@ -180,7 +170,6 @@ export const teamSeasons: Team[] = [
     season: "2023",
     name: "Better rua turtle",
     alternate: "不如摸萨卡班甲鱼",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Haoyuan Wu", slug: "haoyuan-wu", program: "BEng(CompSc)" },
       { name: "Jiannan Wang", slug: "jiannan-wang", program: "PhD 1" },
@@ -197,7 +186,6 @@ export const teamSeasons: Team[] = [
     season: "2023",
     name: "404 Not Found",
     alternate: "什么神什么启动",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Ching Wai Justin Yim", slug: "ching-wai-justin-yim", program: "FBE 5" },
       { name: "Yufei Li", slug: "yufei-li", program: "BEng 1" },
@@ -213,7 +201,6 @@ export const teamSeasons: Team[] = [
     season: "2023",
     name: "Cant enter HW 312",
     alternate: "開门呀呀呀",
-    coach: "Qipeng Kuang",
     members: [
       { name: "Xinzhuang Xiong", slug: "xinzhuang-xiong", program: "BEng 2" },
       { name: "Tsz Ching Chan", slug: "tsz-ching-chan", program: "MBBS" },
@@ -228,7 +215,6 @@ export const teamSeasons: Team[] = [
     season: "2022",
     name: "I am not in danger. I am the danger.",
     alternate: "我不是密接，我是阳性",
-    coach: "Hao Xie",
     members: [
       { name: "Che Liu", slug: "che-liu", program: "BEng 1", handle: "cheissmart" },
       { name: "Anzhe Wang", slug: "anzhe-wang", program: "BEng(CE) 3", handle: "Biden" },
@@ -246,7 +232,6 @@ export const teamSeasons: Team[] = [
     season: "2022",
     name: "put yo d away waltuh",
     alternate: "牛牛拿开，老白",
-    coach: "Hao Xie",
     members: [
       { name: "Maodian Huang", slug: "maodian-huang", program: "BEng(CompSc) 2" },
       { name: "Junkai Song", slug: "junkai-song", program: "BEng(CompSc) 3", handle: "dsgsjk" },
@@ -262,7 +247,6 @@ export const teamSeasons: Team[] = [
     season: "2022",
     name: "team name ddl today again (Who didn't take the third dose)",
     alternate: "今天必须再取个队名 (是谁没打第三针)",
-    coach: "Hao Xie",
     members: [
       { name: "Mingtian Yang", slug: "mingtian-yang", program: "BEng(CompSc) 2" },
       { name: "Xiaobang Hu", slug: "xiaobang-hu", program: "BEng 1" },
@@ -278,7 +262,6 @@ export const teamSeasons: Team[] = [
     id: "2022-fake-plastic-tree",
     season: "2022",
     name: "fake plastic tree",
-    coach: "Hao Xie",
     members: [
       { name: "Baicheng Liu", slug: "baicheng-liu", program: "BEng(CompSc) 3" },
       { name: "Maodian Huang", slug: "maodian-huang", program: "BEng(CompSc) 2" },
@@ -292,7 +275,6 @@ export const teamSeasons: Team[] = [
     id: "2022-a-drop-table-teams",
     season: "2022",
     name: "A\"; DROP Table Teams;--",
-    coach: "Hao Xie",
     members: [
       { name: "Anzhe Wang", slug: "anzhe-wang", program: "BEng(CE) 3", handle: "Biden" },
       { name: "Jiahe Jiang", slug: "jiahe-jiang", program: "BEng(CompSc) 3", handle: "Isrothy" },
@@ -306,7 +288,6 @@ export const teamSeasons: Team[] = [
     id: "2022-3men1com",
     season: "2022",
     name: "3men1com",
-    coach: "Hao Xie",
     members: [
       { name: "Ho Ning Leung", slug: "ho-ning-leung", program: "BBA(IS)/BEng(CompSc) 3" },
       { name: "Boao Shi", slug: "boao-shi", program: "BEng 1" },
@@ -319,7 +300,6 @@ export const teamSeasons: Team[] = [
     season: "2021",
     name: "Team name ddl today",
     alternate: "今天必须取个队名",
-    coach: "Hao Xie",
     members: [
       { name: "Zhiheng Lyu", slug: "zhiheng-lyu", program: "BEng(CompSc) 2" },
       { name: "Baicheng Liu", slug: "baicheng-liu", program: "BEng(CompSc) 2" },
@@ -334,7 +314,6 @@ export const teamSeasons: Team[] = [
     season: "2021",
     name: "Gan Ronaldo",
     alternate: "穷哥们琪琪",
-    coach: "Hao Xie",
     members: [
       { name: "Anzhe Wang", slug: "anzhe-wang", program: "BEng(CE) 2", handle: "Biden" },
       { name: "Junkai Song", slug: "junkai-song", program: "BEng(CompSc) 2", handle: "dsgsjk" },
@@ -349,7 +328,6 @@ export const teamSeasons: Team[] = [
     season: "2021",
     name: "Your OI foundation is stronger than mine!",
     alternate: "你的OI基础比我扎实！",
-    coach: "Hao Xie",
     members: [
       { name: "Zhenwei Hu", slug: "zhenwei-hu", program: "BEng(CompSc) 4" },
       { name: "Hiu Hei Chan", slug: "hiu-hei-chan", program: "BEng(CompSc) 4" },
@@ -361,7 +339,6 @@ export const teamSeasons: Team[] = [
     id: "2021-the-sorting-hat-says-we-belong-to-azkaban",
     season: "2021",
     name: "The Sorting Hat says we belong to Azkaban",
-    coach: "Hao Xie",
     members: [
       { name: "Anzhe Wang", slug: "anzhe-wang", program: "BEng(CE) 2", handle: "Biden" },
       { name: "Jiahe Jiang", slug: "jiahe-jiang", program: "BEng(CompSc) 2", handle: "Isrothy" },
@@ -376,7 +353,6 @@ export const teamSeasons: Team[] = [
     season: "2020",
     name: "Will Cyber college students fantasize about Cloud Classroom?",
     alternate: "赛博大学人会梦到空中云课堂么？",
-    coach: "Hao Xie",
     members: [
       { name: "Zhiheng Lyu", slug: "zhiheng-lyu", program: "BEng 1" },
       { name: "Jiahe Jiang", slug: "jiahe-jiang", program: "BEng 1", handle: "Isrothy" },
@@ -394,7 +370,6 @@ export const teamSeasons: Team[] = [
     season: "2020",
     name: "Pandite Ostia",
     alternate: "潘滴特 奧斯蹄亞",
-    coach: "Hao Xie",
     members: [
       { name: "Ho Ning Leung", slug: "ho-ning-leung", program: "BEng 1" },
       { name: "Yuanyue Yao", slug: "yuanyue-yao", program: "BSc 1" },
@@ -410,7 +385,6 @@ export const teamSeasons: Team[] = [
     season: "2020",
     name: "Hunyuan Xingyi Taiji Gate",
     alternate: "浑元形意太极门",
-    coach: "Hao Xie",
     members: [
       { name: "Junkai Song", slug: "junkai-song", program: "BEng 1", handle: "dsgsjk" },
       { name: "Anzhe Wang", slug: "anzhe-wang", program: "BEng 1", handle: "Biden" },
@@ -425,7 +399,6 @@ export const teamSeasons: Team[] = [
     id: "2020-ggdg-wq",
     season: "2020",
     name: "ggdG:wq",
-    coach: "Hao Xie",
     members: [
       { name: "Eehit Ray", slug: "eehit-ray", program: "BEng(CompSc) 2" },
       { name: "Kwan Yin Chan", slug: "kwan-yin-chan", program: "BEng(EngSc) 4" },
@@ -437,7 +410,6 @@ export const teamSeasons: Team[] = [
     id: "2020-s3xy-imposter",
     season: "2020",
     name: "S3xy imposter",
-    coach: "Hao Xie",
     members: [
       { name: "Vyomesh Dua", slug: "vyomesh-dua", program: "BEng(CompSc) 4" },
       { name: "Haihui Zhou", slug: "haihui-zhou", program: "BEng(CompSc) 4" },
@@ -449,7 +421,6 @@ export const teamSeasons: Team[] = [
     id: "2019-gmt-8",
     season: "2019",
     name: "GMT+8",
-    coach: "Bintao Sun",
     members: [
       { name: "Binrui Dong", slug: "binrui-dong" },
       { name: "Chun Yin Lee", slug: "chun-yin-lee", program: "BSc 3" },
@@ -464,7 +435,6 @@ export const teamSeasons: Team[] = [
     id: "2019-no-response",
     season: "2019",
     name: "No Response",
-    coach: "Bintao Sun",
     members: [
       { name: "Zhenwei Hu", slug: "zhenwei-hu", program: "BEng(CompSc) 2" },
       { name: "Dongning Chen", slug: "dongning-chen" },
@@ -477,7 +447,6 @@ export const teamSeasons: Team[] = [
     id: "2019-chmod-254-0",
     season: "2019",
     name: "chmod 254 $0",
-    coach: "Bintao Sun",
     members: [
       { name: "Kwan Yin Chan", slug: "kwan-yin-chan", program: "BEng(EngSc) 3" },
       { name: "Shendy Marcello Yuniar", slug: "shendy-marcello-yuniar", program: "BSc 4" },
@@ -489,7 +458,6 @@ export const teamSeasons: Team[] = [
     id: "2018-rising-hairline-div3-borderline",
     season: "2018",
     name: "^^rising hairline^^ (--Div3 Borderline--)",
-    coach: "Bintao Sun",
     members: [
       { name: "Kin Hei Kwok", slug: "kin-hei-kwok" },
       { name: "Qingwei Huang", slug: "qingwei-huang" },
@@ -505,7 +473,6 @@ export const teamSeasons: Team[] = [
     id: "2017-aha",
     season: "2017",
     name: "Aha!",
-    coach: "Chenzi Zhang",
     members: [
       { name: "Kin Hei Kwok", slug: "kin-hei-kwok" },
       { name: "Bintao Sun", slug: "bintao-sun" },
@@ -521,7 +488,6 @@ export const teamSeasons: Team[] = [
     id: "2017-too-young-to-ac",
     season: "2017",
     name: "Too young to AC",
-    coach: "Chenzi Zhang",
     members: [
       { name: "Pak Nam Hui", slug: "pak-nam-hui" },
       { name: "Jikun Wang", slug: "jikun-wang" },
@@ -536,7 +502,6 @@ export const teamSeasons: Team[] = [
     id: "2017-turtle-racer",
     season: "2017",
     name: "Turtle Racer",
-    coach: "Chenzi Zhang",
     members: [
       { name: "Chi Ian Tang", slug: "chi-ian-tang" },
       { name: "Michelle Yih-chyan Wang", slug: "michelle-yih-chyan-wang" },
@@ -550,7 +515,6 @@ export const teamSeasons: Team[] = [
     id: "2016-superhighway",
     season: "2016",
     name: "SuperHighWay",
-    coach: "Shaofeng Jiang",
     members: [
       { name: "Bintao Sun", slug: "bintao-sun" },
       { name: "Jikun Wang", slug: "jikun-wang" },
@@ -566,7 +530,6 @@ export const teamSeasons: Team[] = [
     id: "2016-acman-go",
     season: "2016",
     name: "ACman Go!",
-    coach: "Shaofeng Jiang",
     members: [
       { name: "Derun Gu", slug: "derun-gu" },
       { name: "Tianchi Cai", slug: "tianchi-cai" },
@@ -579,32 +542,94 @@ export const teamSeasons: Team[] = [
   },
 ];
 
-export const currentTeams = teamSeasons.filter((team) => team.season === '2025');
-export const archive = teamSeasons.filter((team) => team.season !== '2025');
-
-export const coaches: Coach[] = [
-  {
-    name: 'Weiming Feng',
-    role: 'Coordinator',
-    note: 'Faculty coordinator for the HKU ICPC teams. Office CB 409.',
-    email: 'wfeng@hku.hk',
-    links: [{ label: 'Homepage', href: 'https://fwm94.github.io/' }],
-  },
-  {
-    name: 'Mingtian Yang',
-    role: 'Coach',
-    note: 'Coach for the 2025 squads.',
-    email: 'skylee03@connect.hku.hk',
-  },
-  {
-    name: 'Qipeng Kuang',
-    role: 'Team coach',
-    note: 'PhD 4. Team coach for the 2025 squads.',
-    email: 'kuangqipeng@connect.hku.hk',
-    links: [
-      { label: 'Codeforces', href: 'https://codeforces.com/profile/kqp' },
-      { label: 'AtCoder', href: 'https://atcoder.jp/users/kqp' },
-      { label: 'GitHub', href: 'https://github.com/l2l7l9p' },
-    ],
-  },
-];
+export const coachesBySeason: Record<string, Coach[]> = {
+  "2025": [
+    {
+      name: 'Weiming Feng',
+      role: 'Coordinator',
+      note: 'Faculty coordinator · Office CB 409',
+      email: 'wfeng@hku.hk',
+      links: [{ label: 'Homepage', href: 'https://fwm94.github.io/' }],
+    },
+    {
+      name: 'Mingtian Yang',
+      role: 'Coach',
+      note: 'Coach for the 2025 squads.',
+      email: 'skylee03@connect.hku.hk',
+    },
+    {
+      name: 'Qipeng Kuang',
+      role: 'Team coach',
+      note: 'PhD 4',
+      email: 'kuangqipeng@connect.hku.hk',
+      links: [
+        { label: 'Codeforces', href: 'https://codeforces.com/profile/kqp' },
+        { label: 'AtCoder', href: 'https://atcoder.jp/users/kqp' },
+        { label: 'GitHub', href: 'https://github.com/l2l7l9p' },
+      ],
+    },
+  ],
+  "2024": [
+    {
+      name: "Qipeng Kuang",
+      role: 'Coach',
+      note: "PhD 3",
+    },
+  ],
+  "2023": [
+    {
+      name: "Qipeng Kuang",
+      role: 'Coach',
+      note: "PhD 2",
+    },
+  ],
+  "2022": [
+    {
+      name: "Hao Xie",
+      role: 'Coach',
+      note: "PhD Candidate 4",
+    },
+  ],
+  "2021": [
+    {
+      name: "Hao Xie",
+      role: 'Coach',
+      note: "PhD Candidate 3",
+    },
+  ],
+  "2020": [
+    {
+      name: "Hao Xie",
+      role: 'Coach',
+      note: "PhD 2",
+    },
+  ],
+  "2019": [
+    {
+      name: "Bintao Sun",
+      role: 'Coach',
+      note: "PhD Candidate 4",
+    },
+  ],
+  "2018": [
+    {
+      name: "Bintao Sun",
+      role: 'Coach',
+      note: "PhD Candidate 3",
+    },
+  ],
+  "2017": [
+    {
+      name: "Chenzi Zhang",
+      role: 'Coach',
+      note: "Coach",
+    },
+  ],
+  "2016": [
+    {
+      name: "Shaofeng Jiang",
+      role: 'Coach',
+      note: "Coach",
+    },
+  ],
+};
