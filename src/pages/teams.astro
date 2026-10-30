@@ -6,7 +6,12 @@ import { coachesBySeason, teamSeasons } from '../data/teams';
 import { href } from '../lib/url';
 
 const pad = (n: number) => String(n).padStart(2, '0');
-const years = [...new Set(teamSeasons.map((team) => team.season))];
+const years = [
+  ...new Set([
+    ...teamSeasons.map((team) => team.season),
+    ...Object.keys(coachesBySeason),
+  ]),
+].sort((a, b) => Number(b) - Number(a));
 const playerCount = new Set(
   teamSeasons.flatMap((team) => team.members.map((member) => member.slug)),
 ).size;
@@ -21,6 +26,9 @@ const groups = years.map((year) => {
     playerCount: players.size,
   };
 });
+
+const defaultYear =
+  groups.find((group) => group.teams.length > 0)?.year ?? groups[0].year;
 ---
 
 <BaseLayout
@@ -31,26 +39,26 @@ const groups = years.map((year) => {
     index="02"
     label="Teams"
     title="Every squad, by year."
-    intro="Ten seasons of HKU ICPC teams. Coaches are listed for each season; open a player’s name to see their full history and awards."
-    meta={`2016 — 2025 / ${teamSeasons.length} squads / ${playerCount} players`}
+    intro="Ten seasons of HKU ICPC teams, plus the 2026 coach. Coaches are listed for each season; open a player’s name to see their full history and awards."
+    meta={`2016 — 2026 / ${teamSeasons.length} squads / ${playerCount} players`}
   />
 
   <section class="section section--flush-top teams-years">
     <div class="container">
-      <div class="year-tabs" role="tablist" aria-label="Select a season">
+      <div class="year-tabs" role="tablist" aria-label="Select a season" data-default-year={defaultYear}>
         {groups.map((group, index) => (
           <button
-            class:list={['year-tab', { active: index === 0 }]}
+            class:list={['year-tab', { active: group.year === defaultYear }]}
             type="button"
             role="tab"
             id={`year-tab-${group.year}`}
-            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-selected={group.year === defaultYear ? 'true' : 'false'}
             aria-controls={`year-panel-${group.year}`}
-            tabindex={index === 0 ? 0 : -1}
+            tabindex={group.year === defaultYear ? 0 : -1}
             data-year-tab={group.year}
           >
             <span class="year-tab-year">{group.year}</span>
-            <span class="year-tab-count">{group.teams.length}</span>
+            <span class="year-tab-count">{group.teams.length || '—'}</span>
           </button>
         ))}
       </div>
@@ -62,7 +70,7 @@ const groups = years.map((year) => {
           role="tabpanel"
           aria-labelledby={`year-tab-${group.year}`}
           data-year-panel={group.year}
-          hidden={index !== 0}
+          hidden={group.year !== defaultYear}
         >
           <div class="year-head">
             <div>
@@ -70,7 +78,11 @@ const groups = years.map((year) => {
               <h2 class="year-title">{group.year}</h2>
             </div>
             <div class="year-meta">
-              <p>{group.teams.length} squads / {group.playerCount} players</p>
+              <p>
+                {group.teams.length > 0
+                  ? `${group.teams.length} squads / ${group.playerCount} players`
+                  : 'Squad announcements pending'}
+              </p>
               <p class="mono">Coaches listed separately below</p>
             </div>
           </div>
@@ -96,6 +108,13 @@ const groups = years.map((year) => {
 
           <div class="season-teams">
             <p class="kicker">Teams / {group.year}</p>
+            {group.teams.length === 0 && (
+              <p class="season-empty">
+                The 2026 squads have not been announced yet. Team formation and
+                roster updates will be posted on the <a href={href('/news/')}>news page</a>.
+              </p>
+            )}
+            {group.teams.length > 0 && (
             <div class="team-grid">
               {group.teams.map((team, teamIndex) => (
                 <article class="team-card" id={team.id}>
@@ -142,6 +161,7 @@ const groups = years.map((year) => {
                 </article>
               ))}
             </div>
+            )}
           </div>
         </div>
       ))}
@@ -189,7 +209,9 @@ const groups = years.map((year) => {
   };
 
   const hashYear = location.hash.match(/^#(?:year-)?(20\d{2})/)?.[1];
-  activate(hashYear ?? tabs[0]?.dataset.yearTab ?? '2025', false);
+  const defaultYear =
+    document.querySelector<HTMLElement>('[data-default-year]')?.dataset.defaultYear;
+  activate(hashYear ?? defaultYear ?? tabs[0]?.dataset.yearTab ?? '2025', false);
 
   // Deep links from a member profile point at a team anchor, e.g.
   // /teams/#2021-team-name. Open that season, then scroll to the card.

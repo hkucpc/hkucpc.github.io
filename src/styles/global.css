@@ -2065,6 +2065,24 @@ time {
   margin-bottom: 1rem;
 }
 
+.season-empty {
+  max-width: 52ch;
+  padding: 1rem 0 2rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.season-empty a {
+  border-bottom: 1px solid var(--line-dark);
+  color: var(--green);
+}
+
+.season-empty a:hover {
+  border-bottom-color: var(--green);
+}
+
 @media (max-width: 960px) {
   .coach-grid {
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));

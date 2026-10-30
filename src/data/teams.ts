@@ -542,24 +542,21 @@ export const teamSeasons: Team[] = [
   },
 ];
 
+// 2025 squads were coached by Qipeng Kuang. Mingtian Yang is the 2026 coach.
+// The Provinci contact page mixes the 2026 coach listing with 2025 team data.
 export const coachesBySeason: Record<string, Coach[]> = {
-  "2025": [
-    {
-      name: 'Weiming Feng',
-      role: 'Coordinator',
-      note: 'Faculty coordinator · Office CB 409',
-      email: 'wfeng@hku.hk',
-      links: [{ label: 'Homepage', href: 'https://fwm94.github.io/' }],
-    },
+  "2026": [
     {
       name: 'Mingtian Yang',
       role: 'Coach',
-      note: 'Coach for the 2025 squads.',
+      note: 'Coach for the 2026 season.',
       email: 'skylee03@connect.hku.hk',
     },
+  ],
+  "2025": [
     {
       name: 'Qipeng Kuang',
-      role: 'Team coach',
+      role: 'Coach',
       note: 'PhD 4',
       email: 'kuangqipeng@connect.hku.hk',
       links: [

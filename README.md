@@ -76,8 +76,10 @@ Edit `src/data/teams.ts`:
 
 - `teamSeasons` — every squad from 2016 to 2025, with roster and honors
 - `coachesBySeason` — coaches keyed by season, not attached to individual teams
+  (2025: Qipeng Kuang; 2026: Mingtian Yang. The 2026 roster is not yet announced.)
 
-The Teams page displays one season at a time using accessible year tabs.
+The Teams page displays one season at a time using accessible year tabs and
+opens the latest season with a known roster (2025) by default.
 Each team needs a unique `id`; it becomes the anchor on `/teams/`. Player
 profiles in `/members/` are generated automatically from `teamSeasons`
 (2016–2025) by `src/data/members.ts`. Every member must have a unique `slug`;
