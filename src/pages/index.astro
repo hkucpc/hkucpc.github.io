@@ -2,19 +2,26 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHead from '../components/SectionHead.astro';
 import NewsCard from '../components/NewsCard.astro';
-import Award from '../components/Award.astro';
+import AchievementTable from '../components/AchievementTable.astro';
 import JoinCta from '../components/JoinCta.astro';
 import { site, stats } from '../data/site';
 import { formatSeason } from '../lib/season';
 import { posts } from '../data/news';
 import { achievements } from '../data/achievements';
-import { getTeamRef } from '../data/teamRegistry';
 import { href } from '../lib/url';
 
 const latest = posts.slice(0, 3);
-const selected = achievements
-  .filter((item) => ['Gold', 'Silver', 'Bronze', 'Champion'].includes(item.award))
-  .slice(0, 5);
+const medalRows = achievements.filter((item) =>
+  ['Gold', 'Silver', 'Bronze', 'Champion'].includes(item.award),
+);
+const selectedKeys = new Set<string>();
+for (const row of medalRows) {
+  selectedKeys.add(`${row.date ?? row.year}|${row.contest}`);
+  if (selectedKeys.size === 2) break;
+}
+const selected = medalRows.filter((row) =>
+  selectedKeys.has(`${row.date ?? row.year}|${row.contest}`),
+);
 ---
 
 <BaseLayout title="Home">
@@ -99,22 +106,7 @@ const selected = achievements
         description="Three decades of contests, condensed to the results we are proudest of."
       />
 
-      <div class="results">
-        <div class="result-row result-row--head mono" aria-hidden="true">
-          <span>Year</span>
-          <span>Contest</span>
-          <span>Team</span>
-          <span>Award</span>
-        </div>
-        {selected.map((row) => (
-          <div class="result-row">
-            <span class="result-year mono">{row.year}</span>
-            <span class="result-contest">{row.contest}</span>
-            <span class="result-team">{getTeamRef(row.teamId)?.name ?? '—'}</span>
-            <span><Award award={row.award} rank={row.rank} /></span>
-          </div>
-        ))}
-      </div>
+      <AchievementTable rows={selected} />
     </div>
   </section>
 
