@@ -1,8 +1,17 @@
 /* ==========================================================================
    HKU CPC — design system
-   Swiss international style: strict grid, generous whitespace, Geist,
-   a restrained palette of paper, ink and HKU green.
+   Swiss-influenced editorial system: strict grid, generous whitespace,
+   Geist Serif display type, Geist / Geist Mono for text, and a restrained
+   palette of paper, ink and HKU green.
    ========================================================================== */
+
+@font-face {
+  font-family: 'Geist Serif';
+  src: url('/fonts/GeistSerifVF.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --paper: #f2f1eb;
@@ -21,6 +30,7 @@
   --font-sans: 'Geist Variable', 'Geist', Helvetica, Arial, sans-serif;
   --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SFMono-Regular',
     Menlo, monospace;
+  --font-display: 'Geist Serif', 'Times New Roman', Times, serif;
 
   --gutter: clamp(1.25rem, 3.2vw, 3.5rem);
   --max: 1560px;
@@ -74,6 +84,13 @@ blockquote,
 dl,
 dd {
   margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 550;
 }
 
 h1,

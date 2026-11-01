@@ -1,9 +1,9 @@
 # HKU CPC Website
 
 The official website for the **HKU Competitive Programming Community**. It is a
-static [Astro](https://astro.build) site with a Swiss international-style
-typographic system, self-hosted **Geist / Geist Mono**, and a GitHub Pages
-deployment workflow.
+static [Astro](https://astro.build) site built on a Swiss-influenced editorial
+typographic system: a strict grid, **Geist Serif** display type, self-hosted
+**Geist / Geist Mono** text, and a GitHub Pages deployment workflow.
 
 > **Content note:** historical records are compiled from HKU and contest
 > archives. Some early squads, rosters and results are incomplete.
@@ -11,7 +11,9 @@ deployment workflow.
 ## Stack
 
 - Astro 7 (static output, no UI framework)
-- Geist and Geist Mono via `@fontsource-variable` (self-hosted, no Google Fonts)
+- **Geist Serif** for display type, **Geist** and **Geist Mono** for text
+- Sans/mono via `@fontsource-variable`; Geist Serif bundled locally from Vercel
+  under the SIL Open Font License (`public/fonts/GeistSerif-OFL.txt`)
 - Plain CSS design tokens and a 12-column grid
 - GitHub Actions → GitHub Pages
 
