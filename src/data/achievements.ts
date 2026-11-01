@@ -453,6 +453,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2020,
+    date: "2020-12-27",
     contest: "45th ICPC Asia Jinan Regional",
     teamId: "2020-hunyuan-xingyi-taiji-gate",
     award: 'Gold',
@@ -461,6 +462,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2020,
+    date: "2020-12-27",
     contest: "45th ICPC Asia Jinan Regional",
     teamId: "2020-pandite-ostia",
     award: 'Bronze',
@@ -469,6 +471,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2020,
+    date: "2020-12-20",
     contest: "45th ICPC Asia Nanjing Regional",
     teamId: "2020-will-cyber-college-students-fantasize-about-cloud-classroom",
     award: 'Gold',
@@ -477,6 +480,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2020,
+    date: "2020-12-20",
     contest: "45th ICPC Asia Nanjing Regional",
     teamId: "2020-hunyuan-xingyi-taiji-gate",
     award: 'Silver',
@@ -485,6 +489,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2020,
+    date: "2020-12-20",
     contest: "45th ICPC Asia Nanjing Regional",
     teamId: "2020-pandite-ostia",
     award: 'Silver',
@@ -493,6 +498,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2020,
+    date: "2020-12-13",
     contest: "45th ICPC Asia Shanghai Regional",
     teamId: "2020-will-cyber-college-students-fantasize-about-cloud-classroom",
     award: 'Silver',
@@ -510,6 +516,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2019,
+    date: "2019-11-24",
     contest: "44th ICPC Asia Shanghai Regional",
     teamId: "2019-gmt-8",
     award: 'Silver',
@@ -518,6 +525,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2019,
+    date: "2019-11-24",
     contest: "44th ICPC Asia Shanghai Regional",
     teamId: "2019-no-response",
     award: 'Bronze',
@@ -535,6 +543,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2018,
+    date: "2018-10-14",
     contest: "43rd ICPC Asia Nanjing Regional",
     teamId: "2018-rising-hairline-div3-borderline",
     award: 'Silver',
@@ -543,7 +552,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2017,
-    date: "2018",
+    date: "2018-06-23",
     contest: "ACM-HK Programming Contest",
     teamId: "2018-rising-hairline-div3-borderline",
     award: 'Position',
@@ -570,6 +579,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2017,
+    date: "2017-11-19",
     contest: "42nd ACM-ICPC Asia Hong Kong Regional",
     teamId: "2017-aha",
     award: 'Silver',
@@ -578,6 +588,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2017,
+    date: "2017-11-05",
     contest: "42nd ACM-ICPC Asia Qingdao Regional",
     teamId: "2017-turtle-racer",
     award: 'Silver',
@@ -586,6 +597,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2017,
+    date: "2017-11-05",
     contest: "42nd ACM-ICPC Asia Qingdao Regional",
     teamId: "2017-too-young-to-ac",
     award: 'Bronze',
@@ -594,6 +606,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2017,
+    date: "2017-10-29",
     contest: "42nd ACM-ICPC Asia Xi’an Regional",
     teamId: "2017-aha",
     award: 'Gold',
@@ -602,6 +615,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2017,
+    date: "2017-10-29",
     contest: "42nd ACM-ICPC Asia Xi’an Regional",
     teamId: "2017-too-young-to-ac",
     award: 'Silver',
@@ -610,7 +624,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2016,
-    date: "2017",
+    date: "2017-06-24",
     contest: "ACM-HK Programming Contest",
     teamId: null,
     award: 'Position',
@@ -619,7 +633,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2016,
-    date: "2017",
+    date: "2017-06-24",
     contest: "ACM-HK Programming Contest",
     teamId: null,
     award: 'Position',
@@ -646,6 +660,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2016,
+    date: "2016-11-13",
     contest: "41st ACM-ICPC Asia Qingdao Regional",
     teamId: "2016-acman-go",
     award: 'Silver',
@@ -654,6 +669,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2016,
+    date: "2016-11-06",
     contest: "41st ACM-ICPC Asia Hong Kong Regional",
     teamId: "2016-superhighway",
     award: 'Silver',
@@ -662,6 +678,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2016,
+    date: "2016-10-16",
     contest: "41st ACM-ICPC Asia Dalian Regional",
     teamId: "2016-superhighway",
     award: 'Silver',
@@ -679,6 +696,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2014,
+    date: "2014-11-23",
     contest: "39th ACM-ICPC Asia Guangzhou Regional",
     teamId: "2014-big-boss",
     award: 'Silver',
@@ -687,6 +705,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2014,
+    date: "2014-11-23",
     contest: "39th ACM-ICPC Asia Guangzhou Regional",
     teamId: "2014-it-genius",
     award: 'Bronze',
@@ -713,6 +732,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2012,
+    date: "2012-11-30",
     contest: "37th ACM-ICPC Asia Hanoi Regional",
     teamId: "2012-gmt",
     award: 'Champion',
@@ -721,6 +741,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2012,
+    date: "2012-11-30",
     contest: "37th ACM-ICPC Asia Hanoi Regional",
     teamId: "2012-it-genius",
     award: 'First Prize',
@@ -729,6 +750,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2012,
+    date: "2012-10-17",
     contest: "37th ACM-ICPC Asia Jakarta Regional",
     teamId: "2012-azureus",
     award: 'Position',
@@ -737,7 +759,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2010,
-    date: "2011",
+    date: "2011-07-16",
     contest: "ACM Collegiate Programming Contest (Hong Kong)",
     teamId: null,
     award: 'Position',
@@ -746,6 +768,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2009,
+    date: "2009-10-23",
     contest: "34th ACM-ICPC Asia Manila Regional",
     teamId: "2009-far-manila",
     award: 'Position',
@@ -754,6 +777,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2009,
+    date: "2009-10-23",
     contest: "34th ACM-ICPC Asia Manila Regional",
     teamId: "2009-longlonglong",
     award: 'Position',
@@ -762,6 +786,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2009,
+    date: "2009-10-23",
     contest: "34th ACM-ICPC Asia Manila Regional",
     teamId: "2009-temp",
     award: 'Position',
@@ -770,6 +795,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2009,
+    date: "2009-10-23",
     contest: "34th ACM-ICPC Asia Manila Regional",
     teamId: "2009-thunder",
     award: 'Position',
@@ -787,6 +813,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2008,
+    date: "2008-10-21",
     contest: "33rd ACM-ICPC Asia Jakarta Regional",
     teamId: "2008-hi-hi-jakarta",
     award: 'Gold',
@@ -849,6 +876,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2006,
+    date: "2006-10-28",
     contest: "31st ACM-ICPC Asia Manila Regional",
     teamId: null,
     award: 'Position',
@@ -875,6 +903,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2005,
+    date: "2005-10-29",
     contest: "30th ACM-ICPC Asia Manila Regional",
     teamId: null,
     award: 'Position',
@@ -901,6 +930,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2004,
+    date: "2004-11-07",
     contest: "29th ACM-ICPC Asia Taipei Regional",
     teamId: null,
     award: 'Position',
@@ -927,6 +957,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2003,
+    date: "2003-11-05",
     contest: "28th ACM-ICPC Asia Manila Regional",
     teamId: null,
     award: 'Position',
@@ -953,6 +984,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2002,
+    date: "2002-11-12",
     contest: "27th ACM-ICPC Asia Manila Regional",
     teamId: null,
     award: 'Position',
@@ -988,10 +1020,20 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2001,
+    date: "2001-11-30",
     contest: "26th ACM-ICPC Asia Singapore Regional",
-    teamId: null,
+    teamId: "2001-tick",
     award: 'Position',
     rank: '3rd',
+    category: 'Regional',
+  },
+  {
+    year: 2001,
+    date: "2001-11-30",
+    contest: "26th ACM-ICPC Asia Singapore Regional",
+    teamId: "2001-jean",
+    award: 'Position',
+    rank: '6th',
     category: 'Regional',
   },
   {
@@ -1014,8 +1056,9 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2000,
+    date: "2000-10-28",
     contest: "25th ACM-ICPC Asia Hong Kong Regional",
-    teamId: null,
+    teamId: "2000-tick",
     award: 'Position',
     rank: '3rd',
     category: 'Regional',
@@ -1028,6 +1071,15 @@ export const achievements: Achievement[] = [
     award: 'Position',
     rank: '1st',
     category: 'Local',
+  },
+  {
+    year: 1998,
+    date: "1998-11-20",
+    contest: "23rd ACM-ICPC Asia Taipei Regional",
+    teamId: "1998-uhk2",
+    award: 'Position',
+    rank: '12th',
+    category: 'Regional',
   },
   {
     year: 1994,

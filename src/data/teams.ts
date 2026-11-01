@@ -689,6 +689,15 @@ export const teamSeasons: Team[] = [
     ],
   },
   {
+    id: "1998-uhk2",
+    season: "1998",
+    name: "UHK2",
+    members: [],
+    honors: [
+      "12th Place in 23rd ACM-ICPC Asia Taipei Regional Contest",
+    ],
+  },
+  {
     id: "1994-hku",
     season: "1994",
     name: "HKU",
@@ -924,6 +933,15 @@ export const teamSeasons: Team[] = [
     ],
   },
   {
+    id: "2000-tick",
+    season: "2000",
+    name: "TICK",
+    members: [],
+    honors: [
+      "3rd Place in 25th ACM-ICPC Asia Hong Kong Regional Contest",
+    ],
+  },
+  {
     id: "2001-tick",
     season: "2001",
     name: "TICK",
@@ -934,6 +952,16 @@ export const teamSeasons: Team[] = [
     ],
     honors: [
       "High Honours in 25th ACM-ICPC World Finals, Vancouver, Canada",
+      "3rd Place in 26th ACM-ICPC Asia Singapore Regional Contest",
+    ],
+  },
+  {
+    id: "2001-jean",
+    season: "2001",
+    name: "Jean",
+    members: [],
+    honors: [
+      "6th Place in 26th ACM-ICPC Asia Singapore Regional Contest",
     ],
   },
   {
