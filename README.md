@@ -174,10 +174,9 @@ To swap the accent colour, change `--green` and `--green-bright` in `:root`.
 3. Push to `main` (or run the workflow manually). `.github/workflows/deploy.yml`
    builds the site and deploys `dist/`.
 
-The workflow automatically detects the repository type:
-
-- **Project site** (repository name does not end in `.github.io`): base path `/<repo>/`
-- **User or organisation site** (repository name ends in `.github.io`): base path `/`
+The workflow uses `actions/configure-pages` to obtain the Pages origin and
+base path from GitHub, rather than deriving them from the repository name.
+This handles project sites, user/organisation sites and custom domains.
 
 `astro.config.mjs` reads `SITE_URL` and `BASE_PATH`. Every internal link goes
 through `href()` in `src/lib/url.ts`, so the same code works at a domain root
