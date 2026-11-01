@@ -952,6 +952,16 @@ export const teamSeasons: Team[] = [
     ],
     honors: [
       "High Honours in 25th ACM-ICPC World Finals, Vancouver, Canada",
+      "3rd Place in 26th ACM-ICPC Asia Singapore Regional Contest",
+    ],
+  },
+  {
+    id: "2001-jean",
+    season: "2001",
+    name: "Jean",
+    members: [],
+    honors: [
+      "6th Place in 26th ACM-ICPC Asia Singapore Regional Contest",
     ],
   },
   {

@@ -988,10 +988,20 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2001,
+    date: "2001-11-30",
     contest: "26th ACM-ICPC Asia Singapore Regional",
-    teamId: null,
+    teamId: "2001-tick",
     award: 'Position',
     rank: '3rd',
+    category: 'Regional',
+  },
+  {
+    year: 2001,
+    date: "2001-11-30",
+    contest: "26th ACM-ICPC Asia Singapore Regional",
+    teamId: "2001-jean",
+    award: 'Position',
+    rank: '6th',
     category: 'Regional',
   },
   {
