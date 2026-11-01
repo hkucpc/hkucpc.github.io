@@ -1,9 +1,9 @@
 # HKU CPC Website
 
 The official website for the **HKU Competitive Programming Community**. It is a
-static [Astro](https://astro.build) site with a Swiss international-style
-typographic system, self-hosted **Geist / Geist Mono**, and a GitHub Pages
-deployment workflow.
+static [Astro](https://astro.build) site built on a Swiss-influenced editorial
+typographic system: a strict grid, **Geist Serif** display type, self-hosted
+**Geist / Geist Mono** text, and a GitHub Pages deployment workflow.
 
 > **Content note:** historical records are compiled from HKU and contest
 > archives. Some early squads, rosters and results are incomplete.
