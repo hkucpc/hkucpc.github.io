@@ -11,7 +11,9 @@ deployment workflow.
 ## Stack
 
 - Astro 7 (static output, no UI framework)
-- Geist and Geist Mono via `@fontsource-variable` (self-hosted, no Google Fonts)
+- **Geist Serif** for display type, **Geist** and **Geist Mono** for text
+- Sans/mono via `@fontsource-variable`; Geist Serif bundled locally from Vercel
+  under the SIL Open Font License (`public/fonts/GeistSerif-OFL.txt`)
 - Plain CSS design tokens and a 12-column grid
 - GitHub Actions → GitHub Pages
 
