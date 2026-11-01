@@ -64,11 +64,11 @@ export const posts: Post[] = [
     displayDate: '18 Oct 2026',
     tags: ['Competition', 'Regional'],
     excerpt:
-      'Team name ddl today wins silver, with sysmss_hku taking bronze and WeShowSpeed adding another silver at the 51st ICPC Asia Xi’an Regional.',
+      'Team name ddl today wins silver, with sysmss_hku and WeShowSpeed taking bronze at the 51st ICPC Asia Xi’an Regional.',
     body: [
       'HKU opened its 2026–27 regional campaign with three medals at the 51st ICPC Asia Xi’an Regional on 17–18 October.',
-      '[Team name ddl today](/people/2026-team-name-ddl-today/) finished 90th for silver, [sysmss_hku](/people/2026-sysmss-hku/) took bronze in 155th, and [WeShowSpeed](/people/2026-weshowspeed/) finished 161st for silver.',
-      'The result gives HKU two silver medals and one bronze from the first regional weekend of the season.',
+      '[Team name ddl today](/people/2026-team-name-ddl-today/) finished 90th for silver, [sysmss_hku](/people/2026-sysmss-hku/) took bronze in 155th, and [WeShowSpeed](/people/2026-weshowspeed/) took bronze in 161st.',
+      'The result gives HKU one silver and two bronze medals from the first regional weekend of the season.',
     ],
   },
 ];

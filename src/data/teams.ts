@@ -58,7 +58,7 @@ export const teamSeasons: Team[] = [
       "christivan-komah",
     ],
     honors: [
-      "Silver Medal in 51st ICPC Asia Xi’an Regional Contest",
+      "Bronze Medal in 51st ICPC Asia Xi’an Regional Contest",
     ],
   },
   {
