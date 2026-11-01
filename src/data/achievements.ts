@@ -56,7 +56,7 @@ export const achievements: Achievement[] = [
     date: "2026-10-18",
     contest: "51st ICPC Asia Xi’an Regional",
     teamId: "2026-weshowspeed",
-    award: 'Silver',
+    award: 'Bronze',
     rank: '161st',
     category: 'Regional',
   },
