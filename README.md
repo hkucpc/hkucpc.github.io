@@ -170,13 +170,33 @@ To swap the accent colour, change `--green` and `--green-bright` in `:root`.
 ### GitHub Pages
 
 1. Push this repository to GitHub with `main` as the default branch.
-2. Open **Settings → Pages** and set **Source** to **GitHub Actions**.
-3. Push to `main` (or run the workflow manually). `.github/workflows/deploy.yml`
-   builds the site and deploys `dist/`.
+2. Open **Settings → Pages** and set **Source** to **Deploy from a branch**,
+   branch `gh-pages`, folder `/ (root)`.
+3. Open **Settings → Actions → General → Workflow permissions** and select
+   **Read and write permissions** so the deploy and preview workflows can update
+   `gh-pages`.
+4. Push to `main` (or run the workflow manually). `.github/workflows/deploy.yml`
+   builds the site and deploys `dist/` to the root of `gh-pages`.
 
 The workflow uses `actions/configure-pages` to obtain the Pages origin and
 base path from GitHub, rather than deriving them from the repository name.
 This handles project sites, user/organisation sites and custom domains.
+
+### Pull request previews
+
+`.github/workflows/pr-preview.yml` builds pull requests and deploys them to:
+
+```text
+https://<pages-host>/<base>/pr-preview/pr-<number>/
+```
+
+The workflow posts a sticky comment with the preview URL and removes the
+preview when the PR is closed. Production deployments use `clean-exclude:
+pr-preview/` so they do not delete active previews.
+
+The preview action currently supports pull requests whose branches live in the
+same repository. Fork pull requests need an appropriate token or a preview
+service with its own deployment integration.
 
 `astro.config.mjs` reads `SITE_URL` and `BASE_PATH`. Every internal link goes
 through `href()` in `src/lib/url.ts`, so the same code works at a domain root

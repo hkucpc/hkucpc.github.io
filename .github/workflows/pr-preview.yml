@@ -1,0 +1,65 @@
+name: Deploy PR preview
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        if: github.event.action != 'closed'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        if: github.event.action != 'closed'
+        run: npm ci
+
+      - name: Validate data
+        if: github.event.action != 'closed'
+        run: npm run check:data
+
+      - name: Configure GitHub Pages
+        if: github.event.action != 'closed'
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Work out preview base path
+        if: github.event.action != 'closed'
+        id: preview
+        shell: bash
+        run: |
+          BASE="${{ steps.pages.outputs.base_path }}"
+          BASE="${BASE%/}"
+          echo "base=${BASE}/pr-preview/pr-${{ github.event.number }}/" >> "$GITHUB_OUTPUT"
+
+      - name: Build preview
+        if: github.event.action != 'closed'
+        env:
+          SITE_URL: ${{ steps.pages.outputs.origin }}
+          BASE_PATH: ${{ steps.preview.outputs.base }}
+        run: npm run build
+
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: dist
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto
+          wait-for-pages-deployment: true
