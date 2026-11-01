@@ -1030,6 +1030,14 @@ export const achievements: Achievement[] = [
     category: 'Local',
   },
   {
+    year: 1998,
+    contest: "23rd ACM-ICPC Asia Taipei Regional",
+    teamId: "1998-uhk2",
+    award: 'Position',
+    rank: '12th',
+    category: 'Regional',
+  },
+  {
     year: 1994,
     date: "1995",
     contest: "ACM–HK Scholastic Programming Contest",

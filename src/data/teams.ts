@@ -689,6 +689,15 @@ export const teamSeasons: Team[] = [
     ],
   },
   {
+    id: "1998-uhk2",
+    season: "1998",
+    name: "UHK2",
+    members: [],
+    honors: [
+      "12th Place in 23rd ACM-ICPC Asia Taipei Regional Contest",
+    ],
+  },
+  {
     id: "1994-hku",
     season: "1994",
     name: "HKU",
