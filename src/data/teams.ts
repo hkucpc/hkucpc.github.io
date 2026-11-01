@@ -933,6 +933,15 @@ export const teamSeasons: Team[] = [
     ],
   },
   {
+    id: "2000-tick",
+    season: "2000",
+    name: "TICK",
+    members: [],
+    honors: [
+      "3rd Place in 25th ACM-ICPC Asia Hong Kong Regional Contest",
+    ],
+  },
+  {
     id: "2001-tick",
     season: "2001",
     name: "TICK",
