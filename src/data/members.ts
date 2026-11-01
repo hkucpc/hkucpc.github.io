@@ -1,9 +1,12 @@
 import type { Award } from './achievements';
-import { teamSeasons, type Member, type Team } from './teams';
+import { awardFromHonor, honorDescription, positionRank } from '../lib/honors';
+import { getLatestNote, getPerson, type Person } from './people';
+import { seasonMembersBySeason, teamSeasons, type Team } from './teams';
 
 export interface MemberHonor {
   text: string;
   award: Award;
+  rank?: string;
 }
 
 export interface MemberAppearance {
@@ -15,55 +18,49 @@ export interface MemberAppearance {
 export interface MemberProfile {
   slug: string;
   name: string;
-  program?: string;
-  handle?: string;
+  note?: string;
   appearances: MemberAppearance[];
+  seasonMemberSeasons: string[];
   honors: MemberHonor[];
   medals: number;
-  teammates: Member[];
+  teammates: Person[];
 }
 
 const medals = new Set<Award>(['Gold', 'Silver', 'Bronze', 'Champion']);
 
-function parseAward(honor: string): Award {
-  if (/Gold Medal/i.test(honor)) return 'Gold';
-  if (/Silver Medal/i.test(honor)) return 'Silver';
-  if (/Bronze Medal/i.test(honor)) return 'Bronze';
-  if (/Champion/i.test(honor)) return 'Champion';
-  if (/Honou?rable Mention/i.test(honor)) return 'Honourable Mention';
-  return 'Position';
-}
-
 function toHonor(text: string): MemberHonor {
-  return { text, award: parseAward(text) };
+  return {
+    text: honorDescription(text),
+    award: awardFromHonor(text),
+    rank: positionRank(text),
+  };
 }
 
 function buildProfiles(): MemberProfile[] {
   const profiles = new Map<string, MemberProfile>();
 
-  // teamSeasons is ordered newest-first, so the first program/handle we see
-  // is the most recent one on record.
+  const ensureProfile = (slug: string): MemberProfile => {
+    let profile = profiles.get(slug);
+    if (!profile) {
+      const person = getPerson(slug);
+      profile = {
+        slug,
+        name: person?.name ?? slug,
+        note: person ? getLatestNote(person) : undefined,
+        appearances: [],
+        seasonMemberSeasons: [],
+        honors: [],
+        medals: 0,
+        teammates: [],
+      };
+      profiles.set(slug, profile);
+    }
+    return profile;
+  };
+
   for (const team of teamSeasons) {
-    for (const member of team.members) {
-      let profile = profiles.get(member.slug);
-
-      if (!profile) {
-        profile = {
-          slug: member.slug,
-          name: member.name,
-          program: member.program,
-          handle: member.handle,
-          appearances: [],
-          honors: [],
-          medals: 0,
-          teammates: [],
-        };
-        profiles.set(member.slug, profile);
-      }
-
-      profile.handle ??= member.handle;
-      profile.program ??= member.program;
-      profile.appearances.push({
+    for (const slug of team.members) {
+      ensureProfile(slug).appearances.push({
         season: team.season,
         team,
         honors: team.honors.map(toHonor),
@@ -71,14 +68,26 @@ function buildProfiles(): MemberProfile[] {
     }
   }
 
+  for (const [season, members] of Object.entries(seasonMembersBySeason)) {
+    for (const slug of members) {
+      const profile = ensureProfile(slug);
+      if (!profile.seasonMemberSeasons.includes(season)) {
+        profile.seasonMemberSeasons.push(season);
+      }
+    }
+  }
+
   for (const profile of profiles.values()) {
+    profile.seasonMemberSeasons.sort((a, b) => Number(b) - Number(a));
     profile.honors = profile.appearances.flatMap((appearance) => appearance.honors);
     profile.medals = profile.honors.filter((honor) => medals.has(honor.award)).length;
 
-    const teammates = new Map<string, Member>();
+    const teammates = new Map<string, Person>();
     for (const appearance of profile.appearances) {
-      for (const member of appearance.team.members) {
-        if (member.slug !== profile.slug) teammates.set(member.slug, member);
+      for (const slug of appearance.team.members) {
+        if (slug === profile.slug) continue;
+        const person = getPerson(slug);
+        if (person) teammates.set(person.slug, person);
       }
     }
     profile.teammates = [...teammates.values()].sort((a, b) =>

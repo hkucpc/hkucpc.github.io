@@ -10,12 +10,16 @@ const year = new Date().getFullYear();
     <div class="footer-grid">
       <div class="footer-brand">
         <a class="brand" href={href('/')} aria-label={`${site.shortName} home`}>
-          <span class="brand-mark" aria-hidden="true">
-            <span>H</span><span>K</span><span>U</span><span class="brand-mark-dot"></span>
-          </span>
+          <img
+            class="brand-logo"
+            src={href('/hku-crest.webp')}
+            width="1024"
+            height="1024"
+            alt="HKU crest"
+          />
           <span class="brand-type">
-            <span class="brand-name">HKU CPC</span>
-            <span class="brand-sub">Competitive Programming</span>
+            <span class="brand-name">Competitive Programming Community</span>
+            <span class="brand-sub">The University of Hong Kong</span>
           </span>
         </a>
         <p class="footer-statement">
@@ -31,7 +35,6 @@ const year = new Date().getFullYear();
           {nav.map((item) => (
             <li><a href={href(item.href)}>{item.label}</a></li>
           ))}
-          <li><a href={href('/about/#join')}>Join</a></li>
         </ul>
       </nav>
 
@@ -39,26 +42,19 @@ const year = new Date().getFullYear();
         <p class="footer-heading mono">Contact</p>
         <ul class="footer-links">
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li>
+            <a href={`mailto:${site.googleGroup}`}>Google Group ↗</a>
+          </li>
+          <li><a href={site.discord} rel="noreferrer">Discord ↗</a></li>
           <li><a href={site.github} rel="noreferrer">GitHub ↗</a></li>
-          <li><a href={site.instagram} rel="noreferrer">Instagram ↗</a></li>
+          <li><a href={site.linkedin} rel="noreferrer">LinkedIn ↗</a></li>
         </ul>
-      </div>
-
-      <div class="footer-col">
-        <p class="footer-heading mono">Colophon</p>
-        <p class="footer-note">
-          {site.department}<br />
-          {site.address}
-        </p>
-        <p class="footer-note">
-          Set in Geist and Geist Mono. Built with Astro. Deployed on GitHub Pages.
-        </p>
       </div>
     </div>
 
     <div class="footer-bottom">
       <span class="mono">© {year} {site.shortName}</span>
-      <span class="footer-demo">Team and contest data from HKU Provinci · News copy is illustrative</span>
+      <span class="footer-demo">Built by the community</span>
       <a class="mono" href="#top">Back to top ↑</a>
     </div>
   </div>

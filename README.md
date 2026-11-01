@@ -5,11 +5,8 @@ static [Astro](https://astro.build) site with a Swiss international-style
 typographic system, self-hosted **Geist / Geist Mono**, and a GitHub Pages
 deployment workflow.
 
-> **Data provenance:** the Teams and Achievements data are based on the
-> [HKU Provinci contact page](https://i.cs.hku.hk/~provinci/contact.html) and
-> [achievements archive](https://i.cs.hku.hk/~provinci/achievements.html).
-> News copy, training logistics and some contact details are illustrative —
-> review and replace them before publishing.
+> **Content note:** news copy, training logistics and some contact details are
+> illustrative — review and replace them before publishing.
 
 ## Stack
 
@@ -35,8 +32,9 @@ npm run preview    # preview the production build
 | ------------------ | ------------------------------- | -------------------------------------------- |
 | `/`                | `src/pages/index.astro`         | Hero, stats, latest news, selected results   |
 | `/about/`          | `src/pages/about.astro`         | Mission, training model, history, joining    |
-| `/teams/`          | `src/pages/teams.astro`         | Squads and coaches grouped by season         |
-| `/members/[slug]/` | `src/pages/members/[slug].astro`| Player history, awards and teammates          |
+| `/people/`         | `src/pages/people/index.astro`   | Coordinator, coach, contestants and formations   |
+| `/people/[id]/`    | `src/pages/people/[id].astro`    | Single squad roster and awards               |
+| `/members/[slug]/` | `src/pages/members/[slug].astro`| Contestant and/or staff history, awards and contact|
 | `/achievements/`   | `src/pages/achievements.astro`  | Filterable contest record and World Finals   |
 | `/news/`           | `src/pages/news/index.astro`    | Featured story and filterable story list     |
 | `/news/[slug]/`    | `src/pages/news/[slug].astro`   | Generated article pages                      |
@@ -52,8 +50,11 @@ npm run preview    # preview the production build
 │   ├── components/                # Header, Footer, cards, page header, CTA
 │   ├── data/                      # all editable content
 │   │   ├── site.ts                # name, nav, contact, home stats
-│   │   ├── teams.ts               # every squad, roster, coach and honor
-│   │   ├── members.ts             # member profiles derived from teams.ts
+│   │   ├── teams.ts               # squads, roster slugs, coaches and honors
+│   │   ├── people.ts              # canonical name, per-season notes, email and links
+│   │   ├── teamRegistry.ts        # team id → name lookup
+│   │   ├── members.ts             # member profiles derived from teams.ts + people.ts
+│   │   ├── staff.ts               # coach / coordinator profiles
 │   │   ├── achievements.ts        # contest records
 │   │   └── news.ts                # articles and their bodies
 │   ├── layouts/BaseLayout.astro   # <head>, header, footer, global CSS
@@ -74,25 +75,50 @@ header and footer. Homepage statistics live in the same file.
 
 Edit `src/data/teams.ts`:
 
-- `teamSeasons` — every squad from 2016 to 2025, with roster and honors
-- `coachesBySeason` — coaches keyed by season, not attached to individual teams
-  (2025: Qipeng Kuang; 2026: Mingtian Yang. The 2026 roster is not yet announced.)
+- `teamSeasons` — every squad from 1994–95 to 2026–27, with roster slug strings and honors
+- `coachBySeason` — one coach slug string per season, not attached to individual teams
+  (2025–26: Qipeng Kuang; 2026–27: Mingtian Yang.)
+- `coordinatorsBySeason` — one faculty coordinator slug string per season
+  (2025–26 and 2026–27: Weiming Feng; 2016–17 to 2024–25: Hubert Chan)
 
-The Teams page displays one season at a time using accessible year tabs and
-opens the latest season with a known roster (2025) by default.
-Each team needs a unique `id`; it becomes the anchor on `/teams/`. Player
+Rosters and staff records in `teams.ts` store only a person’s `slug`. Names,
+per-season notes, email and links live in `src/data/people.ts`, keyed by slug,
+so a person is defined once.
+
+All contestants, coaches and coordinators use the same `/members/<slug>/` page.
+People who are both staff and contestants (Mingtian Yang, Bintao Sun) see contestant
+and staff history on one page; staff-only people see just their staff history
+and contact details. The page list is built by merging `memberProfiles` from
+`src/data/members.ts` with `staffProfiles` from `src/data/staff.ts`.
+Contact links (email, homepage, Codeforces, AtCoder, GitHub) live in
+`people.ts` and appear on personal pages only; the People page shows just the
+name and a profile link.
+
+The People page displays one season at a time using accessible year tabs and
+opens the latest season (2026–27) by default.
+Each team needs a unique `id`; it becomes `/people/<id>/`. The People page
+lists coordinator, coach, contestants and team formations for each season;
+awards are shown on the individual team pages. Contestant
 profiles in `/members/` are generated automatically from `teamSeasons`
-(2016–2025) by `src/data/members.ts`. Every member must have a unique `slug`;
-it becomes `/members/<slug>/`. Honors shown on a profile come from that
-season’s team entry, and the coach line comes from `coachesBySeason`.
+(1994–95 to 2026–27) and `people.ts` by `src/data/members.ts`. Every contestant
+must have a unique `slug`; it becomes `/members/<slug>/`. Honors shown on a profile come from that
+season’s notes, and the staff line comes from `coachBySeason` and
+`coordinatorsBySeason` plus the same person record.
 
 ### Achievements
 
+The Achievements page has an `Overview` tab (World Finals and Regional
+Finals only) plus one tab per season. Season tabs show every result recorded
+for that season.
+
 Edit `src/data/achievements.ts`. The `category` field must be one of
 `"World Finals"`, `"Regional"`, `"Local"`, `"CCPC"` or `"Other"` to match the
-filter buttons. Update `achievementStats` when the headline numbers change.
+filter buttons. Each result stores a `teamId`, not a team name. IDs come from
+`teamSeasons` in `src/data/teams.ts`. Historical teams with unknown rosters
+are included with an empty `members` array. Use `teamId: null` for results
+with no known team. Update `achievementStats` when the headline numbers change.
 
-The current data was generated from the Provinci achievements table (2000–2026).
+The current records cover 2000–2026.
 When adding results, keep the newest-first order and update `achievementStats`
 if a headline number changes.
 
@@ -161,13 +187,8 @@ npm run preview
 - Fonts are bundled at build time. There are no third-party requests at
   runtime.
 - Add real social links, a mailing address and a privacy note before launch.
-- Team and contest data comes from the HKU Provinci pages. Confirm with the
-  coordinator before publishing updates; results are maintained by hand.
-
-## Sources
-
-- Teams: <https://i.cs.hku.hk/~provinci/contact.html>
-- Achievements: <https://i.cs.hku.hk/~provinci/achievements.html>
+- Team and contest data is maintained by hand. Confirm with the coordinator
+  before publishing updates.
 
 ## License
 

@@ -4,18 +4,25 @@ import { activePath, href } from '../lib/url';
 
 const current = activePath(Astro.url.pathname);
 const isActive = (target: string) =>
-  current === target || current.startsWith(`${target}/`);
+  current === target ||
+  current.startsWith(`${target}/`) ||
+  (target === '/people/' &&
+    current.startsWith('/members/'));
 ---
 
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href={href('/')} aria-label={`${site.shortName} home`}>
-      <span class="brand-mark" aria-hidden="true">
-        <span>H</span><span>K</span><span>U</span><span class="brand-mark-dot"></span>
-      </span>
+      <img
+        class="brand-logo"
+        src={href('/hku-crest.webp')}
+        width="1024"
+        height="1024"
+        alt="HKU crest"
+      />
       <span class="brand-type">
-        <span class="brand-name">HKU CPC</span>
-        <span class="brand-sub">Competitive Programming</span>
+        <span class="brand-name">Competitive Programming Community</span>
+        <span class="brand-sub">The University of Hong Kong</span>
       </span>
     </a>
 
@@ -33,7 +40,6 @@ const isActive = (target: string) =>
         ))}
       </nav>
 
-      <span class="header-season mono" aria-hidden="true">HK / 2025</span>
 
       <button
         class="nav-toggle"

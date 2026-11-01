@@ -20,6 +20,12 @@ const { post } = Astro.props;
 const related = posts.filter((item) => item.slug !== post.slug).slice(0, 2);
 const index = posts.findIndex((item) => item.slug === post.slug);
 const next = posts[(index + 1) % posts.length];
+
+const renderInline = (text: string) =>
+  text.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    (_, label: string, path: string) => `<a href="${href(path)}">${label}</a>`,
+  );
 ---
 
 <BaseLayout title={post.title} description={post.excerpt}>
@@ -51,17 +57,29 @@ const next = posts[(index + 1) % posts.length];
           {post.tags.map((tag) => <span class="tag mono">{tag}</span>)}
         </div>
         <p class="article-aside-note">
-          Written by the HKU Competitive Programming Community. Team and contest
-          data sourced from Provinci; article copy is illustrative.
+          Written by the HKU Competitive Programming Community.
         </p>
       </aside>
 
       <div class="prose">
         {post.body.map((block) => {
           if (block.startsWith('## ')) return <h2>{block.slice(3)}</h2>;
-          if (block.startsWith('> ')) return <blockquote><p>{block.slice(2)}</p></blockquote>;
-          return <p>{block}</p>;
+          if (block.startsWith('> ')) {
+            return (
+              <blockquote>
+                <p set:html={renderInline(block.slice(2))} />
+              </blockquote>
+            );
+          }
+          return <p set:html={renderInline(block)} />;
         })}
+        {post.links?.map((link) => (
+          <p>
+            <a href={link.href} target="_blank" rel="noreferrer">
+              {link.label} ↗
+            </a>
+          </p>
+        ))}
       </div>
     </div>
 

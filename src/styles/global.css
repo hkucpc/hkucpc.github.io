@@ -277,6 +277,23 @@ time {
   white-space: nowrap;
 }
 
+.award-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.award-rank {
+  font-size: 0.48rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.award--rank-only {
+  text-transform: none;
+}
+
 .award-dot {
   width: 0.28rem;
   height: 0.28rem;
@@ -298,9 +315,9 @@ time {
 }
 
 .award--bronze {
-  background: transparent;
+  background: var(--bronze);
   border-color: var(--bronze);
-  color: #7c4b2a;
+  color: var(--ink);
 }
 
 .award--champion {
@@ -309,6 +326,25 @@ time {
   color: var(--paper);
 }
 
+.award--first-prize {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--paper);
+}
+
+.award--highest-honours {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.award--high-honours {
+  background: var(--paper-deep);
+  border-color: var(--line-dark);
+  color: var(--ink);
+}
+
+.award--honours,
 .award--mention,
 .award--finalist,
 .award--position {
@@ -344,29 +380,10 @@ time {
   flex: none;
 }
 
-.brand-mark {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1px;
-  width: 40px;
-  height: 40px;
-  padding: 7px;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-mono);
-  font-size: 0.52rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.brand-mark > span {
-  display: grid;
-  place-items: center;
-}
-
-.brand-mark-dot {
-  background: var(--green-bright);
+.brand-logo {
+  display: block;
+  width: auto;
+  height: 38px;
 }
 
 .brand-type {
@@ -376,19 +393,21 @@ time {
 }
 
 .brand-name {
-  font-size: 0.94rem;
+  font-size: 0.78rem;
   font-weight: 650;
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
 }
 
 .brand-sub {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: 0.46rem;
   line-height: 1;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .header-right {
@@ -435,16 +454,6 @@ time {
 
 .nav-link.active .nav-index {
   color: var(--green);
-}
-
-.header-season {
-  padding-left: 1.1rem;
-  border-left: 1px solid var(--line);
-  font-size: 0.52rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
 }
 
 .nav-toggle {
@@ -809,7 +818,7 @@ time {
 
 .result-row {
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 2.3fr) minmax(0, 1fr) 5rem 10.5rem;
+  grid-template-columns: 5.25rem minmax(0, 1.3fr) minmax(24rem, 1fr) 13rem;
   gap: 1rem;
   align-items: baseline;
   padding: 0.95rem 0;
@@ -825,11 +834,20 @@ time {
   text-transform: uppercase;
   color: var(--muted);
 }
+.results--full .result-row {
+  border-bottom-color: transparent;
+}
+
+.results--full .result-row--group-end,
+.results--full .result-row--head {
+  border-bottom-color: var(--line);
+}
 
 .result-year {
   font-size: 0.62rem;
   color: var(--green);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .result-contest {
@@ -852,9 +870,16 @@ time {
   color: var(--muted);
 }
 
-.result-rank {
-  font-size: 0.58rem;
-  color: var(--muted);
+.result-team a {
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.result-team a:hover {
+  border-bottom-color: var(--line-dark);
+  color: var(--green);
 }
 
 .result-note {
@@ -863,26 +888,6 @@ time {
   font-size: 0.72rem;
   line-height: 1.35;
   color: var(--muted);
-}
-
-.source-note {
-  margin-top: 1.15rem;
-  font-size: 0.5rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.source-note a {
-  border-bottom: 1px solid var(--line-dark);
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease;
-}
-
-.source-note a:hover {
-  color: var(--green);
-  border-bottom-color: var(--green);
 }
 
 .results-empty {
@@ -957,7 +962,7 @@ time {
 
 .pillar-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0 var(--gutter);
 }
 
@@ -1027,7 +1032,7 @@ time {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr 0.8fr 0.95fr 1.1fr;
+  grid-template-columns: 1.6fr 0.8fr 0.95fr;
   gap: var(--gutter);
   padding-bottom: clamp(2rem, 3vw, 3rem);
   border-bottom: 1px solid var(--line);
@@ -1063,13 +1068,6 @@ time {
   color: var(--green);
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-
-.footer-note {
-  margin-bottom: 0.85rem;
-  font-size: 0.75rem;
-  line-height: 1.45;
-  color: var(--muted);
 }
 
 .footer-bottom {
@@ -1246,6 +1244,17 @@ time {
   grid-column: 1 / span 7;
 }
 
+.join-step p a {
+  color: var(--green);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.join-step p a:hover {
+  color: var(--green-bright);
+}
+
 .join-step {
   display: grid;
   grid-template-columns: 3rem minmax(0, 1fr);
@@ -1351,47 +1360,25 @@ time {
   border-top: 1px solid var(--ink);
 }
 
-.team-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.team-no {
-  font-size: 0.52rem;
-  color: var(--muted);
-}
-
-.team-tier {
-  justify-self: start;
-  padding: 0.24rem 0.4rem;
-  border: 1px solid var(--line-dark);
-  font-size: 0.46rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.team-count {
-  font-size: 0.5rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
 .team-name {
   margin-bottom: 0.55rem;
-  font-size: clamp(2rem, 3.5vw, 3.1rem);
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
   font-weight: 550;
-  line-height: 0.9;
-  letter-spacing: -0.055em;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
 }
 
-.team-alternate {
-  margin-bottom: 1.1rem;
-  font-size: 0.86rem;
+.team-name a {
+  transition: color 0.15s ease;
+}
+
+.team-name a:hover {
+  color: var(--green);
+}
+
+.team-page-alternate {
+  margin: -0.35rem 0 0.9rem;
+  font-size: 0.95rem;
   letter-spacing: 0.02em;
   color: var(--green);
 }
@@ -1430,17 +1417,6 @@ time {
 .member-program {
   font-size: 0.48rem;
   color: var(--muted);
-}
-
-.member-handle {
-  align-self: flex-start;
-  font-size: 0.48rem;
-  color: var(--green);
-  border-bottom: 1px solid var(--line-dark);
-}
-
-.member-handle:hover {
-  border-bottom-color: var(--green);
 }
 
 .team-honors {
@@ -1720,7 +1696,7 @@ time {
 
 .member-season-head {
   display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr) auto;
+  grid-template-columns: 5rem minmax(0, 1fr);
   gap: 1rem;
   align-items: baseline;
   margin-bottom: 1.2rem;
@@ -1745,14 +1721,6 @@ time {
 
 .member-season-head h2 a:hover {
   color: var(--green);
-}
-
-.member-season-coach {
-  font-size: 0.48rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-align: right;
 }
 
 .member-season-body {
@@ -1937,11 +1905,6 @@ time {
     padding-top: 0.2rem;
   }
 
-  .member-season-coach {
-    grid-column: 2;
-    text-align: left;
-  }
-
   .teammate-grid {
     grid-template-columns: 1fr;
   }
@@ -2048,12 +2011,20 @@ time {
   text-transform: uppercase;
 }
 
-.season-coaches {
-  padding-block: 1.5rem 1.75rem;
+.season-staff {
+  padding-block: 1.5rem;
   border-bottom: 1px solid var(--line);
 }
 
-.season-coaches > .kicker {
+.season-staff > .kicker {
+  margin-bottom: 1rem;
+}
+
+.season-members {
+  padding-top: 1.5rem;
+}
+
+.season-members > .kicker {
   margin-bottom: 1rem;
 }
 
@@ -2092,18 +2063,7 @@ time {
 
 @media (max-width: 860px) {
   .year-tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
     padding-block: 0.7rem;
-    scrollbar-width: none;
-  }
-
-  .year-tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .year-tab {
-    flex: none;
   }
 
   .year-head {
@@ -2122,14 +2082,135 @@ time {
   .year-title {
     font-size: 3.4rem;
   }
+}
 
-  .team-card-top {
-    gap: 0.6rem;
+
+/* Staff profiles --------------------------------------------------------- */
+
+.staff-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-block: 1px solid var(--line);
+  border-top-color: var(--ink);
+}
+
+.staff-summary-item {
+  padding: 1.4rem 1.5rem;
+  border-left: 1px solid var(--line);
+}
+
+.staff-summary-item:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.staff-summary-label {
+  margin-bottom: 0.45rem;
+  font-size: 0.5rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.staff-summary-value {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.staff-summary-value a {
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.staff-summary-value a:hover {
+  border-bottom-color: var(--line-dark);
+  color: var(--green);
+}
+
+.staff-contact {
+  border-top: 1px solid var(--ink);
+}
+
+.staff-contact-item {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: baseline;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.staff-contact-item .mono {
+  font-size: 0.5rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.staff-contact-value {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  transition: color 0.15s ease;
+}
+
+.staff-contact-arrow {
+  font-size: 0.9rem;
+  line-height: 1;
+  transition:
+    color 0.15s ease,
+    transform 0.2s ease;
+}
+
+.staff-contact-item:hover .staff-contact-value,
+.staff-contact-item:hover .staff-contact-arrow {
+  color: var(--green);
+}
+
+.staff-contact-item:hover .staff-contact-arrow {
+  transform: translate(3px, -3px);
+}
+
+.staff-contact-empty {
+  padding: 1rem 0;
+  border-top: 1px solid var(--ink);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .staff-summary {
+    grid-template-columns: 1fr;
   }
 
-  .member-season-coach {
-    max-width: 22rem;
-    line-height: 1.5;
+  .staff-summary-item,
+  .staff-summary-item:first-child {
+    padding: 1.1rem 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .staff-summary-item:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .staff-contact-item {
+    grid-template-columns: 1fr auto;
+    gap: 0.25rem 1rem;
+  }
+
+  .staff-contact-item .mono {
+    grid-column: 1 / -1;
+  }
+
+  .staff-contact-arrow {
+    grid-column: 2;
+    grid-row: 2;
   }
 }
 
@@ -2504,6 +2585,17 @@ time {
   letter-spacing: -0.04em;
 }
 
+.prose a {
+  color: var(--green);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.prose a:hover {
+  color: var(--green-bright);
+}
+
 .prose blockquote {
   margin: 2rem 0;
   padding-left: 1.4rem;
@@ -2634,10 +2726,6 @@ time {
 }
 
 @media (max-width: 960px) {
-  .header-season {
-    display: none;
-  }
-
   .hero-foot {
     row-gap: 1.75rem;
   }
@@ -2869,7 +2957,7 @@ time {
   }
 
   .result-row {
-    grid-template-columns: 3.5rem minmax(0, 2fr) minmax(0, 1fr) 4.5rem 9.5rem;
+    grid-template-columns: 4.75rem minmax(0, 1fr) minmax(18rem, 1fr) 11rem;
     gap: 0.75rem;
   }
 
@@ -2911,13 +2999,13 @@ time {
 
 @media (max-width: 640px) {
   .brand-sub {
-    display: none;
+    display: block;
+    font-size: 0.42rem;
+    letter-spacing: 0.06em;
   }
 
-  .brand-mark {
-    width: 36px;
-    height: 36px;
-    padding: 6px;
+  .brand-logo {
+    height: 32px;
   }
 
   .hero-meta {
@@ -3011,7 +3099,7 @@ time {
   }
 
   .result-row {
-    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
     gap: 0.25rem 0.75rem;
     padding: 0.9rem 0;
   }
@@ -3039,15 +3127,10 @@ time {
     font-size: 0.8rem;
   }
 
-  .result-rank {
-    grid-column: 3;
-    grid-row: 2;
-    justify-self: end;
-  }
-
   .result-row > span:last-child {
     grid-column: 3;
-    grid-row: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
     justify-self: end;
   }
 
@@ -3125,11 +3208,6 @@ time {
   .team-members {
     grid-template-columns: 1fr;
     gap: 0.7rem;
-  }
-
-  .team-card-top {
-    grid-template-columns: 2rem minmax(0, 1fr) auto;
-    gap: 0.6rem;
   }
 
   .coach-grid {
@@ -3225,5 +3303,72 @@ time {
 
   .article-next a span:first-child {
     font-size: 1.25rem;
+  }
+}
+
+/* Achievements by season ------------------------------------------------- */
+
+.achievement-overview {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.achievement-overview-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ink);
+}
+
+.overview-title {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+}
+
+.overview-count {
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.results--by-season .result-category {
+  display: inline;
+}
+
+.results--no-year .result-row {
+  grid-template-columns: minmax(0, 1.3fr) minmax(24rem, 1fr) 13rem;
+}
+
+@media (max-width: 860px) {
+  .results--no-year .result-row {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 1fr) 11rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .results--no-year .result-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .results--no-year .result-contest {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .results--no-year .result-team {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .results--no-year .result-row > span:last-child {
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
 }

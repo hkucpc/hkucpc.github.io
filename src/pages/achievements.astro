@@ -1,29 +1,41 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import SectionHead from '../components/SectionHead.astro';
-import Award from '../components/Award.astro';
+import AchievementTable from '../components/AchievementTable.astro';
 import JoinCta from '../components/JoinCta.astro';
-import {
-  achievementStats,
-  achievements,
-  worldFinals,
-} from '../data/achievements';
-import { href } from '../lib/url';
+import { achievementStats, achievements, worldFinals } from '../data/achievements';
+import { formatSeason } from '../lib/season';
 
-const filters = ['All', 'World Finals', 'Regional', 'Local', 'CCPC', 'Other'] as const;
+const years = [...new Set(achievements.map((item) => String(item.year)))].sort(
+  (a, b) => Number(b) - Number(a),
+);
+
+const seasons = years.map((year) => ({
+  year,
+  rows: achievements.filter((item) => String(item.year) === year),
+}));
+
+const regionalFinals = achievements.filter((item) =>
+  /East Continent Final|East Continent League Final|China Final|CCPC Final/.test(item.contest),
+);
+
+const regionalMedals = achievements.filter(
+  (item) =>
+    item.category === 'Regional' &&
+    ['Gold', 'Silver', 'Bronze'].includes(item.award),
+).length;
 ---
 
 <BaseLayout
   title="Achievements"
-  description="World Finals appearances, regional medals and the complete contest record of HKU teams since 2000."
+  description="ICPC World Finals appearances, ICPC and CCPC medals, ACM-HK titles and the complete contest record of HKU teams."
 >
   <PageHeader
     index="03"
     label="Achievements"
     title="The record."
-    intro="Ten World Finals appearances, a World Finals bronze and 58 regional medals since 2000. Every line below started as a practice problem nobody could solve."
-    meta={`2000 — 2026 / ${achievements.length} entries`}
+    intro={`${worldFinals.length} ICPC World Finals appearances, an ICPC World Finals bronze and ${regionalMedals} ICPC regional medals. The record also covers CCPC finals and the ACM-HK Programming Contest, from a 1990–91 local title to the 2026 Xi’an and Chengdu regionals. Some early results may be missing.`}
+    meta={`1990 — 2026 / ${achievements.length} entries`}
   />
 
   <section class="section">
@@ -43,86 +55,90 @@ const filters = ['All', 'World Finals', 'Regional', 'Local', 'CCPC', 'Other'] as
 
   <section class="section">
     <div class="container">
-      <SectionHead
-        index="01"
-        title="Contest record"
-        description="Filter by contest level. Records are listed newest first."
-      />
-
-      <div class="filter-bar" role="group" aria-label="Filter achievements by category">
-        {filters.map((filter, index) => (
+      <div
+        class="year-tabs"
+        role="tablist"
+        aria-label="Select a season or overview"
+        data-achievement-tabs
+      >
+        <button
+          class="year-tab active"
+          type="button"
+          role="tab"
+          id="achievement-tab-overview"
+          aria-selected="true"
+          aria-controls="achievement-panel-overview"
+          tabindex="0"
+          data-achievement-tab="overview"
+        >
+          <span class="year-tab-year">Overview</span>
+        </button>
+        {seasons.map(({ year, rows }) => (
           <button
-            class="filter"
+            class="year-tab"
             type="button"
-            data-filter={filter}
-            aria-pressed={index === 0 ? 'true' : 'false'}
+            role="tab"
+            id={`achievement-tab-${year}`}
+            aria-selected="false"
+            aria-controls={`achievement-panel-${year}`}
+            tabindex="-1"
+            data-achievement-tab={year}
           >
-            {filter}
+            <span class="year-tab-year">{formatSeason(year)}</span>
+            <span class="year-tab-count">{rows.length}</span>
           </button>
         ))}
-        <p class="filter-count mono" data-filter-count>{achievements.length} entries</p>
       </div>
 
-      <div class="results results--full" data-achievement-table>
-        <div class="result-row result-row--head mono" aria-hidden="true">
-          <span>Year</span>
-          <span>Contest</span>
-          <span>Team</span>
-          <span>Rank</span>
-          <span>Award</span>
-        </div>
-        {achievements.map((row) => (
-          <div class="result-row" data-category={row.category}>
-            <span class="result-year mono">{row.year}</span>
-            <span class="result-contest">
-              {row.contest}
-              <span class="result-category mono">{row.category}</span>
-              {row.note && <span class="result-note">{row.note}</span>}
-            </span>
-            <span class="result-team">{row.team}</span>
-            <span class="result-rank mono">{row.rank}</span>
-            <span><Award award={row.award} /></span>
+      <div
+        class="year-panel"
+        id="achievement-panel-overview"
+        role="tabpanel"
+        aria-labelledby="achievement-tab-overview"
+        data-achievement-panel="overview"
+      >
+        <div class="achievement-overview">
+          <div class="achievement-overview-head">
+            <div>
+              <p class="kicker">Overview</p>
+              <h2 class="overview-title">ICPC World Finals</h2>
+            </div>
+            <p class="overview-count mono">{worldFinals.length} appearances</p>
           </div>
-        ))}
-        <p class="results-empty" data-empty hidden>No results in this category.</p>
-      </div>
+          <AchievementTable rows={worldFinals} />
 
-      <p class="source-note mono">
-        Source: <a href="https://i.cs.hku.hk/~provinci/achievements.html" rel="noreferrer">HKU Provinci achievements archive ↗</a>
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="split">
-        <div class="split-left">
-          <p class="kicker">02 / World Finals</p>
-          <h2 class="split-title">On the<br />biggest stage.</h2>
-          <p class="split-copy">
-            The World Finals brings the best university teams in the world into
-            one room. HKU has been there ten times, and came home with a bronze
-            in 2005.
-          </p>
-          <a class="btn btn--ghost" href={href('/news/')}>Read the stories <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="split-right">
-          <ol class="finals-list">
-            {worldFinals.map((item) => (
-              <li>
-                <span class="finals-year mono">{item.year}</span>
-                <div>
-                  <strong>{item.contest}</strong>
-                  <span>
-                    {item.team} · {item.award === 'Position' ? `${item.rank} place` : item.award}
-                    {item.rank !== '—' && item.award !== 'Position' ? ` · ${item.rank}` : ''}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div class="achievement-overview-head">
+            <div>
+              <p class="kicker">Overview</p>
+              <h2 class="overview-title">Regional Finals</h2>
+            </div>
+            <p class="overview-count mono">{regionalFinals.length} results</p>
+          </div>
+          <AchievementTable rows={regionalFinals} />
         </div>
       </div>
+
+      {seasons.map(({ year, rows }) => (
+        <div
+          class="year-panel"
+          id={`achievement-panel-${year}`}
+          role="tabpanel"
+          aria-labelledby={`achievement-tab-${year}`}
+          data-achievement-panel={year}
+          hidden
+        >
+          <div class="year-head">
+            <div>
+              <p class="kicker">Season</p>
+              <h2 class="year-title">{formatSeason(year)}</h2>
+            </div>
+            <div class="year-meta">
+              <p>{rows.length} {rows.length === 1 ? 'result' : 'results'}</p>
+            </div>
+          </div>
+          <AchievementTable rows={rows} showCategory />
+        </div>
+      ))}
     </div>
   </section>
 
@@ -131,31 +147,52 @@ const filters = ['All', 'World Finals', 'Regional', 'Local', 'CCPC', 'Other'] as
     title="Add your name to the record."
     text="Every result on this page began with someone deciding to try a contest. The next intake starts in September."
     linkLabel="How to join"
-    linkHref="/about/#join"
+    linkHref="/join/"
   />
 </BaseLayout>
 
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
-  const rows = document.querySelectorAll<HTMLElement>('[data-achievement-table] [data-category]');
-  const count = document.querySelector<HTMLElement>('[data-filter-count]');
-  const empty = document.querySelector<HTMLElement>('[data-empty]');
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-achievement-tab]')];
+  const panels = [...document.querySelectorAll<HTMLElement>('[data-achievement-panel]')];
 
-  const apply = (filter: string) => {
-    let visible = 0;
-    rows.forEach((row) => {
-      const show = filter === 'All' || row.dataset.category === filter;
-      row.hidden = !show;
-      if (show) visible += 1;
+  const activate = (key: string, updateHash = true) => {
+    const validKey = panels.some((panel) => panel.dataset.achievementPanel === key)
+      ? key
+      : 'overview';
+
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.achievementTab === validKey;
+      tab.classList.toggle('active', selected);
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
     });
-    if (count) count.textContent = `${visible} ${visible === 1 ? 'entry' : 'entries'}`;
-    if (empty) empty.hidden = visible !== 0;
+
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.achievementPanel !== validKey;
+    });
+
+    if (updateHash) {
+      history.replaceState(
+        null,
+        '',
+        validKey === 'overview' ? '#overview' : `#year-${validKey}`,
+      );
+    }
   };
 
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      buttons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
-      apply(button.dataset.filter ?? 'All');
+  const hashYear = location.hash.match(/^#year-(\\d{4})/)?.[1];
+  activate(hashYear ?? 'overview', false);
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(tab.dataset.achievementTab ?? 'overview'));
+
+    tab.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      const next = tabs[(index + direction + tabs.length) % tabs.length];
+      next.focus();
+      activate(next.dataset.achievementTab ?? 'overview');
     });
   });
 </script>

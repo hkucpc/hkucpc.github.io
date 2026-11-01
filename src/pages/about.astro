@@ -3,88 +3,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHead from '../components/SectionHead.astro';
 import JoinCta from '../components/JoinCta.astro';
-import { site } from '../data/site';
 
 const facts = [
-  { label: 'Record since', value: '2000' },
-  { label: 'Based in', value: 'Department of Computer Science' },
-  { label: 'World Finals', value: '10 appearances' },
-  { label: 'Regional medals', value: '58 and counting' },
+  { label: 'Founded', value: '1991' },
+  { label: 'Based in', value: 'Department of Computer Science / Department of AI & Data Science' },
+  { label: 'ICPC World Finals', value: '10 appearances' },
+  { label: 'ICPC regional medals', value: '65 and counting' },
 ];
 
 const pillars = [
   {
     no: '01',
     title: 'Train',
-    text: 'Two sessions a week: a theory block, a five-hour contest simulation, and a group upsolve. Problem sets are curated, not scraped. Sessions are free and open to all HKU students.',
+    text: 'Weekly training during term, usually on Virtual Judge: theory, problem solving and contest simulations, plus a group upsolve. Problem sets are curated, not scraped. Sessions are free and open to all HKU students.',
   },
   {
     no: '02',
     title: 'Select',
-    text: 'Each season we run an individual team formation test. It places competitors into squads by experience and working style. Nobody is cut from the community; the test decides where you start, not whether you belong.',
+    text: 'Each season we run a 2.5-hour individual selection contest. It places contestants into squads, but it is not an entrance exam. Everyone can keep training and taking part in community activities regardless of selection.',
   },
   {
     no: '03',
     title: 'Compete',
-    text: 'We field multiple squads across ICPC regional and continental rounds, invitationals and open contests. Travel is supported by the department and the community’s alumni fund.',
-  },
-  {
-    no: '04',
-    title: 'Give back',
-    text: 'Senior members teach the beginner bootcamp, write practice problems and mentor first-time competitors. Alumni return for mock contests, career sessions and the annual dinner.',
+    text: 'We field multiple squads across ICPC and CCPC regionals and finals, the ACM-HK Programming Contest, invitationals and open contests. Travel is supported jointly by the Department of Computer Science and the Department of AI & Data Science.',
   },
 ];
 
-const timeline = [
-  {
-    year: '2000',
-    title: 'The record begins',
-    text: 'HKU takes 3rd place at the Hong Kong Regional — the first result in the archive that now stretches across 26 seasons.',
-  },
-  {
-    year: '2001',
-    title: 'First World Finals',
-    text: 'Team TICK qualifies for the 25th ICPC World Finals in Canada, finishing 29th.',
-  },
-  {
-    year: '2005',
-    title: 'A World Finals bronze',
-    text: 'HKUCS1 finishes 12th at the 29th World Finals in China and brings home a bronze medal.',
-  },
-  {
-    year: '2012',
-    title: 'Champions in Hanoi',
-    text: 'GMT wins the Hanoi Regional, while IT Genius finishes 3rd. The same season, Azureus places 4th in Jakarta.',
-  },
-  {
-    year: '2018',
-    title: 'CCPC Final gold',
-    text: 'GMT+7 takes gold and 5th place at the CCPC Final in Shenzhen, alongside a gold at the Xi’an East Continent Final.',
-  },
-  {
-    year: '2025',
-    title: 'Four squads, two home medals',
-    text: 'Hot Kpop Union wins gold at the Hong Kong Regional and places 40th at the World Finals. Team name ddl today takes silver, while Waiguoren medals in Nanjing and Shanghai.',
-  },
-];
 
-const joinSteps = [
-  {
-    no: '01',
-    title: 'Come to an open session',
-    text: 'We meet weekly during term time. The room and time are announced each semester on the mailing list. No registration, no interview. Bring a laptop if you have one.',
-  },
-  {
-    no: '02',
-    title: 'Take the formation test',
-    text: 'Each season: five hours, nine problems, individual. It is a placement exercise, not an entrance exam. First-years and non-CS majors are especially welcome.',
-  },
-  {
-    no: '03',
-    title: 'Join a squad',
-    text: 'You will be placed in a training group with a coach and a contest calendar. From there, progress is mostly a function of showing up and upsolving.',
-  },
-];
+
+
 ---
 
 <BaseLayout
@@ -95,8 +42,8 @@ const joinSteps = [
     index="01"
     label="About"
     title="A small community with a high bar."
-    intro="HKU’s competitive programming community, supported by the Department of Computer Science. Our business is algorithmic problem solving, and our favourite result is the next one."
-    meta="Record since 2000 / Pokfulam, Hong Kong"
+    intro="A student-run community supported by the Department of Computer Science and the Department of AI & Data Science, founded in 1991. We train weekly, place contestants into squads through an annual selection contest, and compete across ICPC and CCPC contests, the ACM-HK Programming Contest, and other regional and open contests."
+    meta="Founded 1991 / Record 1990 — 2026"
   />
 
   <section class="section">
@@ -129,7 +76,7 @@ const joinSteps = [
       <SectionHead
         index="01"
         title="What we do"
-        description="Four commitments, unchanged since the first season."
+        description="Three commitments that shape every season."
       />
       <div class="pillar-grid">
         {pillars.map((pillar) => (
@@ -143,79 +90,15 @@ const joinSteps = [
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <SectionHead
-        index="02"
-        title="How we got here"
-        description="A short history of a community that keeps taking the next problem."
-      />
-      <ol class="timeline">
-        {timeline.map((item) => (
-          <li class="timeline-item">
-            <span class="timeline-year">{item.year}</span>
-            <div class="timeline-body">
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
 
-  <section class="section" id="join">
-    <div class="container">
-      <SectionHead
-        index="03"
-        title="Join the community"
-        description="There is no application form and no minimum rating. There is a weekly session, and a seat for you."
-      />
 
-      <div class="join-info">
-        <div class="join-steps">
-          {joinSteps.map((step) => (
-            <article class="join-step">
-              <span class="join-step-no mono">{step.no}</span>
-              <div>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
 
-        <aside class="join-aside">
-          <p class="kicker">Practical notes</p>
-          <dl class="detail-list">
-            <div>
-              <dt class="mono">Who</dt>
-              <dd>Any HKU student, any year, any major.</dd>
-            </div>
-            <div>
-              <dt class="mono">Cost</dt>
-              <dd>Free. Travel support is available for selected teams.</dd>
-            </div>
-            <div>
-              <dt class="mono">When</dt>
-              <dd>Weekly during term; the schedule is announced by email.</dd>
-            </div>
-            <div>
-              <dt class="mono">Where</dt>
-              <dd>On campus; the room is announced each semester.</dd>
-            </div>
-          </dl>
-          <a class="btn" href={`mailto:${site.email}`}>Ask us anything <span aria-hidden="true">→</span></a>
-        </aside>
-      </div>
-    </div>
-  </section>
 
   <JoinCta
     eyebrow="Next intake / Each season"
-    title="Start with one session."
-    text="Turn up, solve something, meet the people you will be debugging with at 2 a.m. before a regional. That is the whole pitch."
-    linkLabel="Email the community"
-    linkHref="mailto:hello@hkucpc.example"
+    title="New to competitive programming?"
+    text="Start with the community channels, come to an info session and take the selection contest. No application form and no minimum rating."
+    linkLabel="How to join"
+    linkHref="/join/"
   />
 </BaseLayout>

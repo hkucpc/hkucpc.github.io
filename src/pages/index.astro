@@ -4,9 +4,11 @@ import SectionHead from '../components/SectionHead.astro';
 import NewsCard from '../components/NewsCard.astro';
 import Award from '../components/Award.astro';
 import JoinCta from '../components/JoinCta.astro';
-import { stats } from '../data/site';
+import { site, stats } from '../data/site';
+import { formatSeason } from '../lib/season';
 import { posts } from '../data/news';
 import { achievements } from '../data/achievements';
+import { getTeamRef } from '../data/teamRegistry';
 import { href } from '../lib/url';
 
 const latest = posts.slice(0, 3);
@@ -20,23 +22,24 @@ const selected = achievements
     <div class="container">
       <div class="hero-meta mono">
         <span>The University of Hong Kong</span>
-        <span>Since 2000</span>
+        <span>Since 1991</span>
         <span>Hong Kong</span>
-        <span class="hero-meta-accent">Season 2025</span>
+        <span class="hero-meta-accent">Season {formatSeason(site.currentSeason)}</span>
       </div>
 
       <h1 class="hero-title">
         <span class="line">Competitive</span>
         <span class="line line--indent">Programming</span>
-        <span class="line line--end">at HKU<span class="dot" aria-hidden="true"></span></span>
+        <span class="line line--end">@ HKU<span class="dot" aria-hidden="true"></span></span>
       </h1>
 
       <div class="hero-foot">
         <div class="hero-intro">
           <p>
-            We train, select and support the University of Hong Kong’s teams for
-            the International Collegiate Programming Contest — and for the
-            harder problems that come after it.
+            Founded in 1991, we train, select and support the University of Hong
+            Kong’s teams for the ICPC, CCPC, the ACM-HK Programming Contest and
+            other regional and open contests — from weekly training to
+            continental finals and the ICPC World Finals.
           </p>
           <div class="hero-actions">
             <a class="btn" href={href('/about/')}>About the community <span aria-hidden="true">→</span></a>
@@ -47,10 +50,10 @@ const selected = achievements
         <div class="hero-aside">
           <div class="hero-note">
             <p class="kicker">The season</p>
-            <p>Four squads. Twelve competitors. One weekly ritual: contest, upsolve, repeat.</p>
+            <p>Thirteen squads. Thirty-three contestants. One weekly ritual: contest, upsolve, repeat.</p>
           </div>
           <div class="hero-note">
-            <p class="kicker">Next up</p>
+            <p class="kicker">Latest result</p>
             <p>49th ICPC World Finals<br />40th place, Baku 2025</p>
           </div>
         </div>
@@ -93,7 +96,7 @@ const selected = achievements
         title="Selected results"
         linkHref="/achievements/"
         linkLabel="Full record"
-        description="Twenty-six seasons of contests, condensed to the results we are proudest of."
+        description="Three decades of contests, condensed to the results we are proudest of."
       />
 
       <div class="results">
@@ -101,16 +104,14 @@ const selected = achievements
           <span>Year</span>
           <span>Contest</span>
           <span>Team</span>
-          <span>Rank</span>
           <span>Award</span>
         </div>
         {selected.map((row) => (
           <div class="result-row">
             <span class="result-year mono">{row.year}</span>
             <span class="result-contest">{row.contest}</span>
-            <span class="result-team">{row.team}</span>
-            <span class="result-rank mono">{row.rank}</span>
-            <span><Award award={row.award} /></span>
+            <span class="result-team">{getTeamRef(row.teamId)?.name ?? '—'}</span>
+            <span><Award award={row.award} rank={row.rank} /></span>
           </div>
         ))}
       </div>

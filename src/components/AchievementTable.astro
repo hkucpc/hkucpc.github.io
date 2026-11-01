@@ -1,0 +1,90 @@
+---
+import type { Achievement } from '../data/achievements';
+import { getTeamRef } from '../data/teamRegistry';
+import { href } from '../lib/url';
+import Award from './Award.astro';
+
+interface Props {
+  rows: Achievement[];
+  showCategory?: boolean;
+  showYear?: boolean;
+}
+
+const { rows, showCategory = false, showYear = true } = Astro.props;
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const dateValue = (row: Achievement) => row.date ?? `${row.year}-01-01`;
+const rankValue = (row: Achievement) => {
+  const rank = Number.parseInt(row.rank, 10);
+  return Number.isNaN(rank) ? Number.POSITIVE_INFINITY : rank;
+};
+const sortedRows = [...rows].sort((a, b) => {
+  const byDate = dateValue(b).localeCompare(dateValue(a));
+  if (byDate !== 0) return byDate;
+  if (a.year === b.year && a.contest === b.contest) {
+    return rankValue(a) - rankValue(b);
+  }
+  return 0;
+});
+const displayDate = (row: Achievement) => {
+  if (!row.date) return String(row.year);
+  if (row.date.length === 4) return row.date;
+  const [year, month, day] = row.date.split('-');
+  return `${Number(day)} ${months[Number(month) - 1]} ${year}`;
+};
+---
+
+<div class:list={['results', 'results--full', { 'results--by-season': showCategory, 'results--no-year': !showYear }]}>
+  <div class="result-row result-row--head mono" aria-hidden="true">
+    {showYear && <span>Date</span>}
+    <span>Contest</span>
+    <span>Team</span>
+    <span>Award</span>
+  </div>
+  {sortedRows.map((row, index) => {
+    const team = getTeamRef(row.teamId);
+    const previous = sortedRows[index - 1];
+    const next = sortedRows[index + 1];
+    const showMeta =
+      !previous ||
+      dateValue(previous) !== dateValue(row) ||
+      previous.contest !== row.contest;
+    const groupEnd =
+      !next ||
+      dateValue(next) !== dateValue(row) ||
+      next.contest !== row.contest;
+    return (
+      <div class:list={['result-row', { 'result-row--group-end': groupEnd }]}>
+        {showYear && (
+          <span class="result-year mono">{showMeta ? displayDate(row) : ''}</span>
+        )}
+        <span class="result-contest">
+          {showMeta && (
+            <>
+              {row.contest}
+              <span class="result-category mono">
+                {row.category === 'World Finals' ? 'ICPC World Finals' : row.category}
+              </span>
+              {row.note && <span class="result-note">{row.note}</span>}
+            </>
+          )}
+        </span>
+        <span class="result-team">
+          {team ? (
+            team.hasPage ? (
+              <a href={href(`/people/${team.id}/`)}>{team.name}</a>
+            ) : (
+              team.name
+            )
+          ) : row.category === 'Local' ? (
+            'HKU'
+          ) : (
+            '—'
+          )}
+        </span>
+        <span><Award award={row.award} rank={row.rank} /></span>
+      </div>
+    );
+  })}
+  {rows.length === 0 && <p class="results-empty">No results recorded.</p>}
+</div>

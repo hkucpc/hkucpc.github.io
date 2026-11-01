@@ -1,0 +1,267 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import JoinCta from '../../components/JoinCta.astro';
+import {
+  coachBySeason,
+  coordinatorsBySeason,
+  seasonMembersBySeason,
+  teamSeasons,
+} from '../../data/teams';
+import { getNote, getPerson, type Person } from '../../data/people';
+import { href } from '../../lib/url';
+import { formatSeason } from '../../lib/season';
+
+const years = [
+  ...new Set([
+    ...teamSeasons.map((team) => team.season),
+    ...Object.keys(coachBySeason),
+    ...Object.keys(seasonMembersBySeason),
+  ]),
+].sort((a, b) => Number(b) - Number(a));
+const playerCount = new Set([
+  ...teamSeasons.flatMap((team) => team.members),
+  ...Object.values(seasonMembersBySeason).flatMap((members) => members),
+]).size;
+
+const groups = years.map((year) => {
+  const teams = teamSeasons.filter((team) => team.season === year);
+  const memberMap = new Map<string, Person>();
+  const addMember = (slug: string) => {
+    const person = getPerson(slug);
+    if (person) memberMap.set(slug, person);
+  };
+  for (const team of teams) {
+    for (const slug of team.members) addMember(slug);
+  }
+  for (const slug of seasonMembersBySeason[year] ?? []) {
+    addMember(slug);
+  }
+  const members = [...memberMap.values()].sort((a, b) => a.name.localeCompare(b.name));
+  const coach = coachBySeason[year];
+  const coachPerson = coach ? getPerson(coach) : undefined;
+  const coachNote = coachPerson ? getNote(coachPerson, year) : undefined;
+  return {
+    year,
+    teams,
+    members,
+    coach,
+    coachNote,
+    coordinator: coordinatorsBySeason[year],
+    playerCount: members.length,
+  };
+});
+
+const defaultYear =
+  groups.find((group) => group.teams.length > 0)?.year ?? groups[0].year;
+
+
+---
+
+<BaseLayout
+  title="People"
+  description="Every HKU competitive programming squad and coach, year by year."
+>
+  <PageHeader
+    index="02"
+    label="People"
+    title="Every squad, by year."
+    intro={`${teamSeasons.length} squads and ${playerCount} contestants on record, from ${formatSeason(years[years.length - 1])} to ${formatSeason(years[0])}. Browse by season for squads, coaches and coordinators; open a contestant’s name for their full history and awards. Some early records are incomplete and may be missing squads or contestants.`}
+    meta={`${formatSeason(years[years.length - 1])} — ${formatSeason(years[0])} / ${teamSeasons.length} squads / ${playerCount} contestants`}
+  />
+
+  <section class="section section--flush-top teams-years">
+    <div class="container">
+      <div class="year-tabs" role="tablist" aria-label="Select a season" data-default-year={defaultYear}>
+        {groups.map((group, index) => (
+          <button
+            class:list={['year-tab', { active: group.year === defaultYear }]}
+            type="button"
+            role="tab"
+            id={`year-tab-${group.year}`}
+            aria-selected={group.year === defaultYear ? 'true' : 'false'}
+            aria-controls={`year-panel-${group.year}`}
+            tabindex={group.year === defaultYear ? 0 : -1}
+            data-year-tab={group.year}
+          >
+            <span class="year-tab-year">{formatSeason(group.year)}</span>
+            <span class="year-tab-count">{group.teams.length || '—'}</span>
+          </button>
+        ))}
+      </div>
+
+      {groups.map((group, index) => (
+        <div
+          class="year-panel"
+          id={`year-panel-${group.year}`}
+          role="tabpanel"
+          aria-labelledby={`year-tab-${group.year}`}
+          data-year-panel={group.year}
+          hidden={group.year !== defaultYear}
+        >
+          <div class="year-head">
+            <div>
+              <p class="kicker">Season</p>
+              <h2 class="year-title">{formatSeason(group.year)}</h2>
+            </div>
+            <div class="year-meta">
+              <p>
+                {group.teams.length > 0
+                  ? `${group.teams.length} squads / ${group.playerCount} contestants`
+                  : 'Squad announcements pending'}
+              </p>
+            </div>
+          </div>
+
+          {group.coordinator && (
+            <div class="season-staff">
+              <p class="kicker">Coordinator</p>
+              <ul class="teammate-grid">
+                <li class="teammate-card">
+                  <a href={href(`/members/${group.coordinator}/`)}>
+                    {getPerson(group.coordinator)?.name ?? group.coordinator}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
+
+          {group.coach && (
+            <div class="season-staff">
+              <p class="kicker">Coach</p>
+              <ul class="teammate-grid">
+                <li class="teammate-card">
+                  <a href={href(`/members/${group.coach}/`)}>
+                    {getPerson(group.coach)?.name ?? group.coach}
+                  </a>
+                  {group.coachNote && group.coachNote !== 'Coach' && (
+                    <span class="mono">{group.coachNote}</span>
+                  )}
+                </li>
+              </ul>
+            </div>
+          )}
+
+          {group.members.length > 0 && (
+            <div class="season-members">
+              <p class="kicker">Contestants</p>
+              <ul class="teammate-grid">
+                {group.members.map((member) => (
+                  <li class="teammate-card">
+                    <a href={href(`/members/${member.slug}/`)}>{member.name}</a>
+                    {getNote(member, group.year) && <span class="mono">{getNote(member, group.year)}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div class="season-teams">
+            <p class="kicker">Team formations</p>
+            {group.teams.length === 0 && (
+              <p class="season-empty">
+                The 2026 squads have not been announced yet. Team formation and
+                roster updates will be posted on the <a href={href('/news/')}>news page</a>.
+              </p>
+            )}
+            {group.teams.length > 0 && (
+            <div class="team-grid">
+              {group.teams.map((team) => (
+                <article class="team-card" id={team.id}>
+                  <h3 class="team-name">
+                    <a href={href(`/people/${team.id}/`)}>{team.name}</a>
+                  </h3>
+
+                  {team.members.length > 0 && (
+                    <ul class="team-members" aria-label={`${team.name} contestants`}>
+                      {team.members.flatMap((slug) => {
+                        const person = getPerson(slug);
+                        if (!person) return [];
+                        return (
+                          <li class="team-member">
+                            <a class="member-name" href={href(`/members/${person.slug}/`)}>
+                              {person.name}
+                            </a>
+                            {getNote(person, team.season) && (
+                              <span class="member-program mono">
+                                {getNote(person, team.season)}
+                              </span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </article>
+              ))}
+            </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <JoinCta
+    eyebrow="Selection contest / September"
+    title="Your squad starts here."
+    text="The selection contest is open to every HKU student. It takes 2.5 hours, is scored individually, and is used to place contestants into training squads."
+    linkLabel="About joining"
+    linkHref="/join/"
+  />
+</BaseLayout>
+
+<script>
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-year-tab]')];
+  const panels = [...document.querySelectorAll<HTMLElement>('[data-year-panel]')];
+
+  const activate = (year: string, updateHash = true) => {
+    const validYear = panels.some((panel) => panel.dataset.yearPanel === year)
+      ? year
+      : tabs[0]?.dataset.yearTab;
+
+    if (!validYear) return;
+
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.yearTab === validYear;
+      tab.classList.toggle('active', selected);
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+    });
+
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.yearPanel !== validYear;
+    });
+
+    if (updateHash) {
+      history.replaceState(null, '', `#year-${validYear}`);
+    }
+  };
+
+  const hashYear = location.hash.match(/^#(?:year-)?(20\d{2})/)?.[1];
+  const defaultYear =
+    document.querySelector<HTMLElement>('[data-default-year]')?.dataset.defaultYear;
+  activate(hashYear ?? defaultYear ?? tabs[0]?.dataset.yearTab ?? '2025', false);
+
+  // Deep links from a member profile point at a team anchor, e.g.
+  // /people/#2021-team-name. Open that season, then scroll to the card.
+  if (location.hash && !location.hash.startsWith('#year-')) {
+    const targetId = decodeURIComponent(location.hash.slice(1));
+    requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView();
+    });
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(tab.dataset.yearTab ?? ''));
+
+    tab.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      const next = tabs[(index + direction + tabs.length) % tabs.length];
+      next.focus();
+      activate(next.dataset.yearTab ?? '');
+    });
+  });
+</script>

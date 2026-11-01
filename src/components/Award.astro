@@ -3,19 +3,31 @@ import type { Achievement } from '../data/achievements';
 
 interface Props {
   award: Achievement['award'];
+  rank?: string;
 }
 
-const { award } = Astro.props;
+const { award, rank } = Astro.props;
+const hasRank = Boolean(rank && rank !== '—');
+const positionResult = award === 'Position' && hasRank;
+const label = positionResult ? rank : award;
+const showRank = hasRank && !positionResult;
 const modifier = {
   Gold: 'gold',
   Silver: 'silver',
   Bronze: 'bronze',
   Champion: 'champion',
+  'Highest Honours': 'highest-honours',
+  'High Honours': 'high-honours',
+  'First Prize': 'first-prize',
+  Honours: 'honours',
   'Honourable Mention': 'mention',
   Position: 'position',
 }[award];
 ---
 
-<span class:list={['award', `award--${modifier}`]}>
-  <span class="award-dot" aria-hidden="true"></span>{award}
+<span class="award-result">
+  <span class:list={['award', `award--${modifier}`, { 'award--rank-only': positionResult }]}>
+    <span class="award-dot" aria-hidden="true"></span>{label}
+  </span>
+  {showRank && <span class="award-rank mono">{rank}</span>}
 </span>

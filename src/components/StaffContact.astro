@@ -1,0 +1,35 @@
+---
+import type { CoachLink } from '../data/teams';
+
+interface Props {
+  email?: string;
+  links: CoachLink[];
+}
+
+const { email, links } = Astro.props;
+
+const contacts = [
+  ...(email
+    ? [{ label: 'Email', value: email, href: `mailto:${email}` }]
+    : []),
+  ...links.map((link) => ({
+    label: link.label,
+    value: link.href.replace(/^https?:\/\//, ''),
+    href: link.href,
+  })),
+];
+---
+
+{contacts.length > 0 ? (
+  <div class="staff-contact">
+    {contacts.map((contact) => (
+      <a class="staff-contact-item" href={contact.href} rel="noreferrer">
+        <span class="mono">{contact.label}</span>
+        <span class="staff-contact-value">{contact.value}</span>
+        <span class="staff-contact-arrow" aria-hidden="true">↗</span>
+      </a>
+    ))}
+  </div>
+) : (
+  <p class="staff-contact-empty">No public contact details on record.</p>
+)}

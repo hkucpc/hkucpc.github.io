@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Award from '../../components/Award.astro';
+import { teamSeasons } from '../../data/teams';
+import { getNote, getPerson } from '../../data/people';
+import { awardFromHonor, honorDescription, positionRank } from '../../lib/honors';
+import { formatSeason } from '../../lib/season';
+import { href } from '../../lib/url';
+
+export function getStaticPaths() {
+  return teamSeasons.map((team) => ({
+    params: { id: team.id },
+    props: { team },
+  }));
+}
+
+interface Props {
+  team: (typeof teamSeasons)[number];
+}
+
+const { team } = Astro.props;
+const honors = team.honors.map((text) => ({
+  text: honorDescription(text),
+  award: awardFromHonor(text),
+  rank: positionRank(text),
+}));
+---
+
+<BaseLayout
+  title={`${team.name} — ${formatSeason(team.season)}`}
+  description={`${team.name}, ${formatSeason(team.season)} HKU competitive programming squad, contestants and awards.`}
+>
+  <header class="member-head">
+    <div class="container">
+      <div class="member-top mono">
+        <a href={href(`/people/#year-${team.season}`)}>← All people</a>
+        <span>Team</span>
+      </div>
+
+      <div class="member-head-grid">
+        <div class="member-meta">
+          <p class="kicker">Team</p>
+          <p class="member-program mono">{formatSeason(team.season)}</p>
+        </div>
+
+        <div class="member-heading">
+          <h1 class="member-title">{team.name}</h1>
+          {team.alternate && <p class="team-page-alternate">{team.alternate}</p>}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {team.members.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <SectionHead
+          index="01"
+          title="Contestants"
+          description="The contestants who represented HKU for this squad."
+        />
+        <ul class="teammate-grid">
+          {team.members.flatMap((slug) => {
+            const person = getPerson(slug);
+            if (!person) return [];
+            return (
+              <li class="teammate-card">
+                <a href={href(`/members/${person.slug}/`)}>{person.name}</a>
+                {getNote(person, team.season) && (
+                  <span class="mono">{getNote(person, team.season)}</span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index={team.members.length > 0 ? '02' : '01'}
+        title="Awards & results"
+        description="Results recorded for this squad in its season."
+      />
+      {honors.length > 0 ? (
+        <ul class="member-award-list">
+          {honors.map((honor) => (
+            <li>
+              <span class="member-award-contest">{honor.text}</span>
+              <Award award={honor.award} rank={honor.rank} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="member-award-empty">No recorded results for this squad yet.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>

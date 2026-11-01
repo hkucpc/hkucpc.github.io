@@ -3,12 +3,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import Award from '../../components/Award.astro';
 import JoinCta from '../../components/JoinCta.astro';
+import StaffContact from '../../components/StaffContact.astro';
 import { memberProfiles, type MemberProfile } from '../../data/members';
-import { coachesBySeason } from '../../data/teams';
+import { getStaff, staffProfiles } from '../../data/staff';
+import { getNote, getPerson } from '../../data/people';
 import { href } from '../../lib/url';
+import { formatSeason } from '../../lib/season';
 
 export function getStaticPaths() {
-  return memberProfiles.map((profile) => ({
+  const playerSlugs = new Set(memberProfiles.map((profile) => profile.slug));
+  const staffOnly: MemberProfile[] = staffProfiles
+    .filter((profile) => !playerSlugs.has(profile.slug))
+    .map((profile) => ({
+      slug: profile.slug,
+      name: profile.name,
+      appearances: [],
+      seasonMemberSeasons: [],
+      honors: [],
+      medals: 0,
+      teammates: [],
+    }));
+
+  return [...memberProfiles, ...staffOnly].map((profile) => ({
     params: { slug: profile.slug },
     props: { profile },
   }));
@@ -19,137 +35,224 @@ interface Props {
 }
 
 const { profile } = Astro.props;
-const coachNames = (season: string) =>
-  (coachesBySeason[season] ?? []).map((coach) => coach.name).join(' · ');
-const seasons = profile.appearances.length;
+const seasons = new Set([
+  ...profile.appearances.map((appearance) => appearance.season),
+  ...profile.seasonMemberSeasons,
+]).size;
 const honors = profile.honors.length;
 const plural = (count: number, one: string, many = `${one}s`) =>
   count === 1 ? one : many;
+
+const staff = getStaff(profile.slug);
+const staffLatest = staff?.roles[0];
+const staffOldest = staff?.roles[staff.roles.length - 1];
+const staffSeasons = staff?.roles.length ?? 0;
+const staffRoles = staff
+  ? [...new Set(staff.roles.map((role) => role.role))]
+  : [];
+const staffTenure = staff && staffLatest && staffOldest
+  ? staffOldest.season === staffLatest.season
+    ? formatSeason(staffLatest.season)
+    : `${formatSeason(staffOldest.season)} — ${formatSeason(staffLatest.season)}`
+  : '';
+
+const isPlayer = seasons > 0;
+const profileLabel = isPlayer ? (staff ? 'Contestant & Staff' : 'Contestant') : 'Staff';
+const profileTopLabel = isPlayer
+  ? staff ? 'Contestant & staff profile' : 'Contestant profile'
+  : 'Staff profile';
+const profileSeasons = isPlayer ? seasons : staffSeasons;
+const description = isPlayer
+  ? `Competitive programming season history and awards for ${profile.name}, HKU Competitive Programming Community.`
+  : `Staff history and contact details for ${profile.name}, HKU Competitive Programming Community.`;
 ---
 
-<BaseLayout
-  title={profile.name}
-  description={`ICPC season history and awards for ${profile.name}, HKU Competitive Programming Community.`}
->
+<BaseLayout title={profile.name} description={description}>
   <header class="member-head">
     <div class="container">
       <div class="member-top mono">
-        <a href={href('/teams/')}>← All teams</a>
-        <span>Player profile / {seasons} {plural(seasons, 'season')}</span>
+        <a href={href('/people/')}>← All people</a>
+        <span>{profileTopLabel} / {profileSeasons} {plural(profileSeasons, 'season')}</span>
       </div>
 
       <div class="member-head-grid">
         <div class="member-meta">
-          <p class="kicker">Player</p>
-          {profile.program && <p class="member-program mono">{profile.program}</p>}
-          {profile.handle && (
-            <a
-              class="member-link mono"
-              href={`https://codeforces.com/profile/${profile.handle}`}
-              rel="noreferrer"
-            >
-              Codeforces @{profile.handle} ↗
-            </a>
+          <p class="kicker">{profileLabel}</p>
+          {profile.note && <p class="member-program mono">{profile.note}</p>}
+          {staffLatest && (
+            <p class="member-program mono">{staffLatest.role} · {formatSeason(staffLatest.season)}</p>
           )}
         </div>
 
         <div class="member-heading">
           <h1 class="member-title">{profile.name}</h1>
           <p class="member-dek">
-            {seasons} {plural(seasons, 'season')} on record with HKU CPC
-            {profile.medals > 0 ? `, including ${profile.medals} ${plural(profile.medals, 'medal')}.` : '.'}
+            {isPlayer ? (
+              <>
+                {seasons} {plural(seasons, 'season')} on record with HKU CPC
+                {profile.medals > 0
+                  ? `, including ${profile.medals} ${plural(profile.medals, 'medal')}.`
+                  : '.'}
+              </>
+            ) : (
+              <>
+                {staffSeasons} {plural(staffSeasons, 'season')} as {staffRoles.join(' and ')} with HKU CPC.
+              </>
+            )}
           </p>
         </div>
       </div>
     </div>
   </header>
 
-  <section class="section">
-    <div class="container">
-      <div class="member-stats">
-        <div class="member-stat">
-          <p class="member-stat-value">{seasons}</p>
-          <p class="member-stat-label">{plural(seasons, 'Season')} competing</p>
-          <p class="member-stat-note mono">On record</p>
-        </div>
-        <div class="member-stat">
-          <p class="member-stat-value">{honors}</p>
-          <p class="member-stat-label">{plural(honors, 'Result')} &amp; awards</p>
-          <p class="member-stat-note mono">All contests</p>
-        </div>
-        <div class="member-stat">
-          <p class="member-stat-value">{profile.medals}</p>
-          <p class="member-stat-label">{plural(profile.medals, 'Medal')}</p>
-          <p class="member-stat-note mono">Gold / silver / bronze</p>
+  {isPlayer && (
+    <section class="section">
+      <div class="container">
+        <div class="member-stats">
+          <div class="member-stat">
+            <p class="member-stat-value">{seasons}</p>
+            <p class="member-stat-label">{plural(seasons, 'Season')} competing</p>
+            <p class="member-stat-note mono">On record</p>
+          </div>
+          <div class="member-stat">
+            <p class="member-stat-value">{honors}</p>
+            <p class="member-stat-label">{plural(honors, 'Result')} &amp; awards</p>
+            <p class="member-stat-note mono">All contests</p>
+          </div>
+          <div class="member-stat">
+            <p class="member-stat-value">{profile.medals}</p>
+            <p class="member-stat-label">{plural(profile.medals, 'Medal')}</p>
+            <p class="member-stat-note mono">Gold / silver / bronze</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
-  <section class="section">
-    <div class="container">
-      <SectionHead
-        index="01"
-        title="Season history"
-        description="Every HKU squad on record for this player, newest first."
-      />
+  {isPlayer && (
+    <section class="section">
+      <div class="container">
+        <SectionHead
+          index="01"
+          title="Season history"
+          description="Every HKU squad on record for this contestant, newest first."
+        />
 
-      <div class="member-history">
-        {profile.appearances.map((appearance) => (
-          <article class="member-season">
-            <div class="member-season-head">
-              <span class="member-season-year">{appearance.season}</span>
-              <h2>
-                <a href={href(`/teams/#${appearance.team.id}`)}>{appearance.team.name}</a>
-              </h2>
-              <span class="member-season-coach mono">Coaches — {coachNames(appearance.season)}</span>
-            </div>
-
-            <div class="member-season-body">
-              <div class="member-season-team">
-                <p class="kicker">Team</p>
-                <ul class="member-season-members">
-                  {appearance.team.members.map((member) => (
-                    <li>
-                      <a
-                        class:list={[{ current: member.slug === profile.slug }]}
-                        href={href(`/members/${member.slug}/`)}
-                      >
-                        {member.name}
-                      </a>
-                      {member.program && <span class="mono">{member.program}</span>}
-                    </li>
-                  ))}
-                </ul>
+        <div class="member-history">
+          {profile.seasonMemberSeasons.map((season) => (
+            <article class="member-season">
+              <div class="member-season-head">
+                <span class="member-season-year">{formatSeason(season)}</span>
+                <h2>Season member</h2>
+              </div>
+              <div class="member-season-body">
+                <div class="member-season-team">
+                  <p class="kicker">Role</p>
+                  <p>Contestant for this season; squad assignment not recorded.</p>
+                </div>
+              </div>
+            </article>
+          ))}
+          {profile.appearances.map((appearance) => (
+            <article class="member-season">
+              <div class="member-season-head">
+                <span class="member-season-year">{formatSeason(appearance.season)}</span>
+                <h2>
+                  <a href={href(`/people/${appearance.team.id}/`)}>{appearance.team.name}</a>
+                </h2>
               </div>
 
-              <div class="member-season-awards">
-                <p class="kicker">Awards &amp; results</p>
-                {appearance.honors.length > 0 ? (
-                  <ul class="member-award-list">
-                    {appearance.honors.map((honor) => (
-                      <li>
-                        <span class="member-award-contest">{honor.text}</span>
-                        <Award award={honor.award} />
-                      </li>
-                    ))}
+              <div class="member-season-body">
+                <div class="member-season-team">
+                  <p class="kicker">Team</p>
+                  <ul class="member-season-members">
+                    {appearance.team.members.flatMap((slug) => {
+                      const person = getPerson(slug);
+                      if (!person) return [];
+                      return (
+                        <li>
+                          <a
+                            class:list={[{ current: person.slug === profile.slug }]}
+                            href={href(`/members/${person.slug}/`)}
+                          >
+                            {person.name}
+                          </a>
+                          {getNote(person, appearance.season) && (
+                            <span class="mono">
+                              {getNote(person, appearance.season)}
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
-                ) : (
-                  <p class="member-award-empty">No recorded results for this squad.</p>
-                )}
+                </div>
+
+                <div class="member-season-awards">
+                  <p class="kicker">Awards &amp; results</p>
+                  {appearance.honors.length > 0 ? (
+                    <ul class="member-award-list">
+                      {appearance.honors.map((honor) => (
+                        <li>
+                          <span class="member-award-contest">{honor.text}</span>
+                          <Award award={honor.award} rank={honor.rank} />
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p class="member-award-empty">No recorded results for this squad.</p>
+                  )}
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
+
+  {staff && (
+    <section class="section">
+      <div class="container">
+        <SectionHead
+          index={isPlayer ? '02' : '01'}
+          title="Staff history"
+          description="Every season on record in a coaching or coordinator role."
+        />
+        <div class="staff-summary">
+          <div class="staff-summary-item">
+            <p class="staff-summary-label mono">Role</p>
+            <p class="staff-summary-value">{staffRoles.join(' · ')}</p>
+          </div>
+          <div class="staff-summary-item">
+            <p class="staff-summary-label mono">Tenure</p>
+            <p class="staff-summary-value">{staffTenure}</p>
+          </div>
+          <div class="staff-summary-item">
+            <p class="staff-summary-label mono">Seasons</p>
+            <p class="staff-summary-value">{staffSeasons}</p>
+          </div>
+        </div>
+        <ol class="timeline">
+          {staff.roles.map((role) => (
+            <li class="timeline-item">
+              <span class="timeline-year">{formatSeason(role.season)}</span>
+              <div class="timeline-body">
+                <h3>{role.role}</h3>
+                <p>{role.note}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
 
   {profile.teammates.length > 0 && (
     <section class="section">
       <div class="container">
         <SectionHead
-          index="02"
+          index={staff ? '03' : '02'}
           title="Teammates"
           description={`Everyone who has shared a squad with ${profile.name}.`}
         />
@@ -157,7 +260,6 @@ const plural = (count: number, one: string, many = `${one}s`) =>
           {profile.teammates.map((member) => (
             <li class="teammate-card">
               <a href={href(`/members/${member.slug}/`)}>{member.name}</a>
-              {member.program && <span class="mono">{member.program}</span>}
             </li>
           ))}
         </ul>
@@ -165,11 +267,26 @@ const plural = (count: number, one: string, many = `${one}s`) =>
     </section>
   )}
 
-  <JoinCta
-    eyebrow="Play with us"
-    title="Your name could be here."
-    text="Every player on this page started with one contest. The next intake is open to all HKU students."
-    linkLabel="How to join"
-    linkHref="/about/#join"
-  />
+  {staff && (
+    <section class="section">
+      <div class="container">
+        <SectionHead
+          index={isPlayer ? '04' : '02'}
+          title="Contact & profiles"
+          description="Public contact details and competitive programming profiles."
+        />
+        <StaffContact email={staff.email} links={staff.links} />
+      </div>
+    </section>
+  )}
+
+  {isPlayer && (
+    <JoinCta
+      eyebrow="Play with us"
+      title="Your name could be here."
+      text="Every contestant on this page started with one contest. The next intake is open to all HKU students."
+      linkLabel="How to join"
+      linkHref="/join/"
+    />
+  )}
 </BaseLayout>

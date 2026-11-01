@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { site } from '../data/site';
+
+interface JoinStep {
+  no: string;
+  title: string;
+  text: string;
+}
+
+const joinSteps: JoinStep[] = [
+  {
+    no: '01',
+    title: 'Join the community channels',
+    text: `Join the <a href="mailto:${site.googleGroup}">Google Group</a> for training announcements, contest dates and registration details, and the <a href="${site.discord}" target="_blank" rel="noreferrer">Discord server</a> for day-to-day discussion.`,
+  },
+  {
+    no: '02',
+    title: 'Come to an info session',
+    text: 'At the start of the season we explain how training works, what the contest calendar looks like and how selection fits together. The 2026–27 info session is on 9 September 2026; <a href="https://hkucpc.github.io/info-session-2026/" target="_blank" rel="noreferrer">view the slides</a>.',
+  },
+  {
+    no: '03',
+    title: 'Take the selection contest',
+    text: 'Selection contests usually run for 2.5 hours and are used to place contestants into squads. They are a placement exercise, not an entrance exam. Whether or not you are selected for an HKU team, you can take part in the training and other activities that follow. The 2026–27 contest was held on 20 September 2026, and the problems are available in the <a href="https://codeforces.com/group/rFPEPIopiD" target="_blank" rel="noreferrer">Codeforces group</a>.',
+  },
+  {
+    no: '04',
+    title: 'Join the training',
+    text: 'Training runs weekly during term and usually takes place on <a href="https://vjudge.net/group/hkucpc" target="_blank" rel="noreferrer">Virtual Judge</a>. Sessions cover theory, problem solving and contest simulations, and are open to everyone who wants to improve.',
+  },
+  {
+    no: '05',
+    title: 'Compete',
+    text: 'Selected squads represent HKU at ICPC and CCPC regionals and finals, the ACM-HK Programming Contest, and other regional and open contests. Everyone can also take part in virtual contests and internal competitions.',
+  },
+];
+---
+
+<BaseLayout
+  title="Join"
+  description="How to join the HKU Competitive Programming Community: Google Group, info session, selection contest and squad placement."
+>
+  <PageHeader
+    index="05"
+    label="Join"
+    title="Join the community."
+    intro="Open to every HKU student, any year and any major. Join the community channels, come to an info session, take the selection contest, then train weekly and compete with HKU."
+    meta="Open to all HKU students / Season 2026–27"
+  />
+
+  <section class="section">
+    <div class="container">
+      <SectionHead
+        index="01"
+        title="How it works"
+        description="There is no application form and no minimum rating. There is a weekly session, and a seat for you."
+      />
+
+      <div class="join-info">
+        <div class="join-steps">
+          {joinSteps.map((step) => (
+            <article class="join-step">
+              <span class="join-step-no mono">{step.no}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p set:html={step.text} />
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <aside class="join-aside">
+          <p class="kicker">Practical notes</p>
+          <dl class="detail-list">
+            <div>
+              <dt class="mono">Who</dt>
+              <dd>Any HKU student, any year, any major.</dd>
+            </div>
+            <div>
+              <dt class="mono">Cost</dt>
+              <dd>Free. Travel support is available for selected teams.</dd>
+            </div>
+            <div>
+              <dt class="mono">When</dt>
+              <dd>Weekly during term; the schedule is announced by email.</dd>
+            </div>
+            <div>
+              <dt class="mono">Where</dt>
+              <dd>Online, or anywhere you and your teammates choose to meet in person.</dd>
+            </div>
+          </dl>
+          <a class="btn" href={`mailto:${site.email}`}>Ask us anything <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
