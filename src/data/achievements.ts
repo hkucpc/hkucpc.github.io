@@ -1024,6 +1024,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2000,
+    date: "2000-10-28",
     contest: "25th ACM-ICPC Asia Hong Kong Regional",
     teamId: "2000-tick",
     award: 'Position',
