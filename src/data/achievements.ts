@@ -552,7 +552,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2017,
-    date: "2018",
+    date: "2018-06-23",
     contest: "ACM-HK Programming Contest",
     teamId: "2018-rising-hairline-div3-borderline",
     award: 'Position',
@@ -624,7 +624,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2016,
-    date: "2017",
+    date: "2017-06-24",
     contest: "ACM-HK Programming Contest",
     teamId: null,
     award: 'Position',
@@ -633,7 +633,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2016,
-    date: "2017",
+    date: "2017-06-24",
     contest: "ACM-HK Programming Contest",
     teamId: null,
     award: 'Position',
@@ -759,7 +759,7 @@ export const achievements: Achievement[] = [
   },
   {
     year: 2010,
-    date: "2011",
+    date: "2011-07-16",
     contest: "ACM Collegiate Programming Contest (Hong Kong)",
     teamId: null,
     award: 'Position',
