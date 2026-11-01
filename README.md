@@ -24,6 +24,7 @@ Requires Node 22 or newer.
 ```bash
 npm install
 npm run dev        # http://localhost:4321
+npm run check:data # validate slugs, team references, dates and news
 npm run build      # static output in dist/
 npm run preview    # preview the production build
 ```
@@ -138,6 +139,19 @@ filter are all generated from this array.
   - `"## Heading"` renders an `<h2>`
   - `"> Quote"` renders a blockquote
   - any other string renders a paragraph
+
+### Data validation
+
+Run:
+
+```bash
+npm run check:data
+```
+
+The check verifies team ids, person slugs, roster references, staff references,
+achievement team ids, contest date formats, category and award values, news
+slugs and dates, and conflicting dates for the same contest. It runs in CI
+before the production build.
 
 ### Visual system
 

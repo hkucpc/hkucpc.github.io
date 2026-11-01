@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate data
+        run: npm run check:data
+
       - name: Work out the Pages URL and base path
         id: pages
         run: |
