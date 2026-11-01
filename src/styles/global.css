@@ -31,6 +31,7 @@
   --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SFMono-Regular',
     Menlo, monospace;
   --font-display: 'Geist Serif', 'Times New Roman', Times, serif;
+  --font-geist-serif-heart: 'ELSH' 100;
 
   --gutter: clamp(1.25rem, 3.2vw, 3.5rem);
   --max: 1560px;
@@ -542,6 +543,7 @@ time {
   font-weight: 600;
   line-height: 0.82;
   letter-spacing: -0.068em;
+  font-variation-settings: var(--font-geist-serif-heart);
 }
 
 .hero-title .line {
