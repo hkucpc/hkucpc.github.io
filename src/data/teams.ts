@@ -18,9 +18,7 @@ export const teamSeasons: Team[] = [
       "qixuan-li",
       "mingfei-xia",
     ],
-    honors: [
-      "Silver Medal in 51st ICPC Asia Chengdu Regional Contest",
-    ],
+    honors: [],
   },
   {
     id: "2026-hot-kpop-union-b",
@@ -31,7 +29,9 @@ export const teamSeasons: Team[] = [
       "mingfei-xia",
       "ali-aliyev",
     ],
-    honors: [],
+    honors: [
+      "Silver Medal in 51st ICPC Asia Chengdu Regional Contest",
+    ],
   },
   {
     id: "2026-team-name-ddl-today",

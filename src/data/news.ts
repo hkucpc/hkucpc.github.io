@@ -53,7 +53,7 @@ export const posts: Post[] = [
       'Team name ddl today and Hot Kpop Union take silver, while A wine still dominates the tomb earns bronze at the 51st ICPC Asia Chengdu Regional.',
     body: [
       'HKU added three more medals at the 51st ICPC Asia Chengdu Regional on 24–25 October.',
-      '[Team name ddl today](/people/2026-team-name-ddl-today/) finished 41st for silver, [Hot Kpop Union](/people/2026-hot-kpop-union-a/) finished 43rd for silver, and [A wine still dominates the tomb](/people/2026-a-wine-still-dominates-the-tomb/) took bronze in 137th.',
+      '[Team name ddl today](/people/2026-team-name-ddl-today/) finished 41st for silver, [Hot Kpop Union](/people/2026-hot-kpop-union-b/) finished 43rd for silver, and [A wine still dominates the tomb](/people/2026-a-wine-still-dominates-the-tomb/) took bronze in 137th.',
       'The Chengdu result follows three medals at the Xi’an Regional the previous weekend, giving HKU six regional medals from the two contests.',
     ],
   },
