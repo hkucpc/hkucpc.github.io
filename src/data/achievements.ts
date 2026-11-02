@@ -28,7 +28,7 @@ export const achievements: Achievement[] = [
     year: 2026,
     date: "2026-10-25",
     contest: "51st ICPC Asia Chengdu Regional",
-    teamId: "2026-hot-kpop-union-a",
+    teamId: "2026-hot-kpop-union-b",
     award: 'Silver',
     rank: '43rd',
     category: 'Regional',
