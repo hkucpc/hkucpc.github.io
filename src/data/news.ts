@@ -20,6 +20,20 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: 'nanjing-regional-2026',
+    title: 'HKU takes silver and bronze in Nanjing',
+    date: '2026-11-08',
+    displayDate: '8 Nov 2026',
+    tags: ['Competition', 'Regional'],
+    excerpt:
+      'A wine still dominates the tomb wins silver and WeShowSpeed takes bronze at the 51st ICPC Asia Nanjing Regional.',
+    body: [
+      'HKU added two medals at the 51st ICPC Asia Nanjing Regional on 8 November.',
+      '[A wine still dominates the tomb](/people/2026-a-wine-still-dominates-the-tomb/) finished 63rd for silver, while [WeShowSpeed](/people/2026-weshowspeed/) took bronze in 190th.',
+      'The results follow the season’s Chengdu and Xi’an regionals, where HKU won six medals across the two contests.',
+    ],
+  },
+  {
     slug: 'new-website-2026',
     title: 'The new HKU CPC website is live',
     date: '2026-11-01',
