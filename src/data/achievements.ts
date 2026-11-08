@@ -26,6 +26,15 @@ export interface Achievement {
 export const achievements: Achievement[] = [
   {
     year: 2026,
+    date: "2026-11-08",
+    contest: "51st ICPC Asia Nanjing Regional",
+    teamId: "2026-a-wine-still-dominates-the-tomb",
+    award: 'Silver',
+    rank: '64th',
+    category: 'Regional',
+  },
+  {
+    year: 2026,
     date: "2026-10-25",
     contest: "51st ICPC Asia Chengdu Regional",
     teamId: "2026-hot-kpop-union-b",

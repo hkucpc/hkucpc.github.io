@@ -107,6 +107,7 @@ export const teamSeasons: Team[] = [
     ],
     honors: [
       "Bronze Medal in 51st ICPC Asia Chengdu Regional Contest",
+      "Silver Medal (64th Place) in 51st ICPC Asia Nanjing Regional Contest",
     ],
   },
   {
