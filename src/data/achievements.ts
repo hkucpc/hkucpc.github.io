@@ -1126,6 +1126,6 @@ export const worldFinals = achievements.filter(
 export const achievementStats = [
   { value: '10', label: 'ICPC World Finals appearances', note: '2001 — 2025' },
   { value: '1', label: 'ICPC World Finals medal', note: 'Bronze, 2005' },
-  { value: '65', label: 'ICPC regional medals', note: 'Asia' },
+  { value: '67', label: 'ICPC regional medals', note: 'Asia' },
   { value: '37', label: 'Seasons competing', note: 'Since 1990' },
 ];
