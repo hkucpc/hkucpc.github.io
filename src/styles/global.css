@@ -1952,6 +1952,11 @@ time {
   background: var(--paper);
 }
 
+.year-tab-break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 .year-tab {
   display: inline-flex;
   align-items: baseline;
