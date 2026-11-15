@@ -26,6 +26,24 @@ export interface Achievement {
 export const achievements: Achievement[] = [
   {
     year: 2026,
+    date: "2026-11-15",
+    contest: "12th CCPC Jingzhou",
+    teamId: "2026-beginner-sophomore-team-0",
+    award: 'Silver',
+    rank: '55th',
+    category: 'CCPC',
+  },
+  {
+    year: 2026,
+    date: "2026-11-15",
+    contest: "12th CCPC Jingzhou",
+    teamId: "2026-ria",
+    award: 'Bronze',
+    rank: '178th',
+    category: 'CCPC',
+  },
+  {
+    year: 2026,
     date: "2026-11-08",
     contest: "51st ICPC Asia Nanjing Regional",
     teamId: "2026-weshowspeed",
@@ -1125,6 +1143,6 @@ export const worldFinals = achievements.filter(
 
 export const achievementStats = [
   { value: '10', label: 'ICPC World Finals appearances', note: '2001 — 2025' },
-  { value: '69', label: 'ICPC & CCPC medals', note: '2001 — 2026' },
+  { value: '71', label: 'ICPC & CCPC medals', note: '2001 — 2026' },
   { value: '37', label: 'Seasons on record', note: 'Since 1990' },
 ];

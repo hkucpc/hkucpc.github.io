@@ -82,7 +82,9 @@ export const teamSeasons: Team[] = [
       "raul-jafarli",
       "ismayil-maharramov",
     ],
-    honors: [],
+    honors: [
+      "Bronze Medal in 12th CCPC Jingzhou",
+    ],
   },
   {
     id: "2026-beginner-sophomore-team-0",
@@ -94,7 +96,9 @@ export const teamSeasons: Team[] = [
       "chengyu-huang",
       "yuchen-zhang",
     ],
-    honors: [],
+    honors: [
+      "Silver Medal in 12th CCPC Jingzhou",
+    ],
   },
   {
     id: "2026-a-wine-still-dominates-the-tomb",
