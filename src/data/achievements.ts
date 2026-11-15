@@ -27,7 +27,7 @@ export const achievements: Achievement[] = [
   {
     year: 2026,
     date: "2026-11-15",
-    contest: "12th CCPC Jingzhou Regional",
+    contest: "12th CCPC Jingzhou",
     teamId: "2026-beginner-sophomore-team-0",
     award: 'Silver',
     rank: '55th',
@@ -36,7 +36,7 @@ export const achievements: Achievement[] = [
   {
     year: 2026,
     date: "2026-11-15",
-    contest: "12th CCPC Jingzhou Regional",
+    contest: "12th CCPC Jingzhou",
     teamId: "2026-ria",
     award: 'Bronze',
     rank: '178th',

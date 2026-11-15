@@ -95,7 +95,7 @@ export const teamSeasons: Team[] = [
       "yuchen-zhang",
     ],
     honors: [
-      "Silver Medal in 12th CCPC Jingzhou Regional",
+      "Silver Medal in 12th CCPC Jingzhou",
     ],
   },
   {
