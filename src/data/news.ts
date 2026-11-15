@@ -30,7 +30,7 @@ export const posts: Post[] = [
       'Beginner Sophomore Team 0 wins silver and RIA takes bronze at the 12th CCPC Jingzhou, marking HKU’s return to the CCPC series.',
     body: [
       'HKU returned to the China Collegiate Programming Contest at the 12th CCPC Jingzhou, earning one silver and one bronze medal.',
-      '[Beginner Sophomore Team 0](/people/2026-beginner-sophomore-team-0/) finished 55th for silver with Jingyu Luo, Chengyu Huang and Yuchen Zhang. [RIA](/people/2026-ria/) took bronze in 178th.',
+      '[Beginner Sophomore Team 0](/people/2026-beginner-sophomore-team-0/) finished 55th for silver, while [RIA](/people/2026-ria/) took bronze in 178th.',
       '## Back in the CCPC',
       'The result marks HKU’s first CCPC appearance since the 2018–19 season, when GMT+7 won gold and finished 5th at the CCPC Final in Shenzhen. After several years away from the series, HKU squads are competing in the CCPC again.',
     ],
