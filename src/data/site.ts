@@ -25,6 +25,6 @@ export const nav = [
 
 export const stats = [
   { value: '10', label: 'ICPC World Finals appearances', note: '2001 — 2025' },
-  { value: '69', label: 'ICPC & CCPC medals', note: '2001 — 2026' },
+  { value: '71', label: 'ICPC & CCPC medals', note: '2001 — 2026' },
   { value: '37', label: 'Seasons on record', note: 'Since 1990' },
 ];

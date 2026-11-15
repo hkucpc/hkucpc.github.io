@@ -94,7 +94,9 @@ export const teamSeasons: Team[] = [
       "chengyu-huang",
       "yuchen-zhang",
     ],
-    honors: [],
+    honors: [
+      "Silver Medal in 12th CCPC Jingzhou Regional",
+    ],
   },
   {
     id: "2026-a-wine-still-dominates-the-tomb",
