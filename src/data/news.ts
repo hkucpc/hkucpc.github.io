@@ -33,7 +33,7 @@ export const posts: Post[] = [
     body: [
       'HKU returned to the China Collegiate Programming Contest at the 12th CCPC Jingzhou on 14–15 November, hosted by Yangtze University and Wuhan University, earning one silver and one bronze medal.',
       '[Beginner Sophomore Team 0](/people/2026-beginner-sophomore-team-0/) finished 55th for silver, while [RIA](/people/2026-ria/) took bronze in 178th.',
-      'HKU CPC thanks the Foreign Affairs Office of Jingzhou Municipal People’s Government for its travel arrangements and hospitality.',
+      'HKU CPC thanks the Foreign Affairs Office of Jingzhou Municipal People’s Government for its warm reception and support.',
       '## Back in the CCPC',
       'The result marks HKU’s first CCPC appearance since the 2018–19 season, when GMT+7 won gold and finished 5th at the CCPC Final in Shenzhen. After several years away from the series, HKU squads are competing in the CCPC again.',
     ],
