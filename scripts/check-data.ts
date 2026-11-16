@@ -148,6 +148,9 @@ for (const post of posts) {
   }
   if (!post.displayDate.trim()) fail(`News "${post.slug}": empty displayDate`);
   if (post.tags.length === 0) fail(`News "${post.slug}": no tags`);
+  if (post.tags.includes('Competition') && !post.host) {
+    fail(`News "${post.slug}": competition post is missing host`);
+  }
   if (post.body.length === 0) fail(`News "${post.slug}": empty body`);
   if (post.featured) featuredCount += 1;
 }

@@ -41,6 +41,7 @@ const renderInline = (text: string) =>
           <div class="article-meta">
             <time class="mono" datetime={post.date}>{post.displayDate}</time>
             <span class="mono">HKU CPC</span>
+            {post.host && <span class="mono">Host / {post.host}</span>}
           </div>
           <div class="article-heading">
             <h1 class="article-title">{post.title}</h1>

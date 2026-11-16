@@ -15,6 +15,7 @@ export interface Post {
   tags: NewsTag[];
   excerpt: string;
   featured?: boolean;
+  host?: string;
   links?: { label: string; href: string }[];
   body: string[];
 }
@@ -22,6 +23,7 @@ export interface Post {
 export const posts: Post[] = [
   {
     slug: 'ccpc-jingzhou-2026',
+    host: 'Yangtze University and Wuhan University',
     title: 'HKU returns to CCPC with silver and bronze in Jingzhou',
     date: '2026-11-15',
     displayDate: '15 Nov 2026',
@@ -37,6 +39,7 @@ export const posts: Post[] = [
   },
   {
     slug: 'nanjing-regional-2026',
+    host: 'Nanjing University of Aeronautics and Astronautics',
     title: 'HKU takes silver and bronze in Nanjing',
     date: '2026-11-08',
     displayDate: '8 Nov 2026',
@@ -75,6 +78,7 @@ export const posts: Post[] = [
   },
   {
     slug: 'chengdu-regional-2026',
+    host: 'University of Electronic Science and Technology of China',
     title: 'HKU adds three medals in Chengdu',
     date: '2026-10-25',
     displayDate: '25 Oct 2026',
@@ -89,6 +93,7 @@ export const posts: Post[] = [
   },
   {
     slug: 'xian-regional-2026',
+    host: 'Northwestern Polytechnical University',
     title: 'HKU takes three medals in Xi’an',
     date: '2026-10-18',
     displayDate: '18 Oct 2026',
