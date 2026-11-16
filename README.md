@@ -157,7 +157,8 @@ before the production build.
 
 `src/styles/global.css` contains the whole design system:
 
-- paper `#f2f1eb`, ink `#111110`, HKU green `#006f51`, signal green `#00a878`
+- white `#ffffff`, black `#000000`, neutral greys `#cccccc` / `#999999` / `#666666` / `#333333`
+- CDS Blue `#0a5aff`, AAI Green `#1db181`, BG Blue `#051464`
 - fluid display sizes with `clamp()`
 - a 12-column layout used with explicit column spans
 - responsive breakpoints at 1200, 960, 860 and 640 px
