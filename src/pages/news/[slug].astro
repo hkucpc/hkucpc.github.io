@@ -73,7 +73,6 @@ const renderInline = (text: string) =>
           }
           return <p set:html={renderInline(block)} />;
         })}
-        {post.host && <p>Host: {post.host}</p>}
         {post.links?.map((link) => (
           <p>
             <a href={link.href} target="_blank" rel="noreferrer">
