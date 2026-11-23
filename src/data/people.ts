@@ -49,7 +49,6 @@ export const people: Record<string, Person> = {
   "guanyu-liu": { slug: "guanyu-liu", name: "Guanyu Liu", notes: { "2026": "BEng(CDS) 1" } },
   "haihui-zhou": { slug: "haihui-zhou", name: "Haihui Zhou", notes: { "2020": "BEng(CompSc) 4" } },
   "hao-xie": { slug: "hao-xie", name: "Hao Xie", notes: { "2022": "PhD 4", "2021": "PhD 3", "2020": "PhD 2" }, email: "hxie@connect.hku.hk", links: [{ label: "Homepage", href: "https://www.cs.hku.hk/~hxie" }] },
-  "haoran-yuan": { slug: "haoran-yuan", name: "Haoran Yuan", notes: { "2026": "BEng(CDS) 1" } },
   "haoyang-wu": { slug: "haoyang-wu", name: "Haoyang Wu", notes: { "2026": "BEng(AI&DataSc) 2" } },
   "haoyuan-wu": { slug: "haoyuan-wu", name: "Haoyuan Wu", notes: { "2026": "PhD 1", "2024": "BEng(CompSc) 3", "2023": "BEng(CompSc)" } },
   "hiu-hei-chan": { slug: "hiu-hei-chan", name: "Hiu Hei Chan", notes: { "2021": "BEng(CompSc) 4" } },
@@ -125,8 +124,6 @@ export const people: Record<string, Person> = {
   "yue-yu": { slug: "yue-yu", name: "Yue Yu", notes: { "2026": "BSc 2" } },
   "yufei-li": { slug: "yufei-li", name: "Yufei Li", notes: { "2024": "BEng 2", "2023": "BEng 1" } },
   "yun-lung-he": { slug: "yun-lung-he", name: "Yun Lung He", notes: { "2026": "BEng(CDS) 1" } },
-  "yunhao-qu": { slug: "yunhao-qu", name: "Yunhao Qu", notes: { "2026": "BEng(AI&DataSc) 2" } },
-  "yusaifan-wei": { slug: "yusaifan-wei", name: "Yusaifan Wei", notes: { "2026": "BEng(CompSc) 2" } },
   "zhenwei-hu": { slug: "zhenwei-hu", name: "Zhenwei Hu", notes: { "2021": "BEng(CompSc) 4", "2020": "BEng(CompSc) 3", "2019": "BEng(CompSc) 2" } },
   "zhichao-zhao": { slug: "zhichao-zhao", name: "Zhichao Zhao", notes: {} },
   "zhiheng-lyu": { slug: "zhiheng-lyu", name: "Zhiheng Lyu", notes: { "2021": "BEng(CompSc) 2", "2020": "BEng 1" } },
@@ -146,6 +143,9 @@ export const people: Record<string, Person> = {
   "xiang-fan": { slug: "xiang-fan", name: "Xiang Fan", notes: {} },
   "chiu-yuen-koo": { slug: "chiu-yuen-koo", name: "Chiu Yuen Koo", notes: {} },
   "kin-fai-tam": { slug: "kin-fai-tam", name: "Kin Fai Tam", notes: {} },
+  "ka-ho-zhang": { slug: "ka-ho-zhang", name: "Ka Ho Zhang", notes: { "2026": "BEng(CompSc) 2" } },
+  "guanyu-wang": { slug: "guanyu-wang", name: "Guanyu Wang", notes: { "2026": "BEng(CompSc) 2" } },
+  "shizhao-wu": { slug: "shizhao-wu", name: "Shizhao Wu", notes: { "2026": "BEng(AI&DataSc) 2" } },
 };
 
 export function getPerson(slug: string): Person | undefined {
