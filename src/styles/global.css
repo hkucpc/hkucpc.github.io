@@ -1,8 +1,8 @@
 /* ==========================================================================
    HKU CPC — design system
    Swiss-influenced editorial system: strict grid, generous whitespace,
-   Geist Serif display type, Geist / Geist Mono for text, and a restrained
-   palette of paper, ink and HKU green.
+   Geist Serif display type, Geist / Geist Mono for text, and the HKU CDS
+   palette of white, CDS Blue, AAI Green, navy and neutral greys.
    ========================================================================== */
 
 @font-face {
@@ -14,15 +14,16 @@
 }
 
 :root {
-  --paper: #f2f1eb;
-  --paper-deep: #e6e4da;
-  --ink: #111110;
-  --ink-soft: #2a2a27;
-  --muted: #6c6b64;
-  --line: #c9c7bc;
-  --line-dark: #8e8c82;
-  --green: #006f51;
-  --green-bright: #00a878;
+  --paper: #ffffff;
+  --paper-deep: #f2f2f2;
+  --ink: #000000;
+  --ink-soft: #333333;
+  --muted: #666666;
+  --line: #cccccc;
+  --line-dark: #999999;
+  --navy: #051464;
+  --green: #0a5aff;
+  --green-bright: #1db181;
   --gold: #c9a227;
   --silver: #a9a8a0;
   --bronze: #a56b45;
@@ -378,7 +379,7 @@ time {
   z-index: 100;
   border-top: 3px solid var(--green);
   border-bottom: 1px solid var(--ink);
-  background: rgba(242, 241, 235, 0.94);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -1011,7 +1012,7 @@ time {
 
 .join {
   padding-block: clamp(3.5rem, 7vw, 6.5rem);
-  background: var(--ink);
+  background: var(--navy);
   color: var(--paper);
 }
 
